@@ -1,0 +1,8 @@
+apiVersion: v2
+dependencies:
+  - name: argo-cd
+    repository: https://argoproj.github.io/argo-helm
+    version: 7.6.5
+description: Helm chart to deploy argo-cd
+name: argo-cd
+version: 1.0.0

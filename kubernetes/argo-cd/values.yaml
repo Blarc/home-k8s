@@ -1,0 +1,15 @@
+argo-cd:
+  fullnameOverride: argo-cd
+  namespaceOverride: argo-cd
+#  global:
+#    domain: argo-cd.apps.kubetest-ai.int.medius.si
+#  server:
+#    ingress:
+#      enabled: true
+
+  dex:
+    enabled: false
+  configs:
+    cm:
+      # https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#auto-respect-rbac-for-controller
+      resource.respectRBAC: "strict"
