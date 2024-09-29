@@ -1,2 +1,3 @@
 .idea
 /kubernetes/wireguard/conf/
+charts
