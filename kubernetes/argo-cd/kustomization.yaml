@@ -9,7 +9,7 @@ helmCharts:
     valuesFile: values.yaml
 resources:
   - namespace.yaml
-  - argo-cd.yaml
-#  - kube-system.yaml
+  - projects/argo-cd.yaml
+#  - projects/kube-system.yaml
 generators:
   - secret-generator.yaml
