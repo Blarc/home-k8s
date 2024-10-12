@@ -28,6 +28,8 @@ spec:
     repoURL: https://github.com/Blarc/home-k8s
     targetRevision: main
     path: 'kubernetes/argo-cd'
+#    plugin:
+#      name: kustomized-helm
   destination:
     name: in-cluster
     namespace: argo-cd
