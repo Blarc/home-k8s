@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - app/deployment.yaml
 generators:
-  - app/secret-generator.yaml
+  - secrets/secret-generator.yaml

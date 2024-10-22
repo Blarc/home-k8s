@@ -12,4 +12,4 @@ resources:
   - projects/argo-cd.yaml
 #  - projects/kube-system.yaml
 generators:
-  - secret-generator.yaml
+  - secrets/secret-generator.yaml

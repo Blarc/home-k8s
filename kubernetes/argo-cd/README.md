@@ -18,4 +18,3 @@
 ## KSOPS
 1. Install KSOPS as custom tooling in Argo CD helm chart by following [instructions](https://github.com/viaduct-ai/kustomize-sops?tab=readme-ov-file#argo-cd-helm-chart-with-custom-tooling).
 2. Create a secret containing the key and add it to Argo CD by following [instructions](https://github.com/viaduct-ai/kustomize-sops?tab=readme-ov-file#argocdgitops-operator-w-ksopsagekey-in-okd4ocp4).
-3. 
