@@ -1,0 +1,21 @@
+clusterName: ENC[AES256_GCM,data:7cYv9g==,iv:qVkmu2tjtPLfRroLDwhrneJzLKLW4+f1+3LjAT2BoKo=,tag:T0OFqywiM1SQHzfD3R+jRg==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1mm90zkg8lsmpqa7gya9p2prsj8yfq774gjm6dkamkkvwugen7ywse5w97z
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBTSTBKNUlqbzVNYkF5MEx3
+            NHRGTXN5TUJqd2FwVTV4ZWlUeDNDREN4dGtnCmoyLzBTNVd3WWUzN3BtL3NKRXVw
+            RXlrcXhrQ0duS1BMaTN3SlhxcFNTZjQKLS0tIHFMay8xNkNub0o4S0VaLytxenh0
+            SmV5Z2t5aTI2QzVPbG02b1NYSnVBMUEKg6amVbvFkThgY5oDKAFDaQMP/z7b1Wn8
+            A8PxnRHAsEplu4428ddJIdp71bgOoP7rTkfoH/YB702tDZYbAp+T3A==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2024-10-22T16:32:28Z"
+    mac: ENC[AES256_GCM,data:aUWzSy8YdJu4uVoWFd/kl0uF005npT3mqO8EJkcQxFaoS6WtngYILZFI+rgq5aKHFzX8V7ijJyKFlCB7tEDzxm2hAzLb447gCIbAtfnigdsWcq/3Qc7MUYCDeNr3FR8kCAg1Fptk68AE3ycPXBlYiKJCnzpWxR+wsX47Gdc4bXY=,iv:j+ABlVf2df2DRfAKev+r0not0kBEIxvvIKP+uVMmp8M=,tag:6Jm6LfRmsnggQmZjhbeJvg==,type:str]
+    pgp: []
+    unencrypted_suffix: _unencrypted
+    version: 3.8.1
