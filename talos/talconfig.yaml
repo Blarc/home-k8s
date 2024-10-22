@@ -1,0 +1,34 @@
+---
+clusterName: home
+talosVersion: 1.8.1
+kubernetesVersion: 1.30.1
+endpoint: https://192.168.1.17:6443
+nodes:
+  - hostname: control-plane-1
+    controlPlane: true
+    ipAddress: 192.168.1.17
+    installDisk: /dev/sdb
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/i915-ucode
+            - siderolabs/mei
+  - hostname: worker-1
+    controlPlane: false
+    ipAddress: 192.168.1.18
+    installDisk: /dev/nvme0n1
+
+controlPlane:
+  patches:
+    - |-
+      machine:
+        kubelet:
+          extraMounts:
+            - destination: /var/data
+              type: bind
+              source: /var/data
+              options:
+                - bind
+                - rshared
+                - rw
