@@ -2,8 +2,12 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 clusterName: ${clusterName}
 talosVersion: 1.8.1
-kubernetesVersion: 1.30.1
+kubernetesVersion: 1.31.1
 endpoint: https://192.168.1.17:6443
+
+cniConfig:
+  name: none
+
 nodes:
   - hostname: control-plane-1
     controlPlane: true
@@ -33,3 +37,8 @@ controlPlane:
                 - bind
                 - rshared
                 - rw
+    # Disable kube-proxy
+    - |
+      cluster:
+        proxy:
+          disabled: true

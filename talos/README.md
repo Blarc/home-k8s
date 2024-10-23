@@ -53,6 +53,12 @@ and optionally:
 talosctl upgrade --wait --debug
 ```
 
+## Inspecting manifests of static pods
+Run the following command to list manifests of static pods for specific node:
+```bash
+talosctl get manifests -n 192.168.1.17
+```
+
 ## Talhelper
 https://budimanjojo.github.io/talhelper/latest/getting-started/ \
 Talhelper is kustomize for Talos. It helps you configure Talos machine configuration in a GitOps way.
