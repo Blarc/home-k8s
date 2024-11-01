@@ -22,6 +22,11 @@ This is because there are already routing tables set up on your machine that hav
 subnet traffic can route through the wireguard path it will not because of the route priority. By adding this it
 basically sets the wireguard route as the highest priority for that specific subnet.
 
+You can copy config from pod:
+```bash
+k cp wireguard-b8d6bf6cb-dw8gs:/config/peer_jakob peer_jakob
+```
+
 ## Installing with kustomize
 Make sure you have [kustomize](https://kustomize.io/) na [KSOPS](https://github.com/viaduct-ai/kustomize-sops) installed
 and run the following command:
