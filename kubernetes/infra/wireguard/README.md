@@ -24,7 +24,7 @@ basically sets the wireguard route as the highest priority for that specific sub
 
 You can copy config from pod:
 ```bash
-k cp wireguard-b8d6bf6cb-dw8gs:/config/peer_jakob peer_jakob
+k cp wireguard-b8d6bf6cb-dw8gs:/config/peer_jakob ./config/peer_jakob
 ```
 
 ## Installing with kustomize
