@@ -31,6 +31,8 @@ curl -L --fail --remote-name-all "https://github.com/cilium/hubble/releases/down
 sha256sum --check "hubble-linux-${HUBBLE_ARCH}.tar.gz.sha256sum"
 sudo tar xzvfC "hubble-linux-${HUBBLE_ARCH}.tar.gz" /usr/local/bin
 rm "hubble-linux-${HUBBLE_ARCH}.tar.gz"{,.sha256sum}
+
+k -n kube-system port-forward svc/hubble-ui 8080:80
 ```
 
 # Gateway CRDs
