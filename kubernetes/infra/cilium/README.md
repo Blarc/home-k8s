@@ -1,6 +1,8 @@
 # Cilium
+Needs to be installed in order for Talos node to progress to healthy state.
 
 ## Cilium CLI
+
 ```bash
 CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt)
 CLI_ARCH=amd64
@@ -12,12 +14,15 @@ rm "cilium-linux-${CLI_ARCH}.tar.gz"{,.sha256sum}
 ```
 
 ## Installation
-Based on: https://www.talos.dev/v1.8/kubernetes-guides/network/deploying-cilium/.
+
+Based on: https://www.talos.dev/v1.9/kubernetes-guides/network/deploying-cilium/.
+
 ```bash
 kustomize build --enable-helm . | k apply -f -
 ```
 
 ## Hubble CLI
+
 ```bash
 HUBBLE_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/hubble/master/stable.txt)
 HUBBLE_ARCH=amd64
@@ -26,4 +31,20 @@ curl -L --fail --remote-name-all "https://github.com/cilium/hubble/releases/down
 sha256sum --check "hubble-linux-${HUBBLE_ARCH}.tar.gz.sha256sum"
 sudo tar xzvfC "hubble-linux-${HUBBLE_ARCH}.tar.gz" /usr/local/bin
 rm "hubble-linux-${HUBBLE_ARCH}.tar.gz"{,.sha256sum}
+```
+
+# Gateway CRDs
+https://gateway-api.sigs.k8s.io/guides/
+
+The standard release channel includes all resources that have graduated to GA or beta, including GatewayClass, Gateway,
+HTTPRoute, and ReferenceGrant (this is what I installed).
+
+```bash
+kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/standard-install.yaml
+```
+
+The experimental release channel includes everything in the standard release channel plus some experimental resources
+and fields. This includes TCPRoute, TLSRoute, UDPRoute and GRPCRoute.
+```bash
+kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/experimental-install.yaml
 ```
