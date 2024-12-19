@@ -1,7 +1,7 @@
 # Talos
 
 ## Bare-metal installation
-1. Download ISO from: https://github.com/siderolabs/talos/releases
+1. Download ISO from: https://github.com/siderolabs/talos/releases (look for metal-*)
 2. Run `mediawriter` if on Fedora.
 3. Plug to PC and boot from USB.
 4. Apply config:
@@ -10,7 +10,7 @@
    ```
 5. Bootstrap the control plane:
    ```bash
-    talosctl bootstrap --nodes 192.168.1.17 --endpoints 192.168.1.17 --talosconfig=./clusterconfig/talosconfig
+   talosctl bootstrap --nodes 192.168.1.17 --endpoints 192.168.1.17 --talosconfig=./clusterconfig/talosconfig
    ```
 6. Retrieve kubeconfig:
    ```bash
@@ -42,7 +42,7 @@ Docs: https://www.talos.dev/v1.8/talos-guides/upgrading-talos/.
 
 Run the following command for each node
 ```bash
-talosctl upgrade --nodes 192.168.1.17 --endpoints 192.168.1.17 --image <copy-from-machine-configuration> --preserve=true
+talosctl upgrade --nodes 192.168.1.17 --endpoints 192.168.1.17 --image <copy-from-machine-configuration> --preserve true
 ```
 For a **single-node** control-plane, make sure that `--preserve=true`. To watch upgrade logs use:
 ```bash
