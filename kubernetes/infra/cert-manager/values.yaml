@@ -1,10 +1,19 @@
 # $schema: https://raw.githubusercontent.com/cert-manager/cert-manager/refs/heads/master/deploy/charts/cert-manager/values.schema.json
 
+global:
+  leaderElection:
+    namespace: cert-manager
 
 crds:
   enabled: true
+
+namespace: cert-manager
 
 config:
   apiVersion: controller.config.cert-manager.io/v1alpha1
   kind: ControllerConfiguration
   enableGatewayAPI: true
+
+#webhook:
+#  hostNetwork: true
+#  securePort: 10260
