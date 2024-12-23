@@ -1,4 +1,5 @@
 # Cilium
+
 Needs to be installed in order for Talos node to progress to healthy state.
 
 ## Cilium CLI
@@ -36,17 +37,21 @@ k -n kube-system port-forward svc/hubble-ui 8080:80
 ```
 
 # Gateway CRDs
+
 https://gateway-api.sigs.k8s.io/guides/
 
 The standard release channel includes all resources that have graduated to GA or beta, including GatewayClass, Gateway,
-HTTPRoute, and ReferenceGrant (this is what I installed).
+HTTPRoute, and ReferenceGrant (this is what I installed). Later I realized it does not include crd TLS Routes, which is
+required by Cilium operator.
 
 ```bash
 kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/standard-install.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/gateway-api/v1.2.0/config/crd/experimental/gateway.networking.k8s.io_tlsroutes.yaml
 ```
 
 The experimental release channel includes everything in the standard release channel plus some experimental resources
 and fields. This includes TCPRoute, TLSRoute, UDPRoute and GRPCRoute.
+
 ```bash
 kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.0/experimental-install.yaml
 ```

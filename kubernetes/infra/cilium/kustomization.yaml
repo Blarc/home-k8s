@@ -14,3 +14,4 @@ helmCharts:
 resources:
   - announce.yaml
   - ip-pool.yaml
+  - hubble-route.yaml

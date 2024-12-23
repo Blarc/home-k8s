@@ -1,0 +1,21 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: cilium-gateway
+  namespace: gateway
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  gatewayClassName: cilium
+  listeners:
+    - protocol: HTTPS
+      port: 443
+      name: https-gateway
+      hostname: "*.blarc.my.id"
+      tls:
+        certificateRefs:
+          - kind: Secret
+            name: gateway-cert
+      allowedRoutes:
+        namespaces:
+          from: All
