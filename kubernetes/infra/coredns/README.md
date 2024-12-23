@@ -12,6 +12,7 @@
    export ETCDCTL_ENDPOINTS=http://localhost:2379
    export ETCDCTL_API=3
    etcdctl put /blarcdns/id/my/blarc/dns/ns '{"host": "${public-ip}"}'
+   etcdctl put /blarcdns/id/my/blarc/dns/ns2 '{"host": "${public-ip}"}'
    etcdctl put /blarcdns/id/my/blarc '{"host":"ns.dns.blarc.my.id"}'
    etcdctl put /blarcdns/id/my/blarc/_acme-challenge '{"text":"dummy-value"}'
    ```
