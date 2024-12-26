@@ -1,7 +1,7 @@
 # isClusterService specifies whether chart should be deployed as cluster-service or normal k8s app.
 isClusterService: false
 
-serviceType: "NodePort"
+serviceType: "LoadBalancer"
 
 rbac:
   create: true
@@ -15,7 +15,7 @@ servers:
     # -- expose the service on a different port
     # servicePort: 5353
     # If serviceType is nodePort you can specify nodePort here
-    nodePort: 30053
+    # nodePort: 30053
     # hostPort: 53
     plugins:
       - name: errors
