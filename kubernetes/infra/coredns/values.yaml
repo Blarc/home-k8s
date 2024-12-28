@@ -10,6 +10,7 @@ rbac:
 # https://kubernetes.io/docs/tasks/administer-cluster/dns-custom-nameservers/#coredns-configmap-options
 servers:
   - zones:
+      # Set this to "." and enable the forward plugin, if you want the CoreDNS to also work as a recursive DNS
       - zone: blarc.my.id
     port: 53
     # -- expose the service on a different port
@@ -18,23 +19,25 @@ servers:
     # nodePort: 30053
     # hostPort: 53
     plugins:
+      # errors enables error logging.
       - name: errors
-      # Serves a /health endpoint on :8080, required for livenessProbe
+      # health enables a health check endpoint on :8080, required for livenessProbe
       - name: health
         configBlock: |-
           lameduck 5s
-      # Serves a /ready endpoint on :8181, required for readinessProbe
+      # ready enables a readiness check endpoint on :8181, required for readinessProbe
       - name: ready
-      # Serves a /metrics endpoint on :9153, required for serviceMonitor
+      # prometheus enables Prometheus metrics on :9153, required for serviceMonitor
       - name: prometheus
         parameters: 0.0.0.0:9153
-      - name: forward
-        parameters: . 8.8.8.8 1.1.1.1
+      # - name: forward
+      #   parameters: . 8.8.8.8 1.1.1.1
       - name: cache
         parameters: 30
+        # loop detects simple forwarding loops and halts the server.
       - name: loop
+        # reload allows automatic reload of a changed Corefile.
       - name: reload
-      - name: loadbalance
       - name: etcd
         parameters: blarc.my.id
         configBlock: |-
@@ -42,3 +45,15 @@ servers:
           stubzones
           path /blarcdns
           endpoint http://etcd-headless.etcd.svc.cluster.local:2379
+      # Domain's TLD does not support DNSSEC.
+      # - name: dnssec
+      #   parameters: blarc.my.id
+      #   configBlock: |-
+      #    key file /etc/coredns/dnssec/blarc.my.id
+      - name: whoami
+      - name: log
+
+#extraSecrets:
+#  - name: dnssec
+#    mountPath: /etc/coredns/dnssec
+#    defaultMode: 420
