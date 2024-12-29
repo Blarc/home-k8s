@@ -1,7 +1,7 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 clusterName: ${clusterName}
-talosVersion: 1.9.0
+talosVersion: 1.9.1
 kubernetesVersion: 1.31.1
 endpoint: https://192.168.1.17:6443
 
