@@ -5,6 +5,7 @@ metadata:
   name: podinfo
   namespace: flux-system
 spec:
+  force: true
   interval: 30m0s
   path: ./kustomize
   prune: true
@@ -18,14 +19,19 @@ spec:
   wait: true
   patches:
     - target:
-        version: apps/v1
         kind: Deployment
         name: podinfo
-        namespace: default
-      patch: |-
-        apiVersion: apps/v1
-        kind: Deployment
-        metadata:
-          name: podinfo
-        spec:
-          replicas: 1
+      patch: |
+        - op: replace
+          path: /spec/replicas
+          value: 1
+    - target:
+        kind: HorizontalPodAutoscaler
+        name: podinfo
+      patch: |
+        - op: replace
+          path: /spec/minReplicas
+          value: 1
+        - op: replace
+          path: /spec/maxReplicas
+          value: 3
