@@ -1,8 +1,29 @@
 apiVersion: vpn.wireguard-operator.io/v1alpha1
 kind: Wireguard
 metadata:
-  name: wireguard
+    name: wireguard
 spec:
-  mtu: "1380"
-  serviceType: LoadBalancer
-
+    mtu: "1380"
+    serviceType: LoadBalancer
+    address: ENC[AES256_GCM,data:iojlX4R18CPKtlwMgA==,iv:X+vpEgyHKdrnxQfNahQ4MM8JxfqLZtJO9zTw1/Sdvsg=,tag:e1zVdlwFspt9MhhxHE9RMw==,type:str]
+    port: ENC[AES256_GCM,data:U22qOFs=,iv:+NNcyEBRTzLusQOICOLDdpztQAokTX1r8ukPSeBQpJw=,tag:Z/MQ4lQDdorcJX1wZeRkIw==,type:int]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1mm90zkg8lsmpqa7gya9p2prsj8yfq774gjm6dkamkkvwugen7ywse5w97z
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAzY0R1czNzZlFhM2R4MVpr
+            c1l5bStzckZvTHBPdUxYQzVOSkozaDB4U2lJCjZnOCs5L3Z5KzJqZmVaS2cvU1hj
+            cUwxL3RqamRvcS9tMGQwOG5sV0RnOXcKLS0tIElDNmZRbHZWRXpLVWduTDdUblRO
+            bk00NXBFQkExN3A4WFZCbTZ6OEF0NlEKk1WagftL2CcoZFkRfq3zNC6LNSsS8a5l
+            FGVl22Z2Re0C6KtRWprkvAzdD4v0ZhOdKdR85p0nkMW69bl0bufsAg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-01-07T17:43:56Z"
+    mac: ENC[AES256_GCM,data:eapFoNP39ryY/dnFnGq4naoWYJyVyvcPJjxa0A5SMNGS4qfYtHNkfm5COHIGmO2bCTHFvCiQQtKUvTINTId+r0Nuydww2QDZdy6xGfVfD3UFc3s8bJYsjYofzcJu+Z/iyRczS/+YXzbfMB3k2Q8VuAYbfefGuIAs548tHy4uGvQ=,iv:OGWFSXWWRSrkY9JzrI1McSiJGo89lKNsPw+1B6SA9e4=,tag:h71Uu4XEnfv6/1hSWLNUFA==,type:str]
+    pgp: []
+    encrypted_regex: ^(address|port)$
+    version: 3.8.1
