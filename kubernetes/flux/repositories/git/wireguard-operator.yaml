@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/gitrepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: wireguard-operator
+  namespace: flux-system
+spec:
+  interval: 10m
+  ref:
+    semver: "^2.7.0"
+  url: https://github.com/jodevsa/wireguard-operator

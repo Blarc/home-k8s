@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: wireguard-operator
+  namespace: flux-system
+spec:
+  force: true
+  interval: 30m0s
+  path: ./config/default
+  prune: true
+  retryInterval: 2m0s
+  sourceRef:
+    kind: GitRepository
+    namespace: flux-system
+    name: wireguard-operator
+  targetNamespace: network
+  timeout: 3m0s
+  wait: true
