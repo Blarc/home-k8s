@@ -35,3 +35,10 @@ spec:
         - op: replace
           path: /spec/maxReplicas
           value: 3
+    - target:
+        kind: Service
+        name: podinfo
+      patch: |
+        - op: replace
+          path: /spec/type
+          value: LoadBalancer
