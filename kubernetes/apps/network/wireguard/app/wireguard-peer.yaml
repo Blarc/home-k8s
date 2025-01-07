@@ -8,5 +8,5 @@ spec:
     - action: ACCEPT
       protocol: TCP
       to:
-        ip: 192.168.1.220
-        port: 443
+        ip: 192.168.1.223
+        port: 9898
