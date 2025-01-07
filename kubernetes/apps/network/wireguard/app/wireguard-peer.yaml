@@ -4,10 +4,3 @@ metadata:
   name: blarc
 spec:
   wireguardRef: "wireguard"
-  egressNetworkPolicies:
-    - action: ACCEPT
-      protocol: TCP
-      to:
-        ip: 192.168.1.220
-        port: 443
-
