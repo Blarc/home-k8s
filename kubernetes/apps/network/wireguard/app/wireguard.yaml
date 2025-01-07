@@ -3,7 +3,6 @@ kind: Wireguard
 metadata:
     name: wireguard
 spec:
-    mtu: "1380"
     serviceType: LoadBalancer
     address: ENC[AES256_GCM,data:iojlX4R18CPKtlwMgA==,iv:X+vpEgyHKdrnxQfNahQ4MM8JxfqLZtJO9zTw1/Sdvsg=,tag:e1zVdlwFspt9MhhxHE9RMw==,type:str]
 sops:
@@ -21,8 +20,8 @@ sops:
             bk00NXBFQkExN3A4WFZCbTZ6OEF0NlEKk1WagftL2CcoZFkRfq3zNC6LNSsS8a5l
             FGVl22Z2Re0C6KtRWprkvAzdD4v0ZhOdKdR85p0nkMW69bl0bufsAg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-01-07T18:02:23Z"
-    mac: ENC[AES256_GCM,data:PPNyT/zujAkp84vwQJKbPeH07aKi0Xv5rs9/7XCdeb73jC6DnNme3nEQPd2bakGYXAO7vZekE1QaZPOnl88Wd6v/OzlaOehqLz57FqBSmPBUKMemXeJjykqWkDLFlhuyxwtx/mmX5TkcU9J4SnMf5NDjpD8ONATDMf/9PBfV1k0=,iv:/lYN0Fime9GR6StVrlA0fCEGMUbNjPRWEUKQA9uOOVc=,tag:4i7aDb0IuL71vDYFivMXXQ==,type:str]
+    lastmodified: "2025-01-07T18:45:59Z"
+    mac: ENC[AES256_GCM,data:u8qq/ftDjyNC3Mh7Ef49WukPNkIhaBp+Q5Iq+pFIDR5DyLfHg6mrO53DuxaVxs4+2riI0RtNJLBiNqBRfF7wO+c6qDP9QkeBk6KRJjh0mj/NDvTjGfqRawQqLzcBl0cEOnMXHbst36nGwhlXHY41ae6VqBurumIuPQf5lDaK5W0=,iv:um3U5Ry46zILe/sRj2OjZrCRoQmFOYaccvEo3GJ2sZA=,tag:mrxV5syHwNFbjIhcaA8bXA==,type:str]
     pgp: []
     encrypted_regex: ^(address|port)$
     version: 3.8.1
