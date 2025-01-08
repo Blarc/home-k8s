@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cod2
+  namespace: default
+  labels:
+    app: cod2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cod2
+  template:
+    metadata:
+      labels:
+        app: cod2
+    spec:
+      containers:
+        - name: cod2
+          image: registry.blarc.my.id/cod2:latest
+          ports:
+            - containerPort: 20500
+              protocol: UDP
+            - containerPort: 20510
+              protocol: UDP
+            - containerPort: 28960
+              protocol: TCP
+            - containerPort: 28960
+              protocol: UDP
+          args:
+            [
+              "+set",
+              "net_port",
+              "28960",
+              "+set",
+              "sv_cheats",
+              "0",
+              "+set",
+              "sv_punkbuster",
+              "0",
+              "+exec",
+              "punkbuster.cfg",
+              "+exec",
+              "server_mp.cfg"
+            ]
+          stdin: true
+          tty: true
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cod2
+  namespace: default
+  labels:
+    app: cod2
+spec:
+  selector:
+    app: cod2
+  ports:
+    - name: udp-20500
+      protocol: UDP
+      port: 20500
+      targetPort: 20500
+    - name: udp-20510
+      protocol: UDP
+      port: 20510
+      targetPort: 20510
+    - name: tcp-28960
+      protocol: TCP
+      port: 28960
+      targetPort: 28960
+    - name: udp-28960
+      protocol: UDP
+      port: 28960
+      targetPort: 28960
+  type: LoadBalancer
