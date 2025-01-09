@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - https://github.com/jodevsa/wireguard-operator/releases/latest/download/release.yaml
   - wireguard.yaml
-  - wireguard-peer.yaml
+  - wireguard-peers.yaml
