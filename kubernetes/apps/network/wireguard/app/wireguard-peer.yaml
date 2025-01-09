@@ -20,12 +20,10 @@ spec:
   egressNetworkPolicies:
     # For debugging purposes
     - action: ACCEPT
-      protocol: TCP
       to:
         ip: 192.168.1.223
         port: 9898
     - action: ACCEPT
-      protocol: TCP
       to:
         ip: 192.168.1.224
 ---
@@ -38,11 +36,9 @@ spec:
   egressNetworkPolicies:
     # For debugging purposes
     - action: ACCEPT
-      protocol: TCP
       to:
         ip: 192.168.1.223
         port: 9898
     - action: ACCEPT
-      protocol: TCP
       to:
         ip: 192.168.1.224
