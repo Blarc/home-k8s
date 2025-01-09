@@ -10,3 +10,21 @@ spec:
       to:
         ip: 192.168.1.223
         port: 9898
+---
+apiVersion: vpn.wireguard-operator.io/v1alpha1
+kind: WireguardPeer
+metadata:
+  name: rokk
+spec:
+  wireguardRef: "wireguard"
+  egressNetworkPolicies:
+    # For debugging purposes
+    - action: ACCEPT
+      protocol: TCP
+      to:
+        ip: 192.168.1.223
+        port: 9898
+    - action: ACCEPT
+      protocol: TCP
+      to:
+        ip: 192.168.1.224
