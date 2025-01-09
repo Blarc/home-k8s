@@ -1,6 +1,13 @@
 apiVersion: vpn.wireguard-operator.io/v1alpha1
 kind: WireguardPeer
 metadata:
+  name: jakob
+spec:
+  wireguardRef: "wireguard"
+---
+apiVersion: vpn.wireguard-operator.io/v1alpha1
+kind: WireguardPeer
+metadata:
   name: blarc
 spec:
   wireguardRef: "wireguard"
