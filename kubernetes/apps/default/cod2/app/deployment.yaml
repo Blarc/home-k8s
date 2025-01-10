@@ -45,6 +45,14 @@ spec:
             ]
           stdin: true
           tty: true
+          volumeMounts:
+            - name: server-config
+              subPath: server_mp.cfg
+              mountPath: /home/cod2/main/server_mp.cfg
+      volumes:
+        - name: server-config
+          secret:
+            secretName: cod2-server-mp
 ---
 apiVersion: v1
 kind: Service
