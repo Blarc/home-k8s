@@ -5,3 +5,9 @@ resources:
   - https://github.com/jodevsa/wireguard-operator/releases/latest/download/release.yaml
   - wireguard.yaml
   - wireguard-peers.yaml
+patches:
+  - target:
+      kind: Namespace
+    patch: |-
+      - op: remove
+        path: /
