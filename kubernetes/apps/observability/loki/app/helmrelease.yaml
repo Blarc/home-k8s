@@ -62,6 +62,8 @@ spec:
       replicas: 0
     write:
       replicas: 0
+    ruler:
+      enabled: false
     chunksCache:
       enabled: false
     resultsCache:
