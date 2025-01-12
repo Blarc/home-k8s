@@ -37,23 +37,29 @@ spec:
         log_level: info
       commonConfig:
         replication_factor: 1
-#      compactor:
-#        working_directory: /var/loki/compactor/retention
-#        delete_request_store: filesystem
-#        retention_enabled: true
+      #      compactor:
+      #        working_directory: /var/loki/compactor/retention
+      #        delete_request_store: filesystem
+      #        retention_enabled: true
       ingester:
         chunk_encoding: snappy
       storage:
         type: none
-      schemaConfig: {}
+      schemaConfig: { }
       limits_config:
         retention_period: 1h
     singleBinary:
       replicas: 1
       persistence:
         enabled: false
-#        storageClass: ceph-block
-#        size: 50Gi
+      extraVolumes:
+        - name: var-loki
+          emptyDir: { }
+      extraVolumeMounts:
+        - mountPath: /var/loki
+          name: var-loki
+    #        storageClass: ceph-block
+    #        size: 50Gi
     gateway:
       replicas: 0
     backend:
