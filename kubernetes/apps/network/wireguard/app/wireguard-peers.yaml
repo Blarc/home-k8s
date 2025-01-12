@@ -74,6 +74,23 @@ spec:
 apiVersion: vpn.wireguard-operator.io/v1alpha1
 kind: WireguardPeer
 metadata:
+  name: tilenp
+spec:
+  wireguardRef: "wireguard"
+  allowedIPs: 192.168.1.0/24
+  egressNetworkPolicies:
+    # For debugging purposes
+    - action: ACCEPT
+      to:
+        ip: 192.168.1.223
+        port: 9898
+    - action: ACCEPT
+      to:
+        ip: 192.168.1.224
+---
+apiVersion: vpn.wireguard-operator.io/v1alpha1
+kind: WireguardPeer
+metadata:
   name: markb
 spec:
   wireguardRef: "wireguard"
