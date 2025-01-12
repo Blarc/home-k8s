@@ -28,6 +28,8 @@ spec:
     # https://github.com/grafana/loki/blob/main/production/helm/loki/values.yaml
     deploymentMode: SingleBinary
     loki:
+      # Remove this when persistence is set up.
+      useTestSchema: true
       auth_enabled: false
       analytics:
         reporting_enabled: false
@@ -42,22 +44,14 @@ spec:
       ingester:
         chunk_encoding: snappy
       storage:
-        type: filesystem
-      schemaConfig:
-        configs:
-          - from: "2024-04-01" # quote
-            store: tsdb
-            object_store: filesystem
-            schema: v13
-            index:
-              prefix: loki_index_
-              period: 24h
+        type: none
+      schemaConfig: {}
       limits_config:
-        retention_period: 7d
+        retention_period: 1h
     singleBinary:
       replicas: 1
-#      persistence:
-#        enabled: true
+      persistence:
+        enabled: false
 #        storageClass: ceph-block
 #        size: 50Gi
     gateway:
