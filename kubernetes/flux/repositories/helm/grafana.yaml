@@ -5,7 +5,7 @@ metadata:
   name: grafana
   namespace: flux-system
 spec:
-  type: oci
+  type: default
   interval: 5m
   # https://github.com/grafana/helm-charts/pkgs/container/helm-charts%2Fgrafana
-  url: oci://ghcr.io/grafana/helm-charts
+  url: https://grafana.github.io/helm-charts
