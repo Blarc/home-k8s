@@ -22,3 +22,20 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  values:
+    serviceMonitor:
+      enabled: true
+      namespace: "observability"
+      interval: 30s
+      scrapeTimeout: 5s
+      labels:
+        release: kube-prometheus-stack
+      attachMetadata:
+        node: false
+      relabelings:
+        - action: replace
+          regex: (.*)
+          replacement: $1
+          sourceLabels:
+            - __meta_kubernetes_pod_node_name
+          targetLabel: instance
