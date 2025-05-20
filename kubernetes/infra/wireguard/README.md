@@ -1,11 +1,11 @@
 # Wireguard
 
 1. Router needs to open the correct port for the correct IP.
-2. Configuration is saved on the node. In order to delete configuration you need to execute to pod and delete with:
+2. Configuration is saved on the node. To delete configuration, you need to execute to pod and delete with:
    ```bash
    rm -rf /config # Can't delete the folder, but deletes it's contents which is good enough
    ```
-3. If the routers static IP changes, `SERVERURL` environment variable, that is mapped from secret, needs to be updated.
+3. If the router static IP changes, `SERVERURL` environment variable mapped from secret needs to be updated.
 
 ## Setting up Wireguard on PC
 
