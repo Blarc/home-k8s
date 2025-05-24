@@ -1,8 +1,8 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 clusterName: ${clusterName}
-talosVersion: 1.9.1
-kubernetesVersion: 1.31.1
+talosVersion: 1.10.2
+kubernetesVersion: 1.33.1
 endpoint: https://192.168.1.17:6443
 
 cniConfig:
@@ -23,7 +23,16 @@ nodes:
   - hostname: worker-1
     controlPlane: false
     ipAddress: 192.168.1.16
-    installDisk: dev/sdb
+    installDisk: /dev/sdc
+    installDiskSelector:
+      model: WDC*
+    userVolumes:
+      - name: data
+        provisioning:
+          minSize: 128 GB
+          grow: true
+          diskSelector:
+            match: disk.model == "FORESEE 512GB SS"
 
 controlPlane:
   patches:

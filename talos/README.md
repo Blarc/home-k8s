@@ -22,7 +22,7 @@ To prevent changing of nodes' IP, set static IPs for the nodes on the router (Ad
 
 ## Talosctl
 
-Talos uses CLI called talosctl to interact with the cluster. The configuration works similar as for kubernetes. The configuration file is located at `~/.talos/config`.
+Talos uses CLI called talosctl to interact with the cluster. The configuration works similarly as for kubernetes. The configuration file is located at `~/.talos/config`.
 
 To check the version of nodes, you can run the following command:
 ```bash
@@ -32,9 +32,9 @@ To check disks:
 ```bash
 talosctl -e 192.168.1.17 disks
 ```
-It's important correct disk is specified in the machine config. You can edit machine config with:
+It's important the correct disk is specified in the machine config. You can edit machine config with:
 ```bash
-TALOS_EDITOR="vim" talosctl edit machineconfig -e 192.168.1.17
+TALOS_EDITOR="vim" talosctl edit machineconfig -n 192.168.1.17
 ```
 
 ## Upgrading Talos nodes
@@ -44,7 +44,7 @@ Run the following command for each node
 ```bash
 talosctl upgrade --nodes 192.168.1.17 --endpoints 192.168.1.17 --image <copy-from-machine-configuration> --preserve true
 ```
-For a **single-node** control-plane, make sure that `--preserve=true`. To watch upgrade logs use:
+For a **single-node control-plane**, make sure that `--preserve=true`. To watch the upgrade logs use:
 ```bash
 talosctl dmesg -f
 ```
