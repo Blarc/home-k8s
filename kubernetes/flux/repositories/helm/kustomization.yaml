@@ -4,3 +4,4 @@ resources:
   - ./grafana.yaml
   - ./prometheus-community.yaml
   - ./kepler.yaml
+  - ./openebs.yaml
