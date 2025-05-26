@@ -5,3 +5,4 @@ resources:
   - ./prometheus-community.yaml
   - ./kepler.yaml
   - ./openebs.yaml
+  - ./twuni.yaml

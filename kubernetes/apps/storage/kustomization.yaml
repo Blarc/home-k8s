@@ -7,3 +7,4 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./openebs-localpv/ks.yaml
+  - ./docker-registry/ks.yaml

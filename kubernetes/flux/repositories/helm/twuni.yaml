@@ -1,0 +1,10 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: twuni # https://github.com/twuni/docker-registry.helm
+  namespace: flux-system
+spec:
+  type: default
+  interval: 5m
+  url: https://helm.twun.io
