@@ -8,6 +8,6 @@ helmCharts:
   - name: etcd
     repo: oci://registry-1.docker.io/bitnamicharts
     namespace: etcd
-    version: 10.5.3
+    version: 10.7.3
     valuesFile: values.yaml
     releaseName: etcd
