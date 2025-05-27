@@ -9,6 +9,6 @@ helmCharts:
     repo: https://coredns.github.io/helm
     includeCRDs: true
     namespace: coredns
-    version: v1.36.1
+    version: 1.42.2
     valuesFile: values.yaml
     releaseName: coredns
