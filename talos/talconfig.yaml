@@ -26,6 +26,9 @@ nodes:
     installDisk: /dev/sdc
     installDiskSelector:
       model: WDC*
+    kernelModules:
+      - name: dm_thin_pool
+      - name: dm_mod
 #    userVolumes:
 #      - name: data
 #        provisioning:

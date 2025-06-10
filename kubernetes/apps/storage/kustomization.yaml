@@ -9,3 +9,4 @@ resources:
   # - ./openebs-localpv/ks.yaml
   # - ./docker-registry/ks.yaml
   - ./lvm-disk-watcher/ks.yaml
+  - ./topolvm/ks.yaml

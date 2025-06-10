@@ -7,3 +7,4 @@ resources:
   - ./openebs.yaml
   - ./twuni.yaml
   - ./truecharts.yaml
+  - ./topolvm.yaml
