@@ -26,13 +26,13 @@ nodes:
     installDisk: /dev/sdc
     installDiskSelector:
       model: WDC*
-    userVolumes:
-      - name: data
-        provisioning:
-          minSize: 128 GB
-          grow: true
-          diskSelector:
-            match: disk.model == "FORESEE 512GB SS"
+#    userVolumes:
+#      - name: data
+#        provisioning:
+#          minSize: 128 GB
+#          grow: true
+#          diskSelector:
+#            match: disk.model == "FORESEE 512GB SS"
 
 controlPlane:
   patches:

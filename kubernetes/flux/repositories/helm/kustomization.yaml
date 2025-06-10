@@ -6,3 +6,4 @@ resources:
   - ./kepler.yaml
   - ./openebs.yaml
   - ./twuni.yaml
+  - ./truecharts.yaml

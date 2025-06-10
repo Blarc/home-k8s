@@ -8,3 +8,4 @@ resources:
   # Flux-Kustomizations
   - ./openebs-localpv/ks.yaml
   - ./docker-registry/ks.yaml
+  - ./lvm-disk-watcher/ks.yaml
