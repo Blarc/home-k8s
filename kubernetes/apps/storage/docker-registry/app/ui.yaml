@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registry-ui
+  labels:
+    app: registry-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: registry-ui
+  template:
+    metadata:
+      labels:
+        app: registry-ui
+    spec:
+      containers:
+        - name: registry-ui
+          image: docker.io/klausmeyer/docker-registry-browser:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SECRET_KEY_BASE
+              value: "changeme"
+            - name: DOCKER_REGISTRY_URL
+              value: "http://docker-registry:5000"
+            - name: ENABLE_DELETE_IMAGES
+              value: "true"
+            - name: PUBLIC_REGISTRY_URL
+              value: "registry.blarc.my.id"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: registry-ui
+spec:
+  selector:
+    app: registry-ui
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+  type: ClusterIP
