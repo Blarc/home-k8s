@@ -7,6 +7,8 @@ global:
 crds:
   enabled: true
 
+replicaCount: 1
+
 namespace: cert-manager
 
 config:
