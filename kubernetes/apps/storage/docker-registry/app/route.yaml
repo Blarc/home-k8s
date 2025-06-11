@@ -10,6 +10,17 @@ spec:
   hostnames:
     - "registry.blarc.my.id"
   rules:
-    - backendRefs:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /v2
+      backendRefs:
         - name: docker-registry
           port: 5000
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: registry-ui
+          port: 8080
