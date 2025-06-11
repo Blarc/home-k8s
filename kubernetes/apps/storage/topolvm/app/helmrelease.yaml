@@ -23,6 +23,8 @@ spec:
       retries: 3
   #language=yaml
   values:
+    controller:
+      replicaCount: 1
     lvmd:
       managed: false
       env:
