@@ -24,5 +24,6 @@ spec:
   #language=yaml
   values:
     persistence:
-      enabled: false
+      enabled: true
       size: 5Gi
+      storageClass: topolvm-thin
