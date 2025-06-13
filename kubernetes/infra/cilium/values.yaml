@@ -108,6 +108,6 @@ spec:
   dnsPolicy: ClusterFirst
   containers:
     - name: dns-tools
-      image: registry.k8s.io/e2e-test-images/agnhost:2.39
+      image: registry.k8s.io/e2e-test-images/agnhost:2.56
       command: ["sleep", "3600"]
   restartPolicy: Never
