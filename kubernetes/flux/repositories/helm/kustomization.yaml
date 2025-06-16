@@ -8,3 +8,4 @@ resources:
   - ./twuni.yaml
   - ./truecharts.yaml
   - ./topolvm.yaml
+  - ./cloudnative-pg.yaml
