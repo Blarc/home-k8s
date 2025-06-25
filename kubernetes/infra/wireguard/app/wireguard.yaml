@@ -3,7 +3,8 @@ kind: Wireguard
 metadata:
     name: wireguard
 spec:
-    serviceType: LoadBalancer
+    serviceType: NodePort
+    port: ENC[AES256_GCM,data:SgjFcdA=,iv:BYKPQM8rZfVveQlGZHwmiLj4lZbRAXUFboh4aJj2z8o=,tag:oiC0IWK12x82C01UzKJJoQ==,type:int]
     address: ENC[AES256_GCM,data:iojlX4R18CPKtlwMgA==,iv:X+vpEgyHKdrnxQfNahQ4MM8JxfqLZtJO9zTw1/Sdvsg=,tag:e1zVdlwFspt9MhhxHE9RMw==,type:str]
 sops:
     kms: []
@@ -20,8 +21,8 @@ sops:
             bk00NXBFQkExN3A4WFZCbTZ6OEF0NlEKk1WagftL2CcoZFkRfq3zNC6LNSsS8a5l
             FGVl22Z2Re0C6KtRWprkvAzdD4v0ZhOdKdR85p0nkMW69bl0bufsAg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-06-25T07:24:32Z"
-    mac: ENC[AES256_GCM,data:DGEeVe/kAnsnNEf+OGuSp5CWdXV0YE19y9l6m5bK6T9eIKhKQjjmN+VRRHX+ano30EpJ1ybKgvwo0vKBi78fFAB8wpOTywMQJC8J5svwoaIsL7BbS1bYTf0bYojFYZPxg69pQYl8vX1n8WsC+fuw5lP2neGu4T38NDyl1THDgc4=,iv:zxBdO//SwBgYIlVYv6voIGuWZBvbyo/nR68se57I6Dw=,tag:uNSp9/xJNpcZ53R7nXjp+Q==,type:str]
+    lastmodified: "2025-06-25T12:37:07Z"
+    mac: ENC[AES256_GCM,data:CQ56Dn9MsZ7/25TGiQQcs2uGzkz/myJ7OLV4iLxY1ANv65K04a94YIZf1fJPj76aJ1bpyCs5RynP/4HoNXV7I7D5wjLc39rKTuaPF5NS0GbRdLtuVwFsfnNmlAenFxaVnjjSo7AeJk1ilcbqMkBBdapQzzBOyQkB9Q+wMFRaOpE=,iv:6uRKirlKRMd42nj7RPCJhy2bY+WAt8jcXomDWT4DVBk=,tag:MJvjdnHzjX975zCB6FBQwQ==,type:str]
     pgp: []
     encrypted_regex: ^(address|port)$
     version: 3.9.3
@@ -61,8 +62,8 @@ sops:
             bk00NXBFQkExN3A4WFZCbTZ6OEF0NlEKk1WagftL2CcoZFkRfq3zNC6LNSsS8a5l
             FGVl22Z2Re0C6KtRWprkvAzdD4v0ZhOdKdR85p0nkMW69bl0bufsAg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-06-25T07:24:32Z"
-    mac: ENC[AES256_GCM,data:DGEeVe/kAnsnNEf+OGuSp5CWdXV0YE19y9l6m5bK6T9eIKhKQjjmN+VRRHX+ano30EpJ1ybKgvwo0vKBi78fFAB8wpOTywMQJC8J5svwoaIsL7BbS1bYTf0bYojFYZPxg69pQYl8vX1n8WsC+fuw5lP2neGu4T38NDyl1THDgc4=,iv:zxBdO//SwBgYIlVYv6voIGuWZBvbyo/nR68se57I6Dw=,tag:uNSp9/xJNpcZ53R7nXjp+Q==,type:str]
+    lastmodified: "2025-06-25T12:37:07Z"
+    mac: ENC[AES256_GCM,data:CQ56Dn9MsZ7/25TGiQQcs2uGzkz/myJ7OLV4iLxY1ANv65K04a94YIZf1fJPj76aJ1bpyCs5RynP/4HoNXV7I7D5wjLc39rKTuaPF5NS0GbRdLtuVwFsfnNmlAenFxaVnjjSo7AeJk1ilcbqMkBBdapQzzBOyQkB9Q+wMFRaOpE=,iv:6uRKirlKRMd42nj7RPCJhy2bY+WAt8jcXomDWT4DVBk=,tag:MJvjdnHzjX975zCB6FBQwQ==,type:str]
     pgp: []
     encrypted_regex: ^(address|port)$
     version: 3.9.3

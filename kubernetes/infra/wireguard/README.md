@@ -1,6 +1,6 @@
 # Wireguard
 
-1. Router needs to open the correct port for the LoadBalancer's IP (`Advanced Setup > NAT`):
+1. Router needs to open the correct port for the NodePort service (`Advanced Setup > NAT`):
 
    | Server Name | External Port Start | External Port End | Protocol | Internal Port Start | Internal Port End | Server IP Address | NAT Loopback |
    |-------------|---------------------|-------------------|----------|---------------------|-------------------|-------------------|--------------|
@@ -24,12 +24,24 @@ subnet traffic can route through the wireguard path it will not because of the r
 basically sets the wireguard route as the highest priority for that specific subnet.
 
 ## Retrieving the peer configuration
+
 Plain text:
+
 ```bash
-kubectl get wireguardpeer -n wireguard blarc --template={{.status.config}} | bash
-```
-QR code:
-```bash
-kubectl get wireguardpeer -n wireguard blarc --template={{.status.config}} | bash | qrencode -t ansiutf8
+kubectl get wireguardpeer -n wireguard jakob --template={{.status.config}} | bash
 ```
 
+QR code:
+
+```bash
+kubectl get wireguardpeer -n wireguard jakob --template={{.status.config}} | bash | qrencode -t ansiutf8
+```
+
+## Address and LoadBalancer IP are different
+
+When using wireguard CRD with `spec.serviceType: LoadBalancer`, keep in mind that Wireguard operator will try to set the
+external IP of the Load Balancer service to the one specified in crd under property `spec.address`.
+
+In my case this didn't work, because I set `spec.address` to my public IP, while the Load Balancer service IP should be
+set to an IP from the range of the IP pool. I had to manually change the Load Balancer service IP by editing the
+resource to get the wireguard working. This is the reason I changed the service type to NodePort instead.
