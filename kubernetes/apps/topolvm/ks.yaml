@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/infra/topolvm/app
+  path: ./kubernetes/apps/topolvm/app
   prune: true
   sourceRef:
     kind: GitRepository

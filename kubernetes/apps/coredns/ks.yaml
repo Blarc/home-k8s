@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/infra/coredns/app
+  path: ./kubernetes/apps/coredns/app
   prune: true
   sourceRef:
     kind: GitRepository
