@@ -26,10 +26,10 @@ basically sets the wireguard route as the highest priority for that specific sub
 ## Retrieving the peer configuration
 Plain text:
 ```bash
-kubectl get wireguardpeer blarc --template={{.status.config}} | bash
+kubectl get wireguardpeer -n wireguard blarc --template={{.status.config}} | bash
 ```
 QR code:
 ```bash
-kubectl get wireguardpeer blarc --template={{.status.config}} | bash | qrencode -t ansiutf8
+kubectl get wireguardpeer -n wireguard blarc --template={{.status.config}} | bash | qrencode -t ansiutf8
 ```
 

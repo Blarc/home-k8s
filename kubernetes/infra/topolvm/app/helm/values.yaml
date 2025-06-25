@@ -1,0 +1,33 @@
+controller:
+  replicaCount: 1
+lvmd:
+  managed: false
+  env:
+    - name: LVM_SYSTEM_DIR
+      value: /tmp
+  deviceClasses:
+    - name: ssd-thin
+      volume-group: topolvm_vg   # Volume Group name used in LVM_Disk_Watcher
+      default: true
+      spare-gb: 10
+      type: thin
+      thin-pool:
+        name: topolvm_thin       # Logical Volume name used in LVM_Disk_Watcher
+        overprovision-ratio: 2.0 # For example: If the overprovisioningRatio is 5.0, pool size is 100GiB, then this pool can be overprovisioned upto (5*100) 500GiB.
+
+storageClasses:
+  - name: topolvm-thin  # Defines name of storage class.
+    storageClass:
+      # Supported filesystems are: ext4, xfs, and btrfs.
+      fsType: xfs
+      # Default storage class for dynamic volume provisioning
+      # ref: https://kubernetes.io/docs/concepts/storage/dynamic-provisioning
+      isDefaultClass: true
+      # volumeBindingMode can be either WaitForFirstConsumer or Immediate. WaitForFirstConsumer is recommended because TopoLVM cannot schedule pods wisely if volumeBindingMode is Immediate.
+      volumeBindingMode: WaitForFirstConsumer
+      # enables CSI drivers to expand volumes. This feature is available for Kubernetes 1.16 and later releases.
+      allowVolumeExpansion: true
+      additionalParameters:
+        topolvm.io/device-class": "ssd-thin"
+node:
+  lvmdEmbedded: true

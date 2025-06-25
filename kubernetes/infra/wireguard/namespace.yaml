@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: network
+  name: wireguard
   annotations:
     kustomize.toolkit.fluxcd.io/prune: disabled
   labels:

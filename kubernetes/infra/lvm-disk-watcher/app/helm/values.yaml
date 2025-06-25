@@ -1,0 +1,7 @@
+configmap:
+  disk-config:
+    enabled: true
+    data:
+      disk-config: |
+        control-plane-1: none
+        worker-1: all

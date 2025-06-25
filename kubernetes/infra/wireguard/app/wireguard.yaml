@@ -20,17 +20,17 @@ sops:
             bk00NXBFQkExN3A4WFZCbTZ6OEF0NlEKk1WagftL2CcoZFkRfq3zNC6LNSsS8a5l
             FGVl22Z2Re0C6KtRWprkvAzdD4v0ZhOdKdR85p0nkMW69bl0bufsAg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-01-09T17:43:15Z"
-    mac: ENC[AES256_GCM,data:QTzlbeEAAjKUp0JeQE/2WdFj9HlAkM0RzNvatxEx/w4zZdLQi2eQUBSWPSKfBVAIt91kKCyMPnFp2aY+CQiF+5wOfw+dp2ecXX/d9JGHlxGrFDBq/mSybIbwH7PLPG9Us71TWnXZOVEvBNuMMQ3xWqKPi9L/SN4Zx5NV6+hAwVw=,iv:2AvGctFUSsmHPLVVEvhAyt+DYwgRdYp5uh0huSf9rck=,tag:JstHkvb7lWVXUQtl+WxWVg==,type:str]
+    lastmodified: "2025-06-25T07:24:32Z"
+    mac: ENC[AES256_GCM,data:DGEeVe/kAnsnNEf+OGuSp5CWdXV0YE19y9l6m5bK6T9eIKhKQjjmN+VRRHX+ano30EpJ1ybKgvwo0vKBi78fFAB8wpOTywMQJC8J5svwoaIsL7BbS1bYTf0bYojFYZPxg69pQYl8vX1n8WsC+fuw5lP2neGu4T38NDyl1THDgc4=,iv:zxBdO//SwBgYIlVYv6voIGuWZBvbyo/nR68se57I6Dw=,tag:uNSp9/xJNpcZ53R7nXjp+Q==,type:str]
     pgp: []
     encrypted_regex: ^(address|port)$
-    version: 3.8.1
+    version: 3.9.3
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
     name: wireguard
-    namespace: network
+    namespace: wireguard
 spec:
     jobLabel: wireguard
     selector:
@@ -38,7 +38,7 @@ spec:
             app: wireguard
     namespaceSelector:
         matchNames:
-            - network
+            - wireguard
     endpoints:
         - port: ENC[AES256_GCM,data:giIH8O076A==,iv:/d5ic8KYLqkd2Kb6Vl2BUwjZs0QvRTI574rAJmUhZ7Q=,tag:kLISf7yjxudIEHcBrRwahQ==,type:str]
           interval: 30s
@@ -61,8 +61,8 @@ sops:
             bk00NXBFQkExN3A4WFZCbTZ6OEF0NlEKk1WagftL2CcoZFkRfq3zNC6LNSsS8a5l
             FGVl22Z2Re0C6KtRWprkvAzdD4v0ZhOdKdR85p0nkMW69bl0bufsAg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-01-09T17:43:15Z"
-    mac: ENC[AES256_GCM,data:QTzlbeEAAjKUp0JeQE/2WdFj9HlAkM0RzNvatxEx/w4zZdLQi2eQUBSWPSKfBVAIt91kKCyMPnFp2aY+CQiF+5wOfw+dp2ecXX/d9JGHlxGrFDBq/mSybIbwH7PLPG9Us71TWnXZOVEvBNuMMQ3xWqKPi9L/SN4Zx5NV6+hAwVw=,iv:2AvGctFUSsmHPLVVEvhAyt+DYwgRdYp5uh0huSf9rck=,tag:JstHkvb7lWVXUQtl+WxWVg==,type:str]
+    lastmodified: "2025-06-25T07:24:32Z"
+    mac: ENC[AES256_GCM,data:DGEeVe/kAnsnNEf+OGuSp5CWdXV0YE19y9l6m5bK6T9eIKhKQjjmN+VRRHX+ano30EpJ1ybKgvwo0vKBi78fFAB8wpOTywMQJC8J5svwoaIsL7BbS1bYTf0bYojFYZPxg69pQYl8vX1n8WsC+fuw5lP2neGu4T38NDyl1THDgc4=,iv:zxBdO//SwBgYIlVYv6voIGuWZBvbyo/nR68se57I6Dw=,tag:uNSp9/xJNpcZ53R7nXjp+Q==,type:str]
     pgp: []
     encrypted_regex: ^(address|port)$
-    version: 3.8.1
+    version: 3.9.3
