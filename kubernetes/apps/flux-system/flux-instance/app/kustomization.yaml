@@ -3,10 +3,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - helmrepository.yaml
-  - helmrelease.yaml
+  - ./ocirepository.yaml
+  - ./helmrelease.yaml
+  - ./route.yaml
+#  - ./receiver.yaml
 configMapGenerator:
-  - name: lvm-disk-watcher-values
+  - name: flux-instance-values
     files:
       - values.yaml=./helm/values.yaml
 configurations:

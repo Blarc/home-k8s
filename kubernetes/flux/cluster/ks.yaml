@@ -6,26 +6,23 @@ metadata:
   name: cluster-apps
   namespace: flux-system
 spec:
-  interval: 30m
-  path: ./kubernetes/apps
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: home-k8s
   decryption:
     provider: sops
     secretRef:
       name: sops-age
-#  postBuild:
-#    substituteFrom:
-#      - name: cluster-settings
-#        kind: ConfigMap
-#        optional: true
-#      - name: cluster-secrets
-#        kind: Secret
-#        optional: true
+  interval: 1h
+  path: ./kubernetes/apps
+  prune: true
+  retryInterval: 2m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  timeout: 5m
+  wait: false
   patches:
-    - patch: |-
+    - # Add Sops decryption to child Kustomizations
+      patch: |-
         apiVersion: kustomize.toolkit.fluxcd.io/v1
         kind: Kustomization
         metadata:
@@ -38,4 +35,3 @@ spec:
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
-        labelSelector: substitution.flux.home.arpa/disabled notin (true)

@@ -2,6 +2,10 @@
 isClusterService: false
 
 serviceType: "LoadBalancer"
+service:
+  annotations:
+    # This makes sure this is the externalIp
+    lbipam.cilium.io/ips: 192.168.1.221
 
 rbac:
   create: true
