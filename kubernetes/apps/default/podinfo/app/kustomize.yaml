@@ -12,7 +12,6 @@ spec:
   retryInterval: 2m0s
   sourceRef:
     kind: GitRepository
-    namespace: flux-system
     name: podinfo
   targetNamespace: default
   timeout: 3m0s
