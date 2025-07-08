@@ -6,14 +6,9 @@ metadata:
   name: promtail
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: promtail
-      version: 6.16.6
-      sourceRef:
-        kind: HelmRepository
-        name: grafana
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: promtail
   install:
     remediation:
       retries: 3
@@ -21,10 +16,6 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-  values:
-    fullnameOverride: promtail
-    config:
-      clients:
-        - url: http://loki-headless.observability.svc.cluster.local:3100/loki/api/v1/push
-    serviceMonitor:
-      enabled: true
+  valuesFrom:
+    - kind: ConfigMap
+      name: promtail-values
