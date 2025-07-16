@@ -61,6 +61,8 @@ metadata:
   namespace: default
   labels:
     app: cod2
+  annotations:
+    lbipam.cilium.io/ips: 192.168.1.224
 spec:
   selector:
     app: cod2
