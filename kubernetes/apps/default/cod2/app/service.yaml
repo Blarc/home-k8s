@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cod2
+  namespace: default
+  labels:
+    app: cod2
+  annotations:
+    lbipam.cilium.io/ips: 192.168.1.224
+spec:
+  type: LoadBalancer
+  selector:
+    app: cod2
+  ports:
+    - name: udp-20500
+      protocol: UDP
+      port: 20500
+      targetPort: 20500
+    - name: udp-20510
+      protocol: UDP
+      port: 20510
+      targetPort: 20510
+    - name: tcp-28960
+      protocol: TCP
+      port: 28960
+      targetPort: 28960
+    - name: udp-28960
+      protocol: UDP
+      port: 28960
+      targetPort: 28960
