@@ -16,6 +16,11 @@ config:
   kind: ControllerConfiguration
   enableGatewayAPI: true
 
+prometheus:
+  enabled: true
+  servicemonitor:
+    enabled: true
+
 #webhook:
 #  hostNetwork: true
 #  securePort: 10260
