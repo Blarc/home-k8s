@@ -1,5 +1,8 @@
+# $schema: https://helm-values-schemas.onrender.com/topolvm/topolvm/refs/heads/main/charts/topolvm/values.yaml
 controller:
   replicaCount: 1
+  # Remove because the cluster has only one worker node and it prevents upgrades
+  affinity: ""
 lvmd:
   managed: false
   env:
