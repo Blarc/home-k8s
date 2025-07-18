@@ -71,14 +71,15 @@ envoy:
       keepCapNetBindService: true
       envoy: [ NET_ADMIN, PERFMON, BPF ]
 
-hubble:
-  enabled: true
-  relay:
-    enabled: true
-    rollOutPods: true
-  ui:
-    enabled: true
-    rollOutPods: true
+# hubble is not enabled in values.yaml to prevent bootstrapping it
+#hubble:
+#  enabled: true
+#  relay:
+#    enabled: true
+#    rollOutPods: true
+#  ui:
+#    enabled: true
+#    rollOutPods: true
 
 #ingressController:
 #  enabled: false
