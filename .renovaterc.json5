@@ -22,6 +22,16 @@
         "prEditedNotification",
         "prIgnoreNotification", // suppress the comment which is added to a PR whenever you close a PR unmerged
     ],
-    schedule: ["every weekend"],
-    ignorePaths: ["**/*.sops.*"]
+    ignorePaths: [
+        "**/*.sops.*"
+    ],
+    flux: {
+        managerFilePatterns: ["/(^|/)kubernetes/.+\\.ya?ml$/"]
+    },
+    "helm-values": {
+        managerFilePatterns: ["/(^|/)kubernetes/.+\\.ya?ml$/"]
+    },
+    kubernetes: {
+        managerFilePatterns: ["/(^|/)kubernetes/.+\\.ya?ml$/"]
+    }
 }
