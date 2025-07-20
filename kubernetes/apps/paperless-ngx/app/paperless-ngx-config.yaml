@@ -11,4 +11,7 @@ data:
   PAPERLESS_TIKA_ENABLED: "true"
   PAPERLESS_TIKA_ENDPOINT: "http://tika:9998"
   PAPERLESS_TIKA_GOTENBERG_ENDPOINT: "http://gotenberg:3000"
+  # Additional OCR languages to install
+  PAPERLESS_OCR_LANGUAGES: "slv"
+  # Customize the language that paperless will attempt to use when parsing documents.
   PAPERLESS_OCR_LANGUAGE: "slv+eng"
