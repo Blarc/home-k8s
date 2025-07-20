@@ -78,10 +78,10 @@ spec:
         - name: consume
           persistentVolumeClaim:
             claimName: paperless-ngx-consume
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
+#      securityContext:
+#        runAsUser: 1000
+#        runAsGroup: 1000
+#        fsGroup: 1000
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
