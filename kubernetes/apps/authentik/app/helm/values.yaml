@@ -51,6 +51,8 @@ worker:
   envFrom:
     - secretRef:
         name: providers-secrets
+    - secretRef:
+        name: users-passwords
   volumes:
     - name: postgres-creds
       secret:
