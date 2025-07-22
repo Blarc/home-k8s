@@ -9,3 +9,7 @@ entries:
     model: authentik_core.group
     identifiers:
       name: Observability
+  - id: media
+    model: authentik_core.group
+    identifiers:
+      name: Media
