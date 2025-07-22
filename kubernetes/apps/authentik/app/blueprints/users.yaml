@@ -14,8 +14,14 @@ entries:
       password: !Env JAKOB_PASSWORD
       type: internal
       groups:
-        - observability
-        - media
+        - !Find [
+          authentik_core.group,
+          [name, "Observability"],
+        ]
+        - !Find [
+          authentik_core.group,
+          [name, "Media"],
+        ]
   - id: masa
     model: authentik_core.user
     identifiers:
@@ -25,6 +31,9 @@ entries:
       password: !Env MASA_PASSWORD
       type: internal
       groups:
-        - media
+        - !Find [
+          authentik_core.group,
+          [name, "Media"],
+        ]
 
 
