@@ -17,6 +17,8 @@ blueprints:
     - authentik-blueprints
 
 server:
+  deploymentAnnotations:
+    reloader.stakater.com/auto: "true"
   route:
     main:
       enabled: true
@@ -44,6 +46,8 @@ server:
     serviceMonitor:
       enabled: true
 worker:
+  deploymentAnnotations:
+    reloader.stakater.com/auto: "true"
   volumes:
     - name: postgres-creds
       secret:
