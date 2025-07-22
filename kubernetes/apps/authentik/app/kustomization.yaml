@@ -13,6 +13,7 @@ configMapGenerator:
     options:
       disableNameSuffixHash: true
     files:
+      - ./blueprints/apps-grafana.yaml
       - ./blueprints/apps-paperless-ngx.yaml
       - ./blueprints/groups.yaml
   - name: authentik-values
