@@ -68,3 +68,11 @@ entries:
       user: !Find [authentik_core.user, [username, "akadmin"]]
     attrs:
       order: 1
+
+  - id: policybinding
+    model: authentik_policies.policybinding
+    identifiers:
+      target: !KeyOf application
+      user: !Find [authentik_core.user, [username, "jakob"]]
+    attrs:
+      order: 1
