@@ -19,6 +19,11 @@ blueprints:
 server:
   deploymentAnnotations:
     reloader.stakater.com/auto: "true"
+  envFrom:
+    - secretRef:
+        name: providers-secrets
+    - secretRef:
+        name: users-passwords
   route:
     main:
       enabled: true
