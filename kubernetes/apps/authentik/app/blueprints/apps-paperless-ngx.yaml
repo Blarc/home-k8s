@@ -61,18 +61,9 @@ entries:
       provider: !KeyOf provider
       policy_engine_mode: any
 
-  - id: policybinding
-    model: authentik_policies.policybinding
+  - model: authentik_policies.policybinding
     identifiers:
       target: !KeyOf application
-      user: !Find [authentik_core.user, [username, "akadmin"]]
-    attrs:
-      order: 1
-
-  - id: policybinding
-    model: authentik_policies.policybinding
-    identifiers:
-      target: !KeyOf application
-      user: !Find [authentik_core.user, [username, "jakob"]]
+      group: !Find [authentik_core.group, [name, "Media"]]
     attrs:
       order: 1
