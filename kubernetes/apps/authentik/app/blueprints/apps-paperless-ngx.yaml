@@ -35,6 +35,9 @@ entries:
       access_token_validity: minutes=5
       refresh_token_validity: days=30
 
+      client_id: !Env PAPERLESS_NGX_PROVIDER_CLIENT_ID
+      client_secret: !Env PAPERLESS_NGX_PROVIDER_CLIENT_SECRET
+
       sub_mode: hashed_user_id
       property_mappings:
         - !Find [

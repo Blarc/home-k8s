@@ -6,7 +6,8 @@ resources:
   - ocirepository.yaml
   - postgres.yaml
   - redis.yaml
-  - secret-key.yaml
+  - secrets/secret-key.yaml
+  - secrets/providers-secrets.yaml
   - helmrelease.yaml
 configMapGenerator:
   - name: authentik-blueprints

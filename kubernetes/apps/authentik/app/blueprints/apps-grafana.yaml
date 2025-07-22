@@ -31,6 +31,9 @@ entries:
         - url: https://grafana.blarc.my.id/login/generic_oauth
           matching_mode: strict
 
+      client_id: !Env GRAFANA_PROVIDER_CLIENT_ID
+      client_secret: !Env GRAFANA_PROVIDER_CLIENT_SECRET
+
       access_code_validity: minutes=1
       access_token_validity: minutes=5
       refresh_token_validity: days=30

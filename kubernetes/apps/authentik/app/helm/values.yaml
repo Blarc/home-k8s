@@ -48,6 +48,9 @@ server:
 worker:
   deploymentAnnotations:
     reloader.stakater.com/auto: "true"
+  envFrom:
+    - secretRef:
+        name: providers-secrets
   volumes:
     - name: postgres-creds
       secret:
