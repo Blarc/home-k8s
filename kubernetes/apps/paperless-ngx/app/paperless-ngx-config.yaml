@@ -15,3 +15,5 @@ data:
   PAPERLESS_OCR_LANGUAGES: "slv"
   # Customize the language that paperless will attempt to use when parsing documents.
   PAPERLESS_OCR_LANGUAGE: "slv+eng"
+  # Authentik
+  PAPERLESS_APPS: "allauth.socialaccount.providers.openid_connect"
