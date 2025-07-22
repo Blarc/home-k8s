@@ -14,6 +14,7 @@ configMapGenerator:
       disableNameSuffixHash: true
     files:
       - ./blueprints/apps-paperless-ngx.yaml
+      - ./blueprints/groups.yaml
   - name: authentik-values
     files:
       - values.yaml=./helm/values.yaml

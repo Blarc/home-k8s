@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://goauthentik.io/blueprints/schema.json
+# yamllint disable
+---
+version: 1
+metadata:
+  name: Groups
+entries:
+  - id: observability
+    model: authentik_core.group
+    identifiers:
+      name: Observability
