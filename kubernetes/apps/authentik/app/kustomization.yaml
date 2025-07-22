@@ -18,6 +18,7 @@ configMapGenerator:
       - ./blueprints/apps-grafana.yaml
       - ./blueprints/apps-paperless-ngx.yaml
       - ./blueprints/groups.yaml
+      - ./blueprints/users.yaml
   - name: authentik-values
     files:
       - values.yaml=./helm/values.yaml
