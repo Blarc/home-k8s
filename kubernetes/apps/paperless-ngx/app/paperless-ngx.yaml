@@ -12,6 +12,8 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/component: *name
+      annotations:
+        reloader.stakater.com/auto: "true"
     spec:
       containers:
         - name: *name
