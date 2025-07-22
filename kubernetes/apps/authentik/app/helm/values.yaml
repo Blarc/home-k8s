@@ -12,6 +12,10 @@ authentik:
   redis:
     host: redis
 
+blueprints:
+  configMaps:
+    - authentik-blueprints
+
 server:
   route:
     main:

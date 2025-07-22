@@ -9,6 +9,11 @@ resources:
   - secret-key.yaml
   - helmrelease.yaml
 configMapGenerator:
+  - name: authentik-blueprints
+    options:
+      disableNameSuffixHash: true
+    files:
+      - ./blueprints/apps-paperless-ngx.yaml
   - name: authentik-values
     files:
       - values.yaml=./helm/values.yaml
