@@ -20,6 +20,12 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
+            - name: home-assistant-config
+              mountPath: /config/configuration.yaml
+              subPath: configuration.yaml
+            - name: home-assistant-config
+              mountPath: /config/automations.yaml
+              subPath: automations.yaml
           resources:
             requests:
               memory: "128Mi"
@@ -28,6 +34,9 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: home-assistant-config-pvc
+        - name: home-assistant-config
+          configMap:
+            name: home-assistant-config
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

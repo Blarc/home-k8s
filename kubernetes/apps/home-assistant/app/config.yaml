@@ -1,0 +1,17 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: home-assistant-config
+data:
+  automations.yaml: |
+  configuration.yaml: |-
+    default_config:
+    frontend:
+      themes: !include_dir_merge_named themes
+    automation: !include automations.yaml
+    http:
+      use_x_forwarded_for: true
+      trusted_proxies:
+        - 10.244.0.0/16    # Pod CIDR
+        - 10.96.0.0/12     # Service CIDR
+    
