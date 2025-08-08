@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: *name
-          image: docker.io/apache/tika:3.2.1.0
+          image: docker.io/apache/tika:3.2.2.0
           ports:
             - containerPort: 9998
               name: http
