@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: *name
-          image: docker.io/gotenberg/gotenberg:8.22
+          image: docker.io/gotenberg/gotenberg:8.23
           args:
             - "gotenberg"
             - "--chromium-disable-javascript=true"
