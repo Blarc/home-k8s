@@ -1,0 +1,29 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: cilium-gateway-external
+  namespace: gateway
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    external-dns.alpha.kubernetes.io/target: "193.77.155.77"
+spec:
+  gatewayClassName: cilium
+  addresses:
+    - value: "192.168.1.225"
+      type: IPAddress
+  listeners:
+    - protocol: HTTPS
+      port: 443
+      name: https-external
+      hostname: "*.external.blarc.my.id"
+      tls:
+        certificateRefs:
+          - kind: Secret
+            name: gateway-cert-external
+      allowedRoutes:
+        namespaces:
+          selector:
+            matchLabels:
+              external: "true"
+
+
