@@ -1,0 +1,15 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: HTTPRoute
+metadata:
+  name: ad-mediation-service
+  namespace: ad-mediation-service
+spec:
+  parentRefs:
+    - name: cilium-gateway-external
+      namespace: gateway
+  hostnames:
+    - "ad-mediation-service.external.blarc.my.id"
+  rules:
+    - backendRefs:
+      - name: ad-mediation-service
+        port: 8080

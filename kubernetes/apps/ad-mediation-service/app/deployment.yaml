@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ad-mediation-service
+  namespace: ad-mediation-service
+  labels:
+    app: ad-mediation-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ad-mediation-service
+  template:
+    metadata:
+      labels:
+        app: ad-mediation-service
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 185
+        runAsGroup: 185
+        fsGroup: 185
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: ad-mediation-service
+          image: ghcr.io/blarc/ad-mediation-service:baeab3dddd3e74a1a8c3de951e413e84e60f11d4
+          imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ "ALL" ]
+          env:
+            - name: QUARKUS_REDIS_HOSTS
+              value: redis://redis:6379
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /q/health/live
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /q/health/ready
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 1000m
+              memory: 512Mi
