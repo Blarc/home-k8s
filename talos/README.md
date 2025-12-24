@@ -38,19 +38,27 @@ TALOS_EDITOR="vim" talosctl edit machineconfig -n 192.168.1.17
 ```
 
 ## Upgrading Talos nodes
-Docs: https://www.talos.dev/v1.8/talos-guides/upgrading-talos/.
+Docs: https://docs.siderolabs.com/talos/v1.8/configure-your-talos-cluster/lifecycle-management/upgrading-talos.
 
 Run the following command for each node
 ```bash
-talosctl upgrade --nodes 192.168.1.17 --endpoints 192.168.1.17 --image <copy-from-machine-configuration> --preserve true
+talosctl upgrade --nodes 192.168.1.17 --endpoints 192.168.1.17 --image <copy-from-machine-configuration>
 ```
-For a **single-node control-plane**, make sure that `--preserve=true`. To watch the upgrade logs use:
+To watch the upgrade logs use:
 ```bash
 talosctl dmesg -f
 ```
 and optionally:
 ```bash
 talosctl upgrade --wait --debug
+```
+
+## Upgrading Kubernetes
+Docs: https://docs.siderolabs.com/kubernetes-guides/advanced-guides/upgrading-kubernetes.
+
+Run the following command
+```bash
+talosctl --nodes 192.168.1.17 upgrade-k8s --to 1.34.0
 ```
 
 ## Inspecting manifests of static pods
