@@ -9,8 +9,6 @@ authentik:
     host: postgres-rw
     user: file:///postgres-creds/username
     password: file:///postgres-creds/password
-  redis:
-    host: redis
 
 blueprints:
   configMaps:
@@ -74,7 +72,4 @@ worker:
       readOnly: true
 
 postgresql:
-  enabled: false
-
-redis:
   enabled: false
