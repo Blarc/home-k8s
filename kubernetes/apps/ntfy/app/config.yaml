@@ -2,7 +2,12 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: ntfy
+  namespace: ntfy
 data:
   server.yml: |
     # Template: https://github.com/binwiederhier/ntfy/blob/main/server/server.yml
     base-url: https://ntfy.blarc.my.id
+    auth-file: "/var/lib/ntfy/user.db"
+    auth-default-access: "deny-all"
+    auth-access:
+      - "grafana:alerts:rw"

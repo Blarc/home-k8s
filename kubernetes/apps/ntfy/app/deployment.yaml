@@ -11,6 +11,8 @@ spec:
     metadata:
       labels:
         app: ntfy
+      annotations:
+        reloader.stakater.com/auto: "true"
     spec:
       securityContext:
         runAsNonRoot: true
@@ -32,6 +34,9 @@ spec:
           env:
             - name: TZ
               value: "Europe/Ljubljana"
+          envFrom:
+            - secretRef:
+                name: ntfy
           resources:
             limits:
               memory: "128Mi"
@@ -45,10 +50,14 @@ spec:
               readOnly: true
             - name: cache
               mountPath: "/var/cache/ntfy"
+            - name: lib
+              mountPath: "/var/lib/ntfy"
       volumes:
         - name: config
           configMap:
             name: ntfy
+        - name: lib
+          emptyDir: {}
   volumeClaimTemplates:
     - metadata:
         name: cache
