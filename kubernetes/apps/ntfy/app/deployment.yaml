@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ntfy
+spec:
+  selector:
+    matchLabels:
+      app: ntfy
+  serviceName: ntfy
+  template:
+    metadata:
+      labels:
+        app: ntfy
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 185
+        runAsGroup: 185
+        fsGroup: 185
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: ntfy
+          image: docker.io/binwiederhier/ntfy:v2.15.0
+          imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ "ALL" ]
+          args: ["serve", "--cache-file", "/var/cache/ntfy/cache.db"]
+          env:
+            - name: TZ
+              value: "Europe/Ljubljana"
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 80
+              name: http
+          volumeMounts:
+            - name: config
+              mountPath: "/etc/ntfy"
+              readOnly: true
+            - name: cache
+              mountPath: "/var/cache/ntfy"
+      volumes:
+        - name: config
+          configMap:
+            name: ntfy
+  volumeClaimTemplates:
+    - metadata:
+        name: cache
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi
