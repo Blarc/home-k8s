@@ -27,10 +27,6 @@ spec:
 #            value: Watchdog
 #            matchType: =
       - receiver: ntfy
-        matchers:
-          - name: severity
-            value: critical
-            matchType: =
     groupBy:
       - alertname
       - cluster
