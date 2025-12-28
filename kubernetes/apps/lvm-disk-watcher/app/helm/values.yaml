@@ -1,3 +1,8 @@
+image:
+  repository: oci.trueforge.org/tccr/lvm-disk-watcher
+  pullPolicy: IfNotPresent
+  tag: v1.1.9
+
 configmap:
   disk-config:
     enabled: true
