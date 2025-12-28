@@ -11,3 +11,4 @@ data:
     auth-default-access: "deny-all"
     auth-access:
       - "grafana:alerts:rw"
+      - "alertmanager:alerts:rw"
