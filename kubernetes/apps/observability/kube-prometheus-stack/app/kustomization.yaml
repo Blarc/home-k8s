@@ -5,6 +5,8 @@ kind: Kustomization
 resources:
   - ./ocirepository.yaml
   - ./helmrelease.yaml
+  - ./alertmanager-secret.yaml
+  - ./alertmanagerconfig.yaml
 configMapGenerator:
   - name: prometheus-values
     files:
