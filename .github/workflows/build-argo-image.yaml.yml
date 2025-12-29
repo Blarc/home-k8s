@@ -48,8 +48,8 @@ jobs:
           context: kubernetes/apps/argocd
           push: true
           tags: |
-            ${{ steps.compute_version.outputs.REPO_LOWER }}:${{ steps.compute_version.outputs.NEW_VERSION }}
-            ${{ steps.compute_version.outputs.REPO_LOWER }}:latest
+            ${{ steps.compute_version.outputs.REPO_LOWER }}/argocd:${{ steps.compute_version.outputs.NEW_VERSION }}
+            ${{ steps.compute_version.outputs.REPO_LOWER }}/argocd:latest
 
       - name: Update values.yaml and Amend
         run: |
