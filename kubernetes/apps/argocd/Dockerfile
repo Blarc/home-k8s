@@ -1,17 +1,17 @@
 # BASED ON https://github.com/jkroepke/helm-secrets/wiki/ArgoCD-Integration#option-1-custom-docker-image
 
-# renovate: datasource=github-releases depName=argoproj/argo-cd versioning=semver
+# renovate: datasource=github-releases depName=argoproj/argo-cd
 ARG ARGOCD_VERSION="v3.2.3"
 FROM quay.io/argoproj/argocd:$ARGOCD_VERSION
-# renovate: datasource=github-releases depName=getsops/sops versioning=semver
+# renovate: datasource=github-releases depName=getsops/sops
 ARG SOPS_VERSION=3.11.0
-# renovate: datasource=github-releases depName=kubernetes/kubectl versioning=semver
+# renovate: datasource=github-releases depName=kubernetes/kubectl
 ARG KUBECTL_VERSION=1.35.0
-# renovate: datasource=github-releases depName=helmfile/vals versioning=semver
+# renovate: datasource=github-releases depName=helmfile/vals
 ARG VALS_VERSION=0.42.2
-# renovate: datasource=github-releases depName=FiloSottile/age versioning=semver
+# renovate: datasource=github-releases depName=FiloSottile/age
 ARG AGE_VERSION=1.2.1
-# renovate: datasource=github-releases depName=jkroepke/helm-secrets versioning=semver
+# renovate: datasource=github-releases depName=jkroepke/helm-secrets
 ARG HELM_SECRETS_VERSION=4.7.4
 
 # vals or sops
