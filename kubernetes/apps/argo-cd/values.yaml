@@ -29,7 +29,7 @@ argo-cd:
 
   repoServer:
     image:
-      repository: ghcr.io/blarc/home-k8s/argocd
+      repository: ghcr.io/blarc/home-k8s/argo-cd
       tag: v3.2.3-991e7d45
       imagePullPolicy: Always
     imagePullSecrets:
