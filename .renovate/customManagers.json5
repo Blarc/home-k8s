@@ -5,6 +5,7 @@
             customType: "regex",
             description: "Process annotated dependencies",
             managerFilePatterns: [
+                "/(^|/)Dockerfile$/",
                 "/(^|/).+\\.env$/",
                 "/(^|/).+\\.sh$/",
                 "/(^|/).+\\.ya?ml(?:\\.j2)?$/",
