@@ -57,7 +57,7 @@ jobs:
           git config user.email "${{ github.event.head_commit.author.email }}"
 
           sed -i "s/\(tag: \).*/\1${{ steps.compute_version.outputs.NEW_VERSION }}/" kubernetes/apps/argo-cd/values.yaml
-          git add kubernetes/apps/argocd/values.yaml
+          git add kubernetes/apps/argo-cd/values.yaml
 
           git commit --amend --no-edit
           git push --force-with-lease origin ${{ github.ref_name }}
