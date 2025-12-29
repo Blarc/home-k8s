@@ -25,13 +25,14 @@ jobs:
         shell: bash
         run: |
           DOCKERFILE_PATH="kubernetes/apps/argocd/Dockerfile"
-          
           versions=$(grep -E "ARG .*VERSION" "$DOCKERFILE_PATH" | sort | cut -d'=' -f2 | tr -d \" | tr -d 'v' | tr '\n' '-')
           versions_hash=$(echo "$versions" | sha256sum | cut -c1-8)
           argocd_version=$(grep "ARG ARGOCD_VERSION" "$DOCKERFILE_PATH" | cut -d'"' -f2 | tr -d '"')
-          
           new_version="${argocd_version}-${versions_hash}"
+          
+          REPO_LOWER=$(echo "ghcr.io/${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
           echo "NEW_VERSION=${new_version}" >> $GITHUB_OUTPUT
+          echo "REPO_LOWER=${REPO_LOWER}" >> $GITHUB_OUTPUT
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3
@@ -43,12 +44,11 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6
         with:
-          # Set the context to the directory containing the Dockerfile
-          context: kubernetes/apps/argocd/
+          context: kubernetes/apps/argocd
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:${{ steps.compute_version.outputs.NEW_VERSION }}
-            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:latest
+            ${{ steps.compute_version.outputs.REPO_LOWER }}:${{ steps.compute_version.outputs.NEW_VERSION }}
+            ${{ steps.compute_version.outputs.REPO_LOWER }}:latest
 
       - name: Update values.yaml and Amend
         run: |
