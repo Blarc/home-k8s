@@ -1,0 +1,62 @@
+name: Build Argo CD Image
+
+on:
+  push:
+    branches:
+      - 'renovate/**'
+    paths:
+      - 'kubernetes/apps/argocd/Dockerfile'
+
+jobs:
+  build-docker:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Compute New Version
+        id: compute_version
+        shell: bash
+        run: |
+          DOCKERFILE_PATH="kubernetes/apps/argocd/Dockerfile"
+          
+          versions=$(grep -E "ARG .*VERSION" "$DOCKERFILE_PATH" | sort | cut -d'=' -f2 | tr -d \" | tr -d 'v' | tr '\n' '-')
+          versions_hash=$(echo "$versions" | sha256sum | cut -c1-8)
+          argocd_version=$(grep "ARG ARGOCD_VERSION" "$DOCKERFILE_PATH" | cut -d'"' -f2 | tr -d '"')
+          
+          new_version="${argocd_version}-${versions_hash}"
+          echo "NEW_VERSION=${new_version}" >> $GITHUB_OUTPUT
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          # Set the context to the directory containing the Dockerfile
+          context: kubernetes/apps/argocd/
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:${{ steps.compute_version.outputs.NEW_VERSION }}
+            ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:latest
+
+      - name: Update values.yaml and Amend
+        run: |
+          git config user.name "${{ github.event.head_commit.author.name }}"
+          git config user.email "${{ github.event.head_commit.author.email }}"
+
+          sed -i "s/\(tag: \).*/\1${{ steps.compute_version.outputs.NEW_VERSION }}/" kubernetes/apps/argocd/values.yaml
+          git add kubernetes/apps/argocd/values.yaml
+
+          git commit --amend --no-edit
+          git push --force-with-lease origin ${{ github.ref_name }}
