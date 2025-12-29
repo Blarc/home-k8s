@@ -5,7 +5,7 @@ on:
     branches:
       - 'renovate/**'
     paths:
-      - '../../kubernetes/apps/argo-cd/Dockerfile'
+      - 'kubernetes/apps/argo-cd/Dockerfile'
   workflow_dispatch:
 
 jobs:
