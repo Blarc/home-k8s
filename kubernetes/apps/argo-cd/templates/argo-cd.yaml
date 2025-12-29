@@ -1,0 +1,46 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: argo-cd
+  namespace: argo-cd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1" # Ensure project is created first
+spec:
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  destinations:
+    - name: in-cluster
+      namespace: argo-cd
+      server: https://kubernetes.default.svc
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  sourceRepos:
+    - https://github.com/Blarc/home-k8s.git
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argo-cd
+  namespace: argo-cd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  project: argo-cd
+  source:
+    repoURL: https://github.com/Blarc/home-k8s.git
+    targetRevision: HEAD
+    path: 'kubernetes/apps/argo-cd'
+    helm:
+      valueFiles:
+        - 'values.yaml'
+        - 'secrets://values.encrypted.yaml'
+  destination:
+    name: in-cluster
+    namespace: argo-cd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+

@@ -11,6 +11,16 @@ creation_rules:
     age: age1mm90zkg8lsmpqa7gya9p2prsj8yfq774gjm6dkamkkvwugen7ywse5w97z
   - path_regex: talos/*/.*sops.ya?ml
     age: age1mm90zkg8lsmpqa7gya9p2prsj8yfq774gjm6dkamkkvwugen7ywse5w97z
+  - path_regex: kubernetes/.*/values.encrypted.yaml
+    key_groups:
+      - age:
+          # argo-cd
+          - age1hnmh393g3qaf2szdjkyrd7jsven9wzvgpud4207vzrfywmuvdassvperqc
+          # personal
+          - age1mm90zkg8lsmpqa7gya9p2prsj8yfq774gjm6dkamkkvwugen7ywse5w97z
+    stores:
+      yaml:
+        indent: 2
   - path_regex: kubernetes/.*/*.ya?ml
     encrypted_comment_regex: "[:space:]*encrypt"
     key_groups:
