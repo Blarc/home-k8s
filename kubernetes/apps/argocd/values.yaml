@@ -33,7 +33,7 @@ argo-cd:
     replicas: 2
     image:
       repository: ghcr.io/blarc/home-k8s/argocd
-      tag: v3.2.3-4f7728f7
+      tag: v3.2.3-77a17f91
       imagePullPolicy: Always
     imagePullSecrets:
       - name: argocd-gitlab-registry-secret

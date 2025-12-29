@@ -10,7 +10,7 @@ ARG KUBECTL_VERSION=1.35.0
 # renovate: datasource=github-releases depName=helmfile/vals
 ARG VALS_VERSION=0.42.6
 # renovate: datasource=github-releases depName=FiloSottile/age
-ARG AGE_VERSION=1.2.1
+ARG AGE_VERSION=1.3.1
 # renovate: datasource=github-releases depName=jkroepke/helm-secrets
 ARG HELM_SECRETS_VERSION=4.7.4
 
