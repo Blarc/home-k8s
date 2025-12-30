@@ -6,7 +6,7 @@ metadata:
 spec:
   destinations:
     - name: in-cluster
-      namespace: argo-cd
+      namespace: '*'
       server: https://kubernetes.default.svc
   clusterResourceWhitelist:
     - group: '*'
