@@ -32,6 +32,8 @@ spec:
         revision: HEAD
         files:
           - path: 'kubernetes/apps/*/values.yaml'
+          - path: 'kubernetes/apps/*/app/values.yaml'
+            exclude: true
           - path: 'kubernetes/apps/argo-cd/values.yaml'
             exclude: true
   syncPolicy:
