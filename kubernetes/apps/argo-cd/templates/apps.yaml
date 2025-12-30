@@ -64,6 +64,17 @@ spec:
       destination:
         name: in-cluster
         namespace: '{{`{{ index (splitList "/" .path.path) 2 | trunc 53 }}`}}'
+      ignoreDifferences:
+        - group: gateway.networking.k8s.io
+          kind: HTTPRoute
+          jqPathExpressions:
+            # Ignore injected backend defaults
+            - .spec.rules[].backendRefs[].weight
+            - .spec.rules[].backendRefs[].kind
+            - .spec.rules[].backendRefs[].group
+            # Ignore injected parentRef defaults
+            - .spec.parentRefs[].group
+            - .spec.parentRefs[].kind
       syncPolicy:
         syncOptions:
           # https://www.arthurkoziel.com/fixing-argocd-crd-too-long-error/
