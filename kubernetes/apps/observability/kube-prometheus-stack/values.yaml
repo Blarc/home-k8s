@@ -31,12 +31,12 @@ kube-prometheus-stack:
     service:
       selector:
         k8s-app: kube-scheduler
-  kubeControllerManager: &kubeControllerManager
+  kubeControllerManager:
     service:
       selector:
         k8s-app: kube-controller-manager
   kubeEtcd:
-    <<: *kubeControllerManager # etcd runs on control plane nodes
+    enabled: false
   kubeProxy:
     enabled: false
   prometheus:
