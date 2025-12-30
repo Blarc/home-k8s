@@ -4,7 +4,7 @@ apiVersion: monitoring.coreos.com/v1alpha1
 kind: AlertmanagerConfig
 metadata:
   name: alertmanager
-  namespace: observability
+  namespace: {{ .Release.Namespace }}
 spec:
   route:
     receiver: ntfy
