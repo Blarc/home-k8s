@@ -56,7 +56,7 @@ spec:
         path: '{{`{{ .path.path }}`}}'
         helm:
           # kubernetes/apps/authentik to authentik
-          releaseName: '{{ `{{ .path.path | splitList "/" | last | trunc 53 }}` }}'
+          releaseName: '{{ `{{ index (splitList "/" .path.path) 2 | trunc 53 }}` }}'
           # paths are prefixed with kubernetes/apps/authentik/ because of the path property defined above
           valueFiles:
             # values.yaml
