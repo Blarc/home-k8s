@@ -1,0 +1,73 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: apps
+  namespace: argo-cd
+spec:
+  destinations:
+    - name: in-cluster
+      namespace: argo-cd
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  sourceRepos:
+    - https://github.com/Blarc/home-k8s.git
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: apps
+  namespace: argo-cd
+spec:
+  goTemplate: true
+  goTemplateOptions: [ "missingkey=error" ]
+  applyNestedSelectors: true
+  generators:
+    - git:
+        repoURL: https://github.com/Blarc/home-k8s.git
+        revision: HEAD
+        files:
+          - path: 'kubernetes/apps/*/values.yaml'
+          - path: 'kubernetes/apps/argo-cd/values.yaml'
+            exclude: true
+  syncPolicy:
+    applicationsSync: sync
+  ignoreApplicationDifferences:
+    - jqPathExpressions:
+        - .spec.source.helm.parameters
+  template:
+    metadata:
+      # kubernetes/apps/authentik to authentik
+      name: '{{`{{ .path.path | splitList "/" | last | trunc 53 }}`}}'
+    spec:
+      project: apps
+      source:
+        repoURL: https://github.com/Blarc/home-k8s.git
+        targetRevision: HEAD
+        # kubernetes/apps/authentik
+        path: '{{`{{ .path.path }}`}}'
+        helm:
+          # kubernetes/apps/authentik to authentik
+          releaseName: '{{ `{{ .path.path | splitList "/" | last | trunc 53 }}` }}'
+          # paths are prefixed with kubernetes/apps/authentik/ because of the path property defined above
+          valueFiles:
+            # values.yaml
+            - 'secrets://?values.yaml'
+            # values.encrypted.yaml
+            - 'secrets://?values.encrypted.yaml'
+      destination:
+        name: in-cluster
+        namespace: '{{`{{ .path.path | splitList "/" | last | trunc 53 }}`}}'
+      syncPolicy:
+        syncOptions:
+          # https://www.arthurkoziel.com/fixing-argocd-crd-too-long-error/
+          - ServerSideApply=true
+          - CreateNamespace=true
+        automated:
+          prune: true
+          selfHeal: true
+
