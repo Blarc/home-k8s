@@ -63,7 +63,7 @@ spec:
             - 'secrets://?values.encrypted.yaml'
       destination:
         name: in-cluster
-        namespace: '{{`{{ .path.path | splitList "/" | last | trunc 53 }}`}}'
+        namespace: '{{`{{ index (splitList "/" .path.path) 2 | trunc 53 }}`}}'
       syncPolicy:
         syncOptions:
           # https://www.arthurkoziel.com/fixing-argocd-crd-too-long-error/
