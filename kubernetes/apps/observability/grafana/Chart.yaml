@@ -1,0 +1,8 @@
+apiVersion: v2
+dependencies:
+  - name: grafana
+    repository: oci://ghcr.io/grafana/helm-charts
+    version: 10.4.1
+description: Helm chart to deploy grafana
+name: grafana
+version: 1.0.0
