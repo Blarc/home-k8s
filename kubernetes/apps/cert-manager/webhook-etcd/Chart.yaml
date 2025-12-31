@@ -1,0 +1,8 @@
+apiVersion: v2
+dependencies:
+  - name: cert-manager-webhook-etcd
+    repository: oci://ghcr.io/blarc/cert-manager-webhook-etcd/charts
+    version: 0.1.0
+description: Helm chart to deploy cert-manager-webhook-etcd
+name: cert-manager-webhook-etcd
+version: 1.0.0

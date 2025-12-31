@@ -1,0 +1,8 @@
+apiVersion: v2
+dependencies:
+  - name: cert-manager
+    repository: oci://quay.io/jetstack/charts
+    version: v1.19.2
+description: Helm chart to deploy cert-manager
+name: cert-manager
+version: 1.0.0

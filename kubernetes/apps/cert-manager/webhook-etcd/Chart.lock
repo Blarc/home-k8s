@@ -1,0 +1,6 @@
+dependencies:
+- name: cert-manager-webhook-etcd
+  repository: oci://ghcr.io/blarc/cert-manager-webhook-etcd/charts
+  version: 0.1.0
+digest: sha256:3317ffd028297dd11ca1dfe11622641fec84c77c15be26e06a3a5fbcbc57a0ec
+generated: "2025-12-31T10:45:44.231685359+01:00"
