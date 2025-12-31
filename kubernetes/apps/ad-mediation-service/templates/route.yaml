@@ -13,3 +13,7 @@ spec:
     - backendRefs:
       - name: ad-mediation-service
         port: 8080
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
