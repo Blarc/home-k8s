@@ -1,0 +1,8 @@
+apiVersion: v2
+dependencies:
+  - name: docker-registry
+    repository: https://twuni.github.io/docker-registry.helm
+    version: 3.0.0
+description: Helm chart to deploy docker-registry
+name: docker-registry
+version: 1.0.0
