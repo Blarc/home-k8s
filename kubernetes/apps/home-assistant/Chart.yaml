@@ -1,0 +1,4 @@
+apiVersion: v2
+description: Helm chart to deploy home-assistant
+name: home-assistant
+version: 1.0.0
