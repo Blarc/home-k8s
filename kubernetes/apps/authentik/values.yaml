@@ -1,0 +1,63 @@
+# $schema: https://helm-values-schemas.onrender.com/goauthentik/helm/refs/heads/main/charts/authentik/values.yaml
+authentik:
+  authentik:
+    # This sends anonymous usage-data, stack traces on errors and
+    # performance data to sentry.io, and is fully opt-in
+    error_reporting:
+      enabled: false
+    postgresql:
+      host: postgres-rw
+      user: file:///postgres-creds/username
+      password: file:///postgres-creds/password
+
+  blueprints:
+    configMaps:
+      - authentik-blueprints
+
+  server:
+    deploymentAnnotations:
+      reloader.stakater.com/auto: "true"
+    envFrom:
+      - secretRef:
+          name: providers-secrets
+      - secretRef:
+          name: users-passwords
+    route:
+      main:
+        enabled: true
+        hostnames:
+          - "authentik.blarc.my.id"
+        parentRefs:
+          - name: cilium-gateway
+            namespace: gateway
+    volumes:
+      - name: postgres-creds
+        secret:
+          secretName: postgres-app
+    volumeMounts:
+      - name: postgres-creds
+        mountPath: /postgres-creds
+        readOnly: true
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+  worker:
+    deploymentAnnotations:
+      reloader.stakater.com/auto: "true"
+    envFrom:
+      - secretRef:
+          name: providers-secrets
+      - secretRef:
+          name: users-passwords
+    volumes:
+      - name: postgres-creds
+        secret:
+          secretName: postgres-app
+    volumeMounts:
+      - name: postgres-creds
+        mountPath: /postgres-creds
+        readOnly: true
+
+  postgresql:
+    enabled: false

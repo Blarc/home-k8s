@@ -1,0 +1,8 @@
+apiVersion: v2
+dependencies:
+  - name: authentik
+    repository: oci://ghcr.io/goauthentik/helm-charts
+    version: 2025.10.3
+description: Helm chart to deploy authentik
+name: authentik
+version: 1.0.0

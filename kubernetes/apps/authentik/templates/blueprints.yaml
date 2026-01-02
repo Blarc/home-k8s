@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: authentik-blueprints
+  namespace: {{ .Release.Namespace | default "authentik" }}
+data:
+  apps-grafana.yaml: |
+{{ .Files.Get "blueprints/apps-grafana.yaml" | indent 4 }}
+  apps-paperless-ngx.yaml: |
+{{ .Files.Get "blueprints/apps-paperless-ngx.yaml" | indent 4 }}
+  groups.yaml: |
+{{ .Files.Get "blueprints/groups.yaml" | indent 4 }}
+  users.yaml: |
+{{ .Files.Get "blueprints/users.yaml" | indent 4 }}
