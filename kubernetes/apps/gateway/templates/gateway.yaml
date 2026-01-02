@@ -16,6 +16,8 @@ spec:
         certificateRefs:
           - kind: Secret
             name: gateway-cert
+            # Keep this for argo
+            group: ''
       allowedRoutes:
         namespaces:
           from: All

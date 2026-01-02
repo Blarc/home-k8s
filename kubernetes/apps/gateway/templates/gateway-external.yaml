@@ -20,6 +20,8 @@ spec:
         certificateRefs:
           - kind: Secret
             name: gateway-cert-external
+            # Keep this for argo
+            group: ''
       allowedRoutes:
         namespaces:
           from: Selector
