@@ -1,2 +1,6 @@
 docker-registry:
   fullnameOverride: docker-registry
+  persistence:
+    enabled: true
+    size: 5Gi
+    storageClass: topolvm-thin
