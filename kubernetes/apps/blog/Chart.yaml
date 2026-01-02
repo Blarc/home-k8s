@@ -1,0 +1,4 @@
+apiVersion: v2
+description: Helm chart to deploy blog
+name: blog
+version: 1.0.0

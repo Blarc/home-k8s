@@ -13,3 +13,7 @@ spec:
     - backendRefs:
       - name: blog
         port: 80
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
