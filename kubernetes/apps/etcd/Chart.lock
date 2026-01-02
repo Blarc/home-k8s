@@ -1,0 +1,6 @@
+dependencies:
+- name: etcd
+  repository: oci://registry-1.docker.io/bitnamicharts
+  version: 12.0.18
+digest: sha256:ade09f91cbeee22d6b9d5868b0a4e82cd4d28d16adbdb8150173bbd94583d1e7
+generated: "2026-01-02T16:29:40.217441351+01:00"

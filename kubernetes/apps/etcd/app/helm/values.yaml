@@ -1,7 +1,0 @@
-# $schema: https://helm-values-schemas.onrender.com/bitnami/charts/refs/heads/main/bitnami/etcd/values.yaml
-auth:
-  rbac:
-    create: false
-
-persistence:
-  enabled: false
