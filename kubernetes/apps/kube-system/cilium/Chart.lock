@@ -1,0 +1,6 @@
+dependencies:
+- name: cilium
+  repository: oci://ghcr.io/home-operations/charts-mirror
+  version: 1.18.5
+digest: sha256:cbe447642736959e7acbd7c99c65032381171834b76b61628e9d2ca11eaf0edf
+generated: "2026-01-02T15:47:08.721225371+01:00"

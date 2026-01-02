@@ -1,0 +1,8 @@
+apiVersion: v2
+dependencies:
+  - name: cilium
+    repository: oci://ghcr.io/home-operations/charts-mirror
+    version: 1.18.5
+description: Helm chart to deploy cilium
+name: cilium
+version: 1.0.0
