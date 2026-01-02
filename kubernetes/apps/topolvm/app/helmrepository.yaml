@@ -1,9 +1,0 @@
----
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: topolvm
-spec:
-  type: default
-  interval: 5m
-  url: https://topolvm.github.io/topolvm
