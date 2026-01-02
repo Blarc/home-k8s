@@ -70,13 +70,11 @@ spec:
         - group: gateway.networking.k8s.io
           kind: HTTPRoute
           jqPathExpressions:
-            # Ignore injected backend defaults
-            - .spec.rules[].backendRefs[].weight
-            - .spec.rules[].backendRefs[].kind
-            - .spec.rules[].backendRefs[].group
-            # Ignore injected parentRef defaults
-            - .spec.parentRefs[].group
-            - .spec.parentRefs[].kind
+            - .spec.rules[] | select(.backendRefs != null) | .backendRefs[]? | .kind
+            - .spec.rules[] | select(.backendRefs != null) | .backendRefs[]? | .group
+            - .spec.rules[] | select(.backendRefs != null) | .backendRefs[]? | .weight
+            - .spec.parentRefs[]? | .kind
+            - .spec.parentRefs[]? | .group
       syncPolicy:
         syncOptions:
           # https://www.arthurkoziel.com/fixing-argocd-crd-too-long-error/
