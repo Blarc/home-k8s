@@ -1,0 +1,22 @@
+{{- $dot := . -}}
+{{- range .Values.peers }}
+---
+apiVersion: vpn.wireguard-operator.io/v1alpha1
+kind: WireguardPeer
+metadata:
+  name: {{ .name }}
+spec:
+  wireguardRef: "wireguard"
+  allowedIPs: "192.168.1.0/24"
+  {{- if .targets }}
+  egressNetworkPolicies:
+    {{- range .targets }}
+    - action: ACCEPT
+      to:
+        ip: {{ .ip | quote }}
+        {{- if .port }}
+        port: {{ .port }}
+        {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}

@@ -1,0 +1,57 @@
+peers:
+  - name: jakob
+  - name: blarc
+    targets:
+      - ip: 192.168.1.223
+        port: 9898
+      - ip: 192.168.1.224
+  - name: rokk
+    targets:
+      - ip: 192.168.1.223
+        port: 9898
+      - ip: 192.168.1.224
+  - name: davids1
+    targets:
+      - ip: 192.168.1.223
+        port: 9898
+      - ip: 192.168.1.224
+  - name: matejp
+    targets:
+      - ip: 192.168.1.223
+        port: 9898
+      - ip: 192.168.1.224
+  - name: tilenp
+    targets:
+      - ip: 192.168.1.223
+        port: 9898
+      - ip: 192.168.1.224
+  - name: markb
+    targets:
+      - ip: 192.168.1.223
+        port: 9898
+      - ip: 192.168.1.224
+  - name: gregorz
+    targets:
+      - ip: 192.168.1.223
+        port: 9898
+      - ip: 192.168.1.224
+  - name: janb
+    targets:
+      - ip: 192.168.1.223
+        port: 9898
+      - ip: 192.168.1.224
+  - name: anzeh
+    targets:
+      - ip: 192.168.1.223
+        port: 9898
+      - ip: 192.168.1.224
+  - name: janb1
+    targets:
+      - ip: 192.168.1.223
+        port: 9898
+      - ip: 192.168.1.224
+  - name: simonk
+    targets:
+      - ip: 192.168.1.223
+        port: 9898
+      - ip: 192.168.1.224
