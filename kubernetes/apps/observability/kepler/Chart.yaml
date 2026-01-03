@@ -1,0 +1,8 @@
+apiVersion: v2
+dependencies:
+  - name: kepler
+    repository: https://sustainable-computing-io.github.io/kepler-helm-chart
+    version: 0.6.1
+description: Helm chart to deploy kepler
+name: kepler
+version: 1.0.0
