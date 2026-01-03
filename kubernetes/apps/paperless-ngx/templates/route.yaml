@@ -2,7 +2,7 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: &name paperless-ngx
-  namespace: default
+  namespace: {{ .Release.Namespace }}
 spec:
   parentRefs:
     - name: cilium-gateway
@@ -13,3 +13,7 @@ spec:
     - backendRefs:
         - name: *name
           port: 8000
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
