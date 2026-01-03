@@ -12,3 +12,7 @@ spec:
     - backendRefs:
       - name: mosquitto
         port: 8123
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
