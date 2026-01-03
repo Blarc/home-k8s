@@ -1,7 +1,0 @@
-# $schema: https://helm-values-schemas.onrender.com/grafana/helm-charts/refs/heads/main/charts/promtail/values.yaml
-fullnameOverride: promtail
-config:
-  clients:
-    - url: http://loki-headless.observability.svc.cluster.local:3100/loki/api/v1/push
-serviceMonitor:
-  enabled: true

@@ -1,0 +1,8 @@
+apiVersion: v2
+dependencies:
+  - name: promtail
+    repository: oci://ghcr.io/grafana/helm-charts
+    version: 6.17.1
+description: Helm chart to deploy promtail
+name: promtail
+version: 1.0.0
