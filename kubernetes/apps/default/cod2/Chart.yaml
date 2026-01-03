@@ -1,0 +1,4 @@
+apiVersion: v2
+description: Helm chart to deploy cod2
+name: cod2
+version: 1.0.0
