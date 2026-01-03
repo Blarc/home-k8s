@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ntfy-templates
+  namespace: ntfy
+data:
+  alertmanager.yml: |
+    {{- .Files.Get "files/alertmanager-template.yaml" | nindent 4 }}
