@@ -1,5 +1,5 @@
-# $schema: https://helm-values-schemas.onrender.com/prometheus-community/helm-charts/refs/heads/main/charts/kube-prometheus-stack/values.yaml
 kube-prometheus-stack:
+  fullnameOverride: kube-prometheus-stack
   crds:
     enabled: true
   cleanPrometheusOperatorObjectNames: true
