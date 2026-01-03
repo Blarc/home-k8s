@@ -1,0 +1,13 @@
+podinfo:
+  fullnameOverride: podinfo
+  service:
+    type: LoadBalancer
+    annotations:
+      lbipam.cilium.io/ips: "192.168.1.223"
+  httpRoute:
+    enabled: true
+    hostnames:
+      - podinfo.blarc.my.id
+    parentRefs:
+      - name: cilium-gateway
+        namespace: gateway

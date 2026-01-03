@@ -1,0 +1,8 @@
+apiVersion: v2
+description: Helm chart to deploy podinfo
+dependencies:
+  - name: podinfo
+    version: 6.9.4
+    repository: oci://ghcr.io/stefanprodan/charts
+name: podinfo
+version: 1.0.0
