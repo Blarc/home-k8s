@@ -8,7 +8,7 @@ spec:
     - name: cilium-gateway
       namespace: gateway
   hostnames:
-    - "audiobooks.blarc.my.id"
+    - "audiobookshelf.blarc.my.id"
   rules:
     - backendRefs:
         - name: {{ .Release.Name }}
