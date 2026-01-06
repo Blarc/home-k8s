@@ -1,0 +1,12 @@
+image:
+  repository: ghcr.io/advplyr/audiobookshelf
+  tag: 2.32.1
+persistence:
+  config:
+    size: 5Gi
+  metadata:
+    size: 10Gi
+  audiobooks:
+    size: 10Gi
+  podcasts:
+    size: 1Gi
