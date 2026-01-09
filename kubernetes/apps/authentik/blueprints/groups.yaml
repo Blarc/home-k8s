@@ -13,3 +13,7 @@ entries:
     model: authentik_core.group
     identifiers:
       name: Media
+  - id: public
+    model: authentik_core.group
+    identifiers:
+      name: Public

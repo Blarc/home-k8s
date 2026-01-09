@@ -22,6 +22,10 @@ entries:
           authentik_core.group,
           [name, "Media"],
         ]
+        - !Find [
+          authentik_core.group,
+          [name, "Public"],
+        ]
   - id: masa
     model: authentik_core.user
     identifiers:
@@ -34,6 +38,10 @@ entries:
         - !Find [
           authentik_core.group,
           [name, "Media"],
+        ]
+        - !Find [
+          authentik_core.group,
+          [name, "Public"],
         ]
 
 

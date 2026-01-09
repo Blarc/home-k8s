@@ -4,6 +4,8 @@ metadata:
   name: authentik-blueprints
   namespace: {{ .Release.Namespace | default "authentik" }}
 data:
+  apps-audiobookshelf.yaml: |
+{{ .Files.Get "blueprints/apps-audiobookshelf.yaml" | indent 4 }}
   apps-grafana.yaml: |
 {{ .Files.Get "blueprints/apps-grafana.yaml" | indent 4 }}
   apps-paperless-ngx.yaml: |
