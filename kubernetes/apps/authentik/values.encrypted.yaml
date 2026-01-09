@@ -1,18 +1,18 @@
 authentik:
     authentik:
         secret_key: ENC[AES256_GCM,data:f7FNlD4hSVtljDu2qg0vGCXEPSDcO5XQbLMOqKMhFx7TFeKNeecSF74VIARGI3JtlHFkSZIrGQA=,iv:5U2sGOgUrSAFHyiMDQyJCLQ7UHh2E33ODALfAwueSig=,tag:1V9QLpTwdEjWmRdyTtS+zQ==,type:str]
-    providersSecrets:
-        PAPERLESS_NGX_PROVIDER_CLIENT_ID: ENC[AES256_GCM,data:dmBreLmkOOJeIpCpDHd6p8jSvhaE4U+EpM+h4AbtxjIx96lK2H/LIA==,iv:iFRu1rUPmHaeZvXYE1TCM+10OW9GC/+86yosh6G6ExI=,tag:GtvpzJ30NT+VDd/fBQG5qw==,type:str]
-        PAPERLESS_NGX_PROVIDER_CLIENT_SECRET: ENC[AES256_GCM,data:Z1PPckaLsggb3a0zuhWe4fNzxDzTE3VSRlKubn5f3WktGdrCVdxp6nGQxXZlUhvduRF9hO3tz3P4xSzNSKz2iFMwUgmrzY3B5gNoHQ0NtGg9qbtlSrHWjSDPo/pY4Y5YjJNmIe61H1h6VkedqnqkMrFzfoDRMfUOwyyFOxOZNA8=,iv:DIz73rUXRLtJPQFOFboJIGCx9EcVS1DHlFtt2rmd4R4=,tag:aPwlmruUpQXpdG9APLB3xw==,type:str]
-        GRAFANA_PROVIDER_CLIENT_ID: ENC[AES256_GCM,data:BVjqqjMu1B+Q8GT4F+ocQPvPOOneS1q08pqIVMVs/Oa3s3UV2DQoNA==,iv:jKmeuWQeNondUS4PyRQeY4jd1NPXZCQlvSX0KdHJH+A=,tag:JYID5KGq/c4wEim5Y1GacQ==,type:str]
-        GRAFANA_PROVIDER_CLIENT_SECRET: ENC[AES256_GCM,data:SUR4EOgysWNA6/lN4piAzbJgdy2WEjODLM5WngsiQHi0/RjfwyhSm6pqVe1k37q2ggay/lffE6x9/DhMMx5PlEbDgMETIqjrh5AGg1bh4GKvVwt+uCTsQUzOe+Aqq8Z876TUJr1huSQ/MPZtesrQSdUfMMKdZkiP7g+A9Y8XjNY=,iv:f4ipqEZYLpdVxK6A2NR7PKoh/2yEOlpGEyzLs/v6QkA=,tag:OsRhDXnFtjb6oeZNNnxjAg==,type:str]
-        AUDIOBOOKSHELF_PROVIDER_CLIENT_ID: ENC[AES256_GCM,data:VxD2eHs7ZUKtcIcRQ4+oI+P6NxMRyz3nSaqvZcITJtgR1IftMyXWfg==,iv:vO2YY73WrMowijBzfR+OroyExwXevA7lBePs1/uQ8Hc=,tag:VD3dQz1pBjDjVJlbWVOy1w==,type:str]
-        AUDIOBOOKSHELF_PROVIDER_CLIENT_SECRET: ENC[AES256_GCM,data:LpE5DwpKJUi3Xe0e9SO8PEpSnsJrpZyDkKemUmFYCsycotvgavjlw53BNPyc7biqNs4xi6+F+Q8Wc9ZuloXdMHIp+OcdA9lsVkZm3/PO6mvTUiJ/Vbd0u2Gy76Zv2ZkuVnvtvv6CxI1qR1vI1HO56Bvwej3im8mFSot2Jn0ag0g=,iv:OUKsaJbpdbNtySXSbva1gsUBjIke/+TjlIrtaNPGKmU=,tag:rkXOedXhmo2eBCBZffj55A==,type:str]
-    users:
-        - username: ENC[AES256_GCM,data:q1YQ9dM=,iv:zBKnfFsVMSarpOGFyHlpcEt7cz4ZtszGs3DkZ9uYF3A=,tag:ijP/bZuHsrJY9pQEnktm+g==,type:str]
-          password: ENC[AES256_GCM,data:EGIJpmegd+RMlcXlSL1ZbHLC,iv:cnTU1mIxPfpx89/6tbOzYt86s5zlkkqzwoDSWXW/BUU=,tag:P1Nx7r2FXGDOdRTHY13Dyw==,type:str]
-        - username: ENC[AES256_GCM,data:EV2D6Q==,iv:YF5/X2VOCmtG20dg6spxAKmP4e9eHin21j8DVsZlIko=,tag:dfLxrrx5MQpCP328IjIMmg==,type:str]
-          password: ENC[AES256_GCM,data:44ak74WbiYoiFR7w,iv:vH3BgCmgC9dU7s/NhwkVSrEqCxm9E81wNlIXsO0LJ/g=,tag:fITib7C8k11JgavpyswzVQ==,type:str]
+providersSecrets:
+    PAPERLESS_NGX_PROVIDER_CLIENT_ID: ENC[AES256_GCM,data:QUJJcCJXuMqOTt5yj+JsyYROvlSPsMQZzeLRZKc5ahyjQ5AJqJdqzQ==,iv:Ofmcvo+J2wuQTRdXL4MZf5iNKGS9lx+3O6Dsv6nwD7E=,tag:2LXmLkeZHLHxPzdye6KGhg==,type:str]
+    PAPERLESS_NGX_PROVIDER_CLIENT_SECRET: ENC[AES256_GCM,data:alvEomzPz/pt+/ixPBGV5fOY8+yWrWFFnEO+KsuUbbRcspH2T+JaoPT7+iNSFvFsK4LBPXgLrdNcmCiTFu/9YjChK50spFkYVAohUuIb1ceOrfVS4nuA061RnS1Q6MIL6lHxJOuspPcxIlqeNgW00oiIxwGaa84lWNQW33h5CYk=,iv:09Ag5A1NcLMp/vkwCxEA7z8M+cOZhhBTkQhndx3KYIs=,tag:Tjd+CitYxehQRTUpZ/YhvA==,type:str]
+    GRAFANA_PROVIDER_CLIENT_ID: ENC[AES256_GCM,data:biZltwPP8Jmy+WIFwkO1xGkT6OSPyrmaQnHIbPozogNmfsF7RZj8RQ==,iv:ijQjjN97UKufPv3uvk/pMR8ERbgk3ppUHekBKLsBjyk=,tag:GrK7PjhIJiGw24M9CmV3aA==,type:str]
+    GRAFANA_PROVIDER_CLIENT_SECRET: ENC[AES256_GCM,data:dVC6JkN1t7tkMPEmLiG5UP8X91eJpX3u1/+71amtyeDzhPObhdxg+fh0xAkcGYe9hsdG1XUHYjwrj9bF0/V/7+w/KKYf6MqnZfB+vEQSCnZOFO5iQi2uq79FLbbi94p62ULQcBYHIsgCGYAfNureIG9RH1IjzY0VIfyYw4+p9Dc=,iv:k53ivIZ8So4tUnOTpxzWPqPm2y7BW2F/VtVSPJawGxI=,tag:eV3HNSceouYQvXRwVyDYJA==,type:str]
+    AUDIOBOOKSHELF_PROVIDER_CLIENT_ID: ENC[AES256_GCM,data:W0dPu9YGVoi/1B8iiEXCvouqLY9mteWydahJBhZj3tuOfR7TUsd1rA==,iv:ehNIrtJxHpkO44uzp+0lVMu63C6i80e9hyRUfUIsAEI=,tag:AeW7uuIZqhqUiKOVlFdH6w==,type:str]
+    AUDIOBOOKSHELF_PROVIDER_CLIENT_SECRET: ENC[AES256_GCM,data:trgp2ucqamJJYVhquZFF8x41b0KY2jQTwi100OORbU2+UHHaagIZyfHf/jmstCJHghCKPzKsi/En0WN10DjyQvA9ss5pxnCsYGsXJ/dlQLGTxK1GcjUP5AleYIutGMZViNwabVnnGmq9hZbljRAMlQ9z1jFaBWbfn09OYrkUJZ4=,iv:AqMwLNci1/PUCHwix80eY5gLQ2k/USmcPBKR4o/injs=,tag:Sa+8HHwiXZ23WoeBZvVroA==,type:str]
+users:
+    - username: ENC[AES256_GCM,data:95Cc9Mw=,iv:BUQEEGGUKsEY1k1Hlv7PfcAyB7zMnxEr6A9fGLXIKoI=,tag:I2w89SEO6/9i1J0WInq/hw==,type:str]
+      password: ENC[AES256_GCM,data:NAmVtplQ9368PQxPOP0/ZspQ,iv:dbnqEIIXkzVJSRe/15y4tD25hJjehWwTBfCzkORka4M=,tag:sykD/8rHsswJzNrrKSgutw==,type:str]
+    - username: ENC[AES256_GCM,data:4zjtQA==,iv:QedkHlXDvIdXvfN1OMG8G78ZFqrN2BcELK6SI4ao9eM=,tag:/JVX2tyfRf9vit9+2r7RzA==,type:str]
+      password: ENC[AES256_GCM,data:t9TknwDKMwJQEd0q,iv:XnURUIdfWmj5eJpIQ4zVFd1R6CRWKdfKy/PEgSfmx6I=,tag:c7we6bU85y0hCWGJnTKqPA==,type:str]
 sops:
     age:
         - recipient: age1hnmh393g3qaf2szdjkyrd7jsven9wzvgpud4207vzrfywmuvdassvperqc
@@ -33,7 +33,7 @@ sops:
             M3NvOE04NXpZaXV5MmpvOXNQZ1AvMTAKoLZMR/x+crsJiJkh2hrXegnStbAivKb1
             YAYiSxFM2Z3m5JXeYlXSFR0KVX/7sZ7YA5ajBaL58nI7YHzY/ldPPA==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-01-09T19:58:43Z"
-    mac: ENC[AES256_GCM,data:2Ij3x5KARgGFRNsS9M5i7r2lMt+axs5URtvPrPJbg/Qk1wZIIClxHKeQfMqmjBcirBoEWzOUPvSdO3MNRqmgm3TVzu6q0rFgYZiO7hrCedlIgn/7Jtk0elqrntkbXZOkTgm11e785uSbhgtauVzWCSM7SMIrWl9tcpPkCUN08oo=,iv:bSA7pK0cYKsDunyu9QGp++ezLfSCaPy0yzEpVpQ5xAY=,tag:Cj2VYyuR0UWEhRE4gk53CA==,type:str]
+    lastmodified: "2026-01-09T20:07:32Z"
+    mac: ENC[AES256_GCM,data:KCVZF1CdkRtIE7ZgD8JyVDUZhS/VZ2aYp4Cs27Z7ZiiVgnVaSO/EZF1ZeprVyRNwLdyh69yCjY7EENM+VnEZWrOQTobtmaJ1UZ+xFOaqTL6dQXZ87iy3PJHQxiGBfjpLIfrN9ff/GkoFaYFNwU42yqpnH3t3xJz5O9/fGb/gPhc=,iv:ngH0UxmxhG2lkN8ky/QdSm4eIrmzvIAKGs06uRDcXfo=,tag:e51lrRikQ6T+TYLxGl12eA==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.11.0
