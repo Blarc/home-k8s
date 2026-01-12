@@ -5,14 +5,14 @@ argo-cd:
     install: false
   createClusterRoles: true
   global:
-    domain: argo-cd.blarc.my.id
+    domain: argo-cd.int.blarc.my.id
   server:
     httproute:
       enabled: true
       hostnames:
-        - argo-cd.blarc.my.id
+        - argo-cd.int.blarc.my.id
       parentRefs:
-        - name: cilium-gateway
+        - name: gateway-internal
           namespace: gateway
   controller:
     replicas: 1

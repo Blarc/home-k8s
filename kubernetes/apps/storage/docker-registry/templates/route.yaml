@@ -5,10 +5,10 @@ metadata:
   namespace: storage
 spec:
   parentRefs:
-    - name: cilium-gateway
+    - name: gateway-internal
       namespace: gateway
   hostnames:
-    - "registry.blarc.my.id"
+    - "registry.int.blarc.my.id"
   rules:
     - matches:
         - path:

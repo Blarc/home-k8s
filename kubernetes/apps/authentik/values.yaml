@@ -26,9 +26,9 @@ authentik:
       main:
         enabled: true
         hostnames:
-          - "authentik.blarc.my.id"
+          - "authentik.int.blarc.my.id"
         parentRefs:
-          - name: cilium-gateway
+          - name: gateway-internal
             namespace: gateway
     volumes:
       - name: postgres-creds

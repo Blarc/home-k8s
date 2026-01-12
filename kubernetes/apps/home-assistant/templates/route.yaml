@@ -4,10 +4,10 @@ metadata:
   name: home-assistant
 spec:
   parentRefs:
-    - name: cilium-gateway
+    - name: gateway-internal
       namespace: gateway
   hostnames:
-    - "home-assistant.blarc.my.id"
+    - "home-assistant.int.blarc.my.id"
   rules:
     - backendRefs:
       - name: home-assistant

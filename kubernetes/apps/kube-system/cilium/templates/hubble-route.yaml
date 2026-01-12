@@ -5,10 +5,10 @@ metadata:
   namespace: kube-system
 spec:
   parentRefs:
-    - name: cilium-gateway
+    - name: gateway-internal
       namespace: gateway
   hostnames:
-    - "hubble.blarc.my.id"
+    - "hubble.int.blarc.my.id"
   rules:
     - matches:
         - path:

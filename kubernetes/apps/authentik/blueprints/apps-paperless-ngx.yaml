@@ -28,7 +28,7 @@ entries:
 
       client_type: confidential
       redirect_uris:
-        - url: https://paperless.blarc.my.id/accounts/oidc/authentik/login/callback/
+        - url: https://paperless.int.blarc.my.id/accounts/oidc/authentik/login/callback/
           matching_mode: strict
 
       access_code_validity: minutes=1

@@ -7,7 +7,7 @@ podinfo:
   httpRoute:
     enabled: true
     hostnames:
-      - podinfo.blarc.my.id
+      - podinfo.int.blarc.my.id
     parentRefs:
-      - name: cilium-gateway
+      - name: gateway-internal
         namespace: gateway

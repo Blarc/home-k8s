@@ -1,7 +1,7 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: cilium-gateway-external
+  name: gateway-external
   namespace: gateway
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
@@ -15,11 +15,11 @@ spec:
     - protocol: HTTPS
       port: 443
       name: https-external
-      hostname: "*.external.blarc.my.id"
+      hostname: "*.blarc.my.id"
       tls:
         certificateRefs:
           - kind: Secret
-            name: gateway-cert-external
+            name: gateway-external-certifcate
             # Keep this for argo
             group: ''
       allowedRoutes:

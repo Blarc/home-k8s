@@ -5,10 +5,10 @@ metadata:
   namespace: blog
 spec:
   parentRefs:
-    - name: cilium-gateway
+    - name: gateway-internal
       namespace: gateway
   hostnames:
-    - "blog.blarc.my.id"
+    - "blog.int.blarc.my.id"
   rules:
     - backendRefs:
       - name: blog

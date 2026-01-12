@@ -5,10 +5,10 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   parentRefs:
-    - name: cilium-gateway
+    - name: gateway-internal
       namespace: gateway
   hostnames:
-    - "paperless.blarc.my.id"
+    - "paperless.int.blarc.my.id"
   rules:
     - backendRefs:
         - name: *name

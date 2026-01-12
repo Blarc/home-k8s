@@ -4,10 +4,10 @@ metadata:
   name: mosquitto
 spec:
   parentRefs:
-    - name: cilium-gateway
+    - name: gateway-internal
       namespace: gateway
   hostnames:
-    - "mosquitto.blarc.my.id"
+    - "mosquitto.int.blarc.my.id"
   rules:
     - backendRefs:
       - name: mosquitto

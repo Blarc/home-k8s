@@ -1,11 +1,11 @@
 # Call Of Duty 2 Server
 
 ```bash
-podman build . -f Dockerfile -t registry.blarc.my.id/cod2
+podman build . -f Dockerfile -t registry.int.blarc.my.id/cod2
 ```
 
 ```bash
-podman push registry.blarc.my.id/cod2:latest
+podman push registry.int.blarc.my.id/cod2:latest
 ```
 
 ```bash

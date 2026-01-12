@@ -25,7 +25,7 @@ spec:
             - name: ENABLE_DELETE_IMAGES
               value: "true"
             - name: PUBLIC_REGISTRY_URL
-              value: "registry.blarc.my.id"
+              value: "registry.int.blarc.my.id"
           envFrom:
             - secretRef:
                 name: ui-secret

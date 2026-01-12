@@ -6,7 +6,7 @@ metadata:
 data:
   server.yml: |
     # Template: https://github.com/binwiederhier/ntfy/blob/main/server/server.yml
-    base-url: https://ntfy.external.blarc.my.id
+    base-url: https://ntfy.blarc.my.id
     auth-file: "/var/lib/ntfy/user.db"
     auth-default-access: "deny-all"
     auth-access:

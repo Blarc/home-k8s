@@ -5,10 +5,10 @@ metadata:
   namespace: ad-mediation-service
 spec:
   parentRefs:
-    - name: cilium-gateway-external
+    - name: gateway-external
       namespace: gateway
   hostnames:
-    - "ad-mediation-service.external.blarc.my.id"
+    - "ad-mediation-service.blarc.my.id"
   rules:
     - backendRefs:
       - name: ad-mediation-service

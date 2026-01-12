@@ -5,10 +5,10 @@ metadata:
   namespace: ntfy
 spec:
   parentRefs:
-    - name: cilium-gateway-external
+    - name: gateway-external
       namespace: gateway
   hostnames:
-    - "ntfy.external.blarc.my.id"
+    - "ntfy.blarc.my.id"
   rules:
     - backendRefs:
       - name: ntfy
