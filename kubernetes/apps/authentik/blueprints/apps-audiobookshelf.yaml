@@ -28,9 +28,9 @@ entries:
 
       client_type: confidential
       redirect_uris:
-        - url: https://audiobookshelf.int.blarc.my.id/auth/openid/callback
+        - url: https://audiobookshelf.blarc.my.id/auth/openid/callback
           matching_mode: strict
-        - url: https://audiobookshelf.int.blarc.my.id/auth/openid/mobile-redirect
+        - url: https://audiobookshelf.blarc.my.id/auth/openid/mobile-redirect
           matching_mode: strict
 
       client_id: !Env AUDIOBOOKSHELF_PROVIDER_CLIENT_ID
