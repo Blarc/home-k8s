@@ -10,6 +10,15 @@ authentik:
       user: file:///postgres-creds/username
       password: file:///postgres-creds/password
 
+  global:
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      runAsNonRoot: true
+      seccompProfile:
+        type: RuntimeDefault
+
   blueprints:
     configMaps:
       - authentik-blueprints
@@ -17,6 +26,12 @@ authentik:
   server:
     deploymentAnnotations:
       reloader.stakater.com/auto: "true"
+    containerSecurityContext:
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+          - ALL
     envFrom:
       - secretRef:
           name: providers-secrets
@@ -26,18 +41,22 @@ authentik:
       main:
         enabled: true
         hostnames:
-          - "authentik.int.blarc.my.id"
+          - "authentik.blarc.my.id"
         parentRefs:
-          - name: gateway-internal
+          - name: gateway-external
             namespace: gateway
     volumes:
       - name: postgres-creds
         secret:
           secretName: postgres-app
+      - name: media
+        emptyDir: {}
     volumeMounts:
       - name: postgres-creds
         mountPath: /postgres-creds
         readOnly: true
+      - name: media
+        mountPath: /media
     metrics:
       enabled: true
       serviceMonitor:
