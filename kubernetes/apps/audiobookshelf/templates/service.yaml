@@ -11,4 +11,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app.kubernetes.io/name: {{ .Release.Name }}
+    app: {{ .Release.Name }}

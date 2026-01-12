@@ -5,10 +5,10 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   parentRefs:
-    - name: gateway-internal
+    - name: gateway-external
       namespace: gateway
   hostnames:
-    - "audiobookshelf.int.blarc.my.id"
+    - "audiobookshelf.blarc.my.id"
   rules:
     - backendRefs:
         - name: {{ .Release.Name }}
