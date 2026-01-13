@@ -1,3 +1,4 @@
 talosconfig
 home-control-plane-1.yaml
 home-worker-1.yaml
+home-multi-role.yaml

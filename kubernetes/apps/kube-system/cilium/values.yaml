@@ -23,6 +23,7 @@ cilium:
     hostRoot: /sys/fs/cgroup
 
   operator:
+    replicas: 1
     rollOutPods: true
     resources:
       limits:

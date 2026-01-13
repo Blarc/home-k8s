@@ -3,25 +3,14 @@
 clusterName: ${clusterName}
 talosVersion: 1.12.0
 kubernetesVersion: 1.35.0
-endpoint: https://192.168.1.17:6443
+endpoint: https://192.168.1.16:6443
 
 cniConfig:
   name: none
 
 nodes:
-  - hostname: control-plane-1
+  - hostname: multi-role
     controlPlane: true
-    ipAddress: 192.168.1.17
-    installDisk: /dev/sdb
-    schematic:
-      customization:
-        systemExtensions:
-          officialExtensions:
-            # https://github.com/siderolabs/talos/issues/9529
-            - siderolabs/i915
-            - siderolabs/mei
-  - hostname: worker-1
-    controlPlane: false
     ipAddress: 192.168.1.16
     installDisk: /dev/sdc
     installDiskSelector:
@@ -39,6 +28,9 @@ nodes:
 
 controlPlane:
   patches:
+    - |-
+      cluster:
+        allowSchedulingOnControlPlanes: true
     - |-
       machine:
         kubelet:
