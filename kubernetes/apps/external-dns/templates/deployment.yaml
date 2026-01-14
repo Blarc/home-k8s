@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: external-dns
-  namespace: external-dns
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
 spec:
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: external-dns
+      app: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: external-dns
+        app: {{ .Release.Name }}
     spec:
-      serviceAccountName: external-dns
+      serviceAccountName: {{ .Release.Name }}
       containers:
-        - name: external-dns
+        - name: {{ .Release.Name }}
           securityContext:
             seccompProfile:
               type: RuntimeDefault
