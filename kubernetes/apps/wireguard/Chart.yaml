@@ -1,4 +1,8 @@
 apiVersion: v2
 description: Helm chart to deploy wireguard
+dependencies:
+  - name: wireguard-operator
+    repository: https://nccloud.github.io/charts
+    version: 0.2.0
 name: wireguard
 version: 1.0.0

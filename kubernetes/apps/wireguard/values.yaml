@@ -1,3 +1,6 @@
+wireguard-operator:
+  fullnameOverride: wireguard
+
 peers:
   - name: jakob
   - name: blarc
