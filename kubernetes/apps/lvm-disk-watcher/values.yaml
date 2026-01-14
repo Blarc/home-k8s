@@ -10,5 +10,4 @@ lvm-disk-watcher:
       enabled: true
       data:
         disk-config: |
-          control-plane-1: none
-          worker-1: all
+          multi-role: all
