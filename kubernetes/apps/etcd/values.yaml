@@ -1,4 +1,6 @@
 etcd:
+  image:
+    repository: bitnamilegacy/etcd
   auth:
     rbac:
       create: false
