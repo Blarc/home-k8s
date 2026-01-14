@@ -3,6 +3,7 @@ topolvm:
   image:
     repository: ghcr.io/topolvm/topolvm
     tag: "0.39.0"
+    pullPolicy: Always
     csi:
       # We must point these specifically to images that support amd64
       # and are not the bundled "with-sidecar" image.
