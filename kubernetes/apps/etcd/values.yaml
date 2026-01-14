@@ -7,3 +7,6 @@ etcd:
 
   persistence:
     enabled: false
+
+  preUpgradeJob:
+    enabled: false
