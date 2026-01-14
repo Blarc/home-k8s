@@ -35,6 +35,6 @@ topolvm:
         # enables CSI drivers to expand volumes. This feature is available for Kubernetes 1.16 and later releases.
         allowVolumeExpansion: true
         additionalParameters:
-          topolvm.io/device-class": "ssd-thin"
+          topolvm.io/device-class: "ssd-thin"
   node:
     lvmdEmbedded: true
