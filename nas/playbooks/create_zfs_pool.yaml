@@ -1,0 +1,44 @@
+
+---
+- name: Create ZFS Pool for Kubernetes NFS
+  hosts: NAS
+  become: true
+  tasks:
+    - name: Create RAID-Z1 pool named 'storage'
+      community.general.zpool:
+        name: storage
+        state: present
+        force: true
+        pool_properties:
+          ashift: "12"
+        filesystem_properties:
+          compression: lz4
+        vdevs:
+          - type: raidz
+            disks:
+              - /dev/disk/by-id/ata-TOSHIBA_MG04ACA600E_46F5K0MGFE1C
+              - /dev/disk/by-id/ata-TOSHIBA_MG04ACA600E_36SDK16IFE1C
+              - /dev/disk/by-id/ata-TOSHIBA_MG04ACA600E_36B7K1GKFE1C
+
+    - name: Set additional ZFS properties
+      community.general.zfs:
+        name: storage
+        state: present
+        extra_zfs_properties:
+          atime: off
+          # should be sa, but it doesn't work
+          xattr: on
+
+    - name: Set ZFS Cache (ARC) to 2GB for dedicated 4GB server
+      lineinfile:
+        path: /etc/modprobe.d/zfs.conf
+        line: "options zfs zfs_arc_max=2147483648"
+        create: yes
+
+    - name: Show pool status
+      command: zpool status storage
+      register: zpool_output
+
+    - name: Display status
+      debug:
+        msg: "{{ zpool_output.stdout_lines }}"

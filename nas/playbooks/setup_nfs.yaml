@@ -1,0 +1,25 @@
+---
+- name: Setup NFS for Kubernetes
+  hosts: NAS
+  become: true
+  tasks:
+    - name: Install NFS server
+      apt:
+        name: nfs-kernel-server
+        state: present
+        update_cache: yes
+
+    - name: Create K8s dataset with NFS sharing enabled
+      community.general.zfs:
+        name: storage/k8s-vols
+        state: present
+        extra_zfs_properties:
+          # should be sa but it doesn't work'
+          xattr: on
+          sharenfs: "rw=@192.168.1.16,no_root_squash,async"
+
+    - name: Ensure NFS service is running
+      service:
+        name: nfs-kernel-server
+        state: started
+        enabled: yes

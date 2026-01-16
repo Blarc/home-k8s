@@ -1,0 +1,35 @@
+---
+- name: Configure ZFS on NAS
+  hosts: NAS
+  become: true
+  tasks:
+    - name: Ensure contrib and non-free repositories are enabled
+      apt_repository:
+        repo: "deb http://deb.debian.org/debian/ {{ ansible_facts['distribution_release'] }} main contrib"
+        state: present
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+    - name: Install dependencies
+      apt:
+        name:
+          - gpg
+          - "linux-headers-{{ ansible_facts['kernel'] }}"
+        state: present
+    - name: Install ZFS packages
+      apt:
+        name:
+          - zfsutils-linux
+          - zfs-dkms
+        state: present
+    - name: Load ZFS kernel module
+      modprobe:
+        name: zfs
+        state: present
+    - name: Verify ZFS installation
+      command: zfs --version
+      register: zfs_version
+      changed_when: false
+    - name: Display ZFS version
+      debug:
+        msg: "Installed ZFS: {{ zfs_version.stdout_lines[0] }}"

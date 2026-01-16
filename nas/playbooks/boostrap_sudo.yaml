@@ -1,0 +1,25 @@
+---
+- name: Bootstrap sudo for Debian
+  hosts: NAS
+  become: true
+  become_method: su  # Use 'su' instead of 'sudo'
+  tasks:
+    - name: Install sudo
+      apt:
+        name: sudo
+        state: present
+        update_cache: yes
+
+    - name: Ensure user 'jakob' is in the sudo group
+      user:
+        name: jakob
+        groups: sudo
+        append: yes
+
+    - name: Ensure the sudo group is enabled in sudoers
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        regexp: '^%sudo'
+        line: '%sudo ALL=(ALL:ALL) ALL'
+        validate: '/usr/sbin/visudo -cf %s'
