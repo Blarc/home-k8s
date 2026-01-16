@@ -73,6 +73,10 @@ kube-prometheus-stack:
   #              resources:
   #                requests:
   #                  storage: 50Gi
+      additionalScrapeConfigs:
+        - job_name: "node-exporter"
+          static_configs:
+            - targets: [ '192.168.1.13:9100' ]
   prometheus-node-exporter:
     fullnameOverride: node-exporter
     prometheus:
