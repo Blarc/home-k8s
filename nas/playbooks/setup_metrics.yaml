@@ -1,0 +1,30 @@
+---
+- name: Setup Monitoring on NAS
+  hosts: NAS
+  become: true
+  tasks:
+    - name: Install Prometheus Node Exporter
+      apt:
+        name: prometheus-node-exporter
+        state: present
+        update_cache: yes
+
+    - name: Configure Node Exporter to enable ZFS collector
+      lineinfile:
+        path: /etc/default/prometheus-node-exporter
+        regexp: '^ARGS='
+        # This enables ZFS and other standard collectors
+        line: 'ARGS="--collector.zfs"'
+      notify: Restart Node Exporter
+
+    - name: Ensure Node Exporter is running
+      service:
+        name: prometheus-node-exporter
+        state: started
+        enabled: yes
+
+  handlers:
+    - name: Restart Node Exporter
+      service:
+        name: prometheus-node-exporter
+        state: restarted
