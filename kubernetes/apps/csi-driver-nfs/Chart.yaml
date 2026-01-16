@@ -1,0 +1,8 @@
+apiVersion: v2
+dependencies:
+  - name: csi-driver-nfs
+    repository: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/master/charts
+    version: 4.12.1
+description: Helm chart to deploy csi-driver-nfs
+name: csi-driver-nfs
+version: 1.0.0
