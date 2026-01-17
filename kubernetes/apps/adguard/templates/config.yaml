@@ -33,10 +33,10 @@ data:
       ratelimit_whitelist: [ ]
       refuse_any: true
       upstream_dns:
-        - 10.96.0.10
+        - 1.1.1.1
       upstream_dns_file: ""
       bootstrap_dns:
-        - 10.96.0.10
+        - 1.1.1.1
       fallback_dns:
         - 1.1.1.1
         - 9.9.9.9
