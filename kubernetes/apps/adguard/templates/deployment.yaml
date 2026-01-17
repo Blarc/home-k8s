@@ -37,10 +37,11 @@ spec:
         - name: {{ .Release.Name }}
           image: docker.io/adguard/adguardhome:v0.107.71 # renovate: docker=docker.io/adguard/adguardhome
           securityContext:
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
-          # capabilities:
-          #   drop: [ "ALL" ]
+            # DHCP needs to bind to raw sockets
+            allowPrivilegeEscalation: true
+            readOnlyRootFilesystem: false
+            capabilities:
+              add: ["NET_ADMIN", "NET_RAW"]
           ports:
             - name: dns-tls
               containerPort: 853
@@ -90,4 +91,17 @@ spec:
         - name: config-folder
           emptyDir: { }
         - name: work-folder
-          emptyDir: { }
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-work-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Release.Name }}-work-pvc
+  namespace: {{ .Release.Namespace }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
