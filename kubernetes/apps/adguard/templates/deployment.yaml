@@ -1,0 +1,110 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
+      initContainers:
+        #        - name: copy-base-config
+        #          image: busybox
+        #          command: [ "cp", "/tmp/AdGuardHome.yaml", "/opt/adguardhome/conf/AdGuardHome.yaml" ]
+        #          securityContext:
+        #            allowPrivilegeEscalation: false
+        #            readOnlyRootFilesystem: true
+        #            capabilities:
+        #              drop: [ "ALL" ]
+        #          volumeMounts:
+        #            - name: config
+        #              mountPath: /tmp/AdGuardHome.yaml
+        #              subPath: AdGuardHome.yaml
+        #            - name: config-folder
+        #              mountPath: /opt/adguardhome/conf
+        - name: append-users
+          image: busybox
+          command: [ "sh", "-c", "cat /tmp/users.yaml >> /opt/adguardhome/conf/AdGuardHome.yaml" ]
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: [ "ALL" ]
+          volumeMounts:
+            - name: users
+              mountPath: /tmp/users.yaml
+              subPath: users.yaml
+            - name: config-folder
+              mountPath: /opt/adguardhome/conf
+      containers:
+        - name: {{ .Release.Name }}
+          image: docker.io/adguard/adguardhome:v0.107.71 # renovate: docker=docker.io/adguard/adguardhome
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+          # capabilities:
+          #   drop: [ "ALL" ]
+          ports:
+            - name: dns-tls
+              containerPort: 853
+              protocol: TCP
+            - name: dns-quic
+              containerPort: 853
+              protocol: UDP
+            - name: dns-tcp
+              containerPort: 53
+              protocol: TCP
+            - name: dns-udp
+              containerPort: 53
+              protocol: UDP
+            - name: dchp
+              containerPort: 67
+              protocol: UDP
+            - name: https
+              containerPort: 443
+              protocol: TCP
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+          volumeMounts:
+            - name: config-folder
+              mountPath: /opt/adguardhome/conf
+            - name: work-folder
+              mountPath: /opt/adguardhome/work
+            - name: cert
+              mountPath: /cert
+      volumes:
+        # - name: config
+        #   configMap:
+        #     name: adguard-config
+        - name: users
+          secret:
+            secretName: {{ .Release.Name }}-users
+        - name: cert
+          secret:
+            secretName: {{ .Release.Name }}-certificate
+            items:
+              - { key: tls.key, path: tls.key }
+              - { key: tls.crt, path: tls.crt }
+        - name: config-folder
+          emptyDir: { }
+        - name: work-folder
+          emptyDir: { }

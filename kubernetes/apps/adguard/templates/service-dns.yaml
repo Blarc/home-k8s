@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-dns-dhcp
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    lbipam.cilium.io/ips: 192.168.1.226
+{{/*  labels:*/}}
+{{/*    bgp.cilium.io/advertise-service: default*/}}
+{{/*    bgp.cilium.io/ip-pool: default*/}}
+spec:
+  type: LoadBalancer
+  # https://kubernetes.io/docs/concepts/services-networking/cluster-ip-allocation/#why-do-you-need-to-reserve-service-cluster-ips
+  clusterIP: 10.96.0.11
+  ports:
+    - name: dns-tls
+      port: 853
+      protocol: TCP
+    - name: dns-quic
+      port: 853
+      protocol: UDP
+    - name: dns-tcp
+      port: 53
+      protocol: TCP
+    - name: dns-udp
+      port: 53
+      protocol: UDP
+    - name: dchp
+      port: 67
+      protocol: UDP
+    - name: https
+      port: 443
+      protocol: TCP
+  selector:
+    app: adguard
