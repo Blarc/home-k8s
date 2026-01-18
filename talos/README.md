@@ -80,6 +80,6 @@ This generates machine configuration and `talosconfig` which is used to connect 
 copy it to `~/.talos/config`. You can then apply the configuration to each node:
 ```bash
 # Add --insecure flag, if the cluster is new
-talosctl apply-config --nodes=192.168.1.17 --file=./clusterconfig/home-control-plane-1.yaml
+talosctl apply-config --nodes=192.168.1.16 --file=./clusterconfig/home-multi-role.yaml
 ```
 

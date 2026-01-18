@@ -12,6 +12,14 @@ nodes:
   - hostname: multi-role
     controlPlane: true
     ipAddress: 192.168.1.16
+    networkInterfaces:
+      - interface: enp1s0
+        dhcp: false
+        addresses:
+          - 192.168.1.16
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.1.1
     installDisk: /dev/sdc
     installDiskSelector:
       model: WDC*
