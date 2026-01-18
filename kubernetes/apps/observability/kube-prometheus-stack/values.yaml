@@ -8,14 +8,14 @@ kube-prometheus-stack:
       main:
         enabled: true
         hostnames:
-          - alertmanager.int.blarc.my.id
+          - alertmanager.blarc.my.id
         parentRefs:
           - name: gateway-internal
             namespace: gateway
     alertmanagerSpec:
       alertmanagerConfiguration:
         name: alertmanager
-      externalUrl: https://alertmanager.int.blarc.my.id
+      externalUrl: https://alertmanager.blarc.my.id
       storage:
         volumeClaimTemplate:
           spec:
@@ -47,9 +47,9 @@ kube-prometheus-stack:
           - name: gateway-internal
             namespace: gateway
         hostnames:
-          - "prometheus.int.blarc.my.id"
+          - "prometheus.blarc.my.id"
     prometheusSpec:
-      externalUrl: https://prometheus.int.blarc.my.id
+      externalUrl: https://prometheus.blarc.my.id
       podMonitorSelectorNilUsesHelmValues: false
       probeSelectorNilUsesHelmValues: false
       ruleSelectorNilUsesHelmValues: false

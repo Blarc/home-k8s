@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: cod2
-          image: registry.int.blarc.my.id/cod2:latest
+          image: registry.blarc.my.id/cod2:latest
           ports:
             - containerPort: 20500
               protocol: UDP

@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 data:
   PAPERLESS_ADMIN_USER: "admin"
-  PAPERLESS_URL: "https://paperless.int.blarc.my.id"
+  PAPERLESS_URL: "https://paperless.blarc.my.id"
   PAPERLESS_REDIS: "redis://redis:6379"
   PAPERLESS_DBHOST: "postgres-rw"
   PAPERLESS_TIKA_ENABLED: "true"

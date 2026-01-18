@@ -28,7 +28,7 @@ entries:
 
       client_type: confidential
       redirect_uris:
-        - url: https://grafana.int.blarc.my.id/login/generic_oauth
+        - url: https://grafana.blarc.my.id/login/generic_oauth
           matching_mode: strict
 
       client_id: !Env GRAFANA_PROVIDER_CLIENT_ID

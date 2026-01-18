@@ -8,7 +8,7 @@ spec:
     - name: gateway-internal
       namespace: gateway
   hostnames:
-    - "paperless.int.blarc.my.id"
+    - "paperless.blarc.my.id"
   rules:
     - backendRefs:
         - name: *name

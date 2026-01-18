@@ -7,7 +7,7 @@ spec:
     - name: gateway-internal
       namespace: gateway
   hostnames:
-    - "mosquitto.int.blarc.my.id"
+    - "mosquitto.blarc.my.id"
   rules:
     - backendRefs:
       - name: mosquitto

@@ -9,7 +9,7 @@ spec:
     - name: gateway-internal
       namespace: gateway
   hostnames:
-    - "hubble.int.blarc.my.id"
+    - "hubble.blarc.my.id"
   rules:
     - matches:
         - path:

@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   dnsNames:
-    - adguard.int.blarc.my.id
+    - adguard.blarc.my.id
   issuerRef:
     group: cert-manager.io
     kind: ClusterIssuer

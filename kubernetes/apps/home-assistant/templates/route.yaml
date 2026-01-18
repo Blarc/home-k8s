@@ -7,7 +7,7 @@ spec:
     - name: gateway-internal
       namespace: gateway
   hostnames:
-    - "home-assistant.int.blarc.my.id"
+    - "home-assistant.blarc.my.id"
   rules:
     - backendRefs:
       - name: home-assistant

@@ -7,7 +7,7 @@ podinfo:
   httpRoute:
     enabled: true
     hostnames:
-      - podinfo.int.blarc.my.id
+      - podinfo.blarc.my.id
     parentRefs:
       - name: gateway-internal
         namespace: gateway

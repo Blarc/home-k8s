@@ -8,7 +8,7 @@ spec:
     - name: gateway-internal
       namespace: gateway
   hostnames:
-    - "blog.int.blarc.my.id"
+    - "blog.blarc.my.id"
   rules:
     - backendRefs:
       - name: blog

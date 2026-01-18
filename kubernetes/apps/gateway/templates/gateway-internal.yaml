@@ -11,7 +11,7 @@ spec:
     - protocol: HTTPS
       port: 443
       name: https-internal
-      hostname: "*.int.blarc.my.id"
+      hostname: "*.blarc.my.id"
       tls:
         certificateRefs:
           - kind: Secret
