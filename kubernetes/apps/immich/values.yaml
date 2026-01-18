@@ -1,0 +1,51 @@
+immich:
+  controllers:
+    main:
+      containers:
+        main:
+          image:
+            tag: v2.4.1
+          env:
+            DB_HOSTNAME:
+              valueFrom:
+                secretKeyRef:
+                  name: immich-database-app
+                  key: host
+            DB_USERNAME:
+              valueFrom:
+                secretKeyRef:
+                  name: immich-database-app
+                  key: user
+            DB_PASSWORD:
+              valueFrom:
+                secretKeyRef:
+                  name: immich-database-app
+                  key: password
+            DB_DATABASE_NAME:
+              valueFrom:
+                secretKeyRef:
+                  name: immich-database-app
+                  key: dbname
+  immich:
+    persistence:
+      library:
+        existingClaim: immich-data
+        size: 1Ti
+
+  valkey:
+    enabled: true
+    persistence:
+      data:
+        # Optional: Set this to persistentVolumeClaim to keep job queues persistent
+        type: persistentVolumeClaim
+        storageClass: topolvm-thin
+        size: 1Gi
+
+  machine-learning:
+    persistence:
+      cache:
+        # Optional: Set this to persistentVolumeClaim to avoid downloading the ML models every start.
+        type: persistentVolumeClaim
+        storageClass: topolvm-thin
+        size: 10Gi
+        accessMode: ReadWriteOnce
