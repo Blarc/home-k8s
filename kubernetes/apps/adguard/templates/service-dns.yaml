@@ -20,11 +20,13 @@ spec:
       port: 853
       protocol: UDP
     - name: dns-tcp
-      port: 5353
+      port: 53
       protocol: TCP
+      targetPort: 5353 # This must match the port in AdGuard config.yaml
     - name: dns-udp
-      port: 5353
+      port: 53
       protocol: UDP
+      targetPort: 5353 # This must match the port in AdGuard config.yaml
     - name: dchp
       port: 67
       protocol: UDP
