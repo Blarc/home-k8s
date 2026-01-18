@@ -10,7 +10,6 @@ metadata:
 {{/*    bgp.cilium.io/ip-pool: default*/}}
 spec:
   type: LoadBalancer
-  externalTrafficPolicy: Local
   # https://kubernetes.io/docs/concepts/services-networking/cluster-ip-allocation/#why-do-you-need-to-reserve-service-cluster-ips
   clusterIP: 10.96.0.11
   ports:
