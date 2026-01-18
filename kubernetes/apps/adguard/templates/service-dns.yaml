@@ -12,6 +12,7 @@ spec:
   type: LoadBalancer
   # https://kubernetes.io/docs/concepts/services-networking/cluster-ip-allocation/#why-do-you-need-to-reserve-service-cluster-ips
   clusterIP: 10.96.0.11
+  externalTrafficPolicy: Cluster
   ports:
     - name: dns-tls
       port: 853
