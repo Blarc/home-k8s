@@ -40,8 +40,8 @@ data:
       fallback_dns:
         - 1.1.1.1
         - 9.9.9.9
-      local_ptr_upstreams:
-        - 10.96.0.10  # Point this to your Kube-DNS / CoreDNS service IP
+      # local_ptr_upstreams:
+      #   - 10.96.0.10  # Point this to your Kube-DNS / CoreDNS service IP
       upstream_mode: parallel
       fastest_timeout: 1s
       allowed_clients: [ ]
