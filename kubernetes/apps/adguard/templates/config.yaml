@@ -24,7 +24,7 @@ data:
     theme: auto
     dns:
       bind_hosts:
-        - 192.168.1.226  # Bind ONLY to your AdGuard IP
+        - 0.0.0.0 # Bind to all available IPs on the host
       port: 53
       anonymize_client_ip: false
       ratelimit: 500
@@ -125,7 +125,7 @@ data:
     user_rules: []
     dhcp:
       enabled: true
-      interface_name: "eth0"
+      interface_name: "enp1s0"
       local_domain_name: lan
       dhcpv4:
         gateway_ip: 192.168.1.1
