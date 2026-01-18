@@ -57,6 +57,7 @@ spec:
               protocol: UDP
             - name: dchp
               containerPort: 67
+              hostPort: 67
               protocol: UDP
             - name: https
               containerPort: 443
