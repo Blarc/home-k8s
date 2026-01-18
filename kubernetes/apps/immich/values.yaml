@@ -31,6 +31,13 @@ immich:
       library:
         existingClaim: immich-data
         size: 1Ti
+    configuration:
+      oauth:
+        enabled: true
+        autoRegister: true
+        buttonText: "Sign in with Authentik"
+        clientId: "hrQQXJ6Vf93NhcmSR1EpZ8Oa3PMala9t9fUY0cq8"
+        issuerUrl: "https://authentik.blarc.my.id/application/o/immich/"
 
   valkey:
     enabled: true
