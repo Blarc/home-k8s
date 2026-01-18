@@ -28,9 +28,11 @@ entries:
 
       client_type: confidential
       redirect_uris:
-        - url: https://immich.blarc.my.id/auth/openid/callback
+        - url: app.immich:///oauth-callback
           matching_mode: strict
-        - url: https://immich.blarc.my.id/auth/openid/mobile-redirect
+        - url: https://immich.blarc.my.id/auth/login
+          matching_mode: strict
+        - url: https://immich.blarc.my.id/user-settings
           matching_mode: strict
 
       client_id: !Env IMMICH_PROVIDER_CLIENT_ID
