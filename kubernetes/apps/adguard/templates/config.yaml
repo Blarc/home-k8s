@@ -24,7 +24,7 @@ data:
     theme: auto
     dns:
       bind_hosts:
-        - 0.0.0.0
+        - 192.168.1.226  # Bind ONLY to your AdGuard IP
       port: 53
       anonymize_client_ip: false
       ratelimit: 500
