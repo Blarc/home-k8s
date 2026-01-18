@@ -20,10 +20,10 @@ spec:
       port: 853
       protocol: UDP
     - name: dns-tcp
-      port: 53
+      port: 5353
       protocol: TCP
     - name: dns-udp
-      port: 53
+      port: 5353
       protocol: UDP
     - name: dchp
       port: 67
