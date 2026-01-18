@@ -10,6 +10,8 @@ data:
 {{ .Files.Get "blueprints/apps-grafana.yaml" | indent 4 }}
   apps-paperless-ngx.yaml: |
 {{ .Files.Get "blueprints/apps-paperless-ngx.yaml" | indent 4 }}
+  apps-immich.yaml: |
+{{ .Files.Get "blueprints/apps-immich.yaml" | indent 4 }}
   groups.yaml: |
 {{ .Files.Get "blueprints/groups.yaml" | indent 4 }}
   users.yaml: |
