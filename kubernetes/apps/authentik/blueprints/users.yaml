@@ -12,6 +12,7 @@ entries:
     attrs:
       name: Jakob
       password: !Env JAKOB_PASSWORD
+      email: !Env JAKOB_EMAIL
       type: internal
       groups:
         - !Find [
