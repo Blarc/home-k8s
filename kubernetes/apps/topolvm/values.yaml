@@ -2,7 +2,7 @@ topolvm:
   # ghcr.io/topolvm/topolvm-with-sidecar@sha256:a8f28a45a8d35c4ae6439a9ed650a43253e1353c2d45e5c112ca5d9b6a554fe3
   image:
     repository: ghcr.io/topolvm/topolvm-with-sidecar
-    tag: "0.38.0"
+    tag: "0.39.0"
   controller:
     replicaCount: 1
     # Remove because the cluster has only one worker node and it prevents upgrades
