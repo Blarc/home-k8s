@@ -1,0 +1,14 @@
+image:
+  repository: bytemark/webdav
+  tag: latest
+  pullPolicy: IfNotPresent
+
+persistence:
+  enabled: true
+  size: 1Gi
+  accessMode: ReadWriteOnce
+  # storageClass: ""
+
+service:
+  type: ClusterIP
+  port: 80
