@@ -24,7 +24,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: ntfy
-          image: docker.io/binwiederhier/ntfy:v2.15.0
+          image: docker.io/binwiederhier/ntfy:v2.16.0
           imagePullPolicy: Always
           securityContext:
             allowPrivilegeEscalation: false
