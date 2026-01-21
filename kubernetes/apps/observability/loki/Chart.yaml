@@ -2,7 +2,7 @@ apiVersion: v2
 dependencies:
   - name: loki
     repository: oci://ghcr.io/grafana/helm-charts
-    version: 6.50.0
+    version: 6.51.0
 description: Helm chart to deploy loki
 name: loki
 version: 1.0.0
