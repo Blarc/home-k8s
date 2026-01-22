@@ -4,7 +4,7 @@
 
    | Server Name | External Port Start | External Port End | Protocol | Internal Port Start | Internal Port End | Server IP Address | NAT Loopback |
    |-------------|---------------------|-------------------|----------|---------------------|-------------------|-------------------|--------------|
-   | wireguard   | 51820               | 51820             | UDP      | 51820               | 51820             | 192.168.1.222     | enabled      |
+   | wireguard   | 31820               | 31820             | UDP      | 31820               | 31820             | 192.168.1.16      | enabled      |
 
 2. If the router's static IP changes property `spec.address` needs to be updated.
 
@@ -28,13 +28,13 @@ basically sets the wireguard route as the highest priority for that specific sub
 Plain text:
 
 ```bash
-kubectl get wireguardpeer -n wireguard jakob --template={{.status.config}} | bash
+kubectl get secret wireguard-peer-configs -o jsonpath='{.data.blarc}' | base64 -d
 ```
 
 QR code:
 
 ```bash
-kubectl get wireguardpeer -n wireguard jakob --template={{.status.config}} | bash | qrencode -t ansiutf8
+kubectl get secret wireguard-peer-configs -o jsonpath='{.data.blarc}' | base64 -d | qrencode -t ansiutf8
 ```
 
 ## Address and LoadBalancer IP are different
