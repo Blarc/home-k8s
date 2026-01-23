@@ -34,6 +34,7 @@ entries:
     attrs:
       name: Masa
       password: !Env MASA_PASSWORD
+      email: !Env MASA_EMAIL
       type: internal
       groups:
         - !Find [
