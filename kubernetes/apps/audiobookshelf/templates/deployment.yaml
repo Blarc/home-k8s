@@ -37,14 +37,10 @@ spec:
               containerPort: 80
               protocol: TCP
           volumeMounts:
-            - name: config
-              mountPath: /config
-            - name: metadata
-              mountPath: /metadata
-            - name: audiobooks
-              mountPath: /audiobooks
-            - name: podcasts
-              mountPath: /podcasts
+            {{- range $name, $config := .Values.persistence }}
+            - name: {{ $name }}
+              mountPath: /{{ $name }}
+            {{- end }}
           livenessProbe:
             httpGet:
               path: /healthcheck
@@ -61,63 +57,28 @@ spec:
               cpu: 500m
               memory: 1Gi
       volumes:
-        - name: config
+        {{- range $name, $config := .Values.persistence }}
+        - name: {{ $name }}
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-config
-        - name: metadata
-          persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-metadata
-        - name: audiobooks
-          persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-audiobooks
-        - name: podcasts
-          persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-podcasts
+            claimName: {{ $.Release.Name }}-{{ $name }}
+        {{- end }}
 ---
+{{- range $name, $config := .Values.persistence }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-config
-  namespace: {{ .Release.Namespace }}
+  name: {{ $.Release.Name }}-{{ $name }}
+  namespace: {{ $.Release.Namespace }}
 spec:
+  {{- if $config.storageClassName }}
+  storageClassName: {{ $config.storageClassName }}
+  {{- end }}
   accessModes:
-    - ReadWriteOnce
+    {{- range $config.accessModes }}
+    - {{ . }}
+    {{- end }}
   resources:
     requests:
-      storage: {{ .Values.persistence.config.size }}
+      storage: {{ $config.size }}
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: {{ .Release.Name }}-metadata
-  namespace: {{ .Release.Namespace }}
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: {{ .Values.persistence.metadata.size }}
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: {{ .Release.Name }}-audiobooks
-  namespace: {{ .Release.Namespace }}
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: {{ .Values.persistence.audiobooks.size }}
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: {{ .Release.Name }}-podcasts
-  namespace: {{ .Release.Namespace }}
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: {{ .Values.persistence.podcasts.size }}
+{{- end }}

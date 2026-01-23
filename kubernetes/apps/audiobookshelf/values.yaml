@@ -4,9 +4,28 @@ image:
 persistence:
   config:
     size: 5Gi
+    accessModes:
+      - ReadWriteOnce
+
   metadata:
     size: 10Gi
+    accessModes:
+      - ReadWriteOnce
+
   audiobooks:
-    size: 10Gi
+    size: 20Gi
+    storageClassName: nfs
+    accessModes:
+      - ReadWriteMany
+
   podcasts:
-    size: 1Gi
+    size: 10Gi
+    storageClassName: nfs
+    accessModes:
+      - ReadWriteMany
+
+  books:
+    size: 10Gi
+    storageClassName: nfs
+    accessModes:
+      - ReadWriteMany
