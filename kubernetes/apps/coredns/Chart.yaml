@@ -2,7 +2,7 @@ apiVersion: v2
 dependencies:
   - name: coredns
     repository: oci://ghcr.io/coredns/charts
-    version: 1.45.0
+    version: 1.45.2
 description: Helm chart to deploy coredns
 name: coredns
 version: 1.0.0
