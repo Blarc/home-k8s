@@ -1,0 +1,21 @@
+{{- range $app, $volumes := .Values.persistence }}
+{{- range $name, $config := $volumes }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ if eq $app "shared" }}{{ $name }}{{ else }}{{ $app }}-{{ $name }}{{ end }}
+  namespace: {{ $.Release.Namespace }}
+spec:
+  {{- if $config.storageClassName }}
+  storageClassName: {{ $config.storageClassName }}
+  {{- end }}
+  accessModes:
+    {{- range $config.accessModes }}
+    - {{ . }}
+    {{- end }}
+  resources:
+    requests:
+      storage: {{ $config.size }}
+---
+{{- end }}
+{{- end }}

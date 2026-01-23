@@ -37,10 +37,16 @@ spec:
               containerPort: 80
               protocol: TCP
           volumeMounts:
-            {{- range $name, $config := .Values.persistence }}
-            - name: {{ $name }}
-              mountPath: /{{ $name }}
-            {{- end }}
+            - name: config
+              mountPath: /config
+            - name: metadata
+              mountPath: /metadata
+            - name: audiobooks
+              mountPath: /audiobooks
+            - name: podcasts
+              mountPath: /podcasts
+            - name: books
+              mountPath: /books
           livenessProbe:
             httpGet:
               path: /healthcheck
@@ -57,28 +63,18 @@ spec:
               cpu: 500m
               memory: 1Gi
       volumes:
-        {{- range $name, $config := .Values.persistence }}
-        - name: {{ $name }}
+        - name: config
           persistentVolumeClaim:
-            claimName: {{ $.Release.Name }}-{{ $name }}
-        {{- end }}
----
-{{- range $name, $config := .Values.persistence }}
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: {{ $.Release.Name }}-{{ $name }}
-  namespace: {{ $.Release.Namespace }}
-spec:
-  {{- if $config.storageClassName }}
-  storageClassName: {{ $config.storageClassName }}
-  {{- end }}
-  accessModes:
-    {{- range $config.accessModes }}
-    - {{ . }}
-    {{- end }}
-  resources:
-    requests:
-      storage: {{ $config.size }}
----
-{{- end }}
+            claimName: audiobookshelf-config
+        - name: metadata
+          persistentVolumeClaim:
+            claimName: audiobookshelf-metadata
+        - name: audiobooks
+          persistentVolumeClaim:
+            claimName: audiobooks
+        - name: podcasts
+          persistentVolumeClaim:
+            claimName: podcasts
+        - name: books
+          persistentVolumeClaim:
+            claimName: books
