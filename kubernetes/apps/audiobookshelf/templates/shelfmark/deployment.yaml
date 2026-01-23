@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: shelfmark
-          image: ghcr.io/calibrain/shelfmark:v1.0.1
+          image: ghcr.io/calibrain/shelfmark:dev
           imagePullPolicy: IfNotPresent
           securityContext:
             capabilities:
