@@ -27,9 +27,9 @@ spec:
               protocol: TCP
           env:
             - name: PUID
-              value: "1000"
+              value: "2501"
             - name: PGID
-              value: "1000"
+              value: "2501"
             - name: FLASK_PORT
               value: "8084"
           volumeMounts:
