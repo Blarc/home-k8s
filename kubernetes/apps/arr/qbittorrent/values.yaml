@@ -3,6 +3,19 @@ app-template:
     qbittorrent:
       annotations:
         reloader.stakater.com/auto: "true"
+      initContainers:
+        setup-config:
+          image:
+            repository: docker.io/busybox
+            tag: latest
+          command:
+            - sh
+            - -c
+            - |
+              echo "Copying custom qBittorrent config..."
+              mkdir -p /config/qBittorrent
+              cp -f /defaults/qBittorrent.conf /config/qBittorrent/qBittorrent.conf
+              echo "Config copied successfully"
       containers:
         app:
           image:
