@@ -73,6 +73,10 @@ app-template:
         - backendRefs:
             - identifier: app
               port: *port
+          matches:
+            - path:
+                type: PathPrefix
+                value: /
   configMaps:
     config:
       data:
