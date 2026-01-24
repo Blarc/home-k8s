@@ -1,5 +1,0 @@
-apiVersion: v2
-name: arr
-description: A Helm chart for *arr apps
-type: application
-version: 1.0.0
