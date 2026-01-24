@@ -13,6 +13,8 @@ spec:
     metadata:
       labels:
         app: shelfmark
+      annotations:
+        reloader.stakater.com/auto: "true"
     spec:
       containers:
         - name: shelfmark
