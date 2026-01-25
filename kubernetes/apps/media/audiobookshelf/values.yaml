@@ -50,7 +50,7 @@ app-template:
       hostnames:
         - "{{ .Release.Name }}.blarc.my.id"
       parentRefs:
-        - name: gateway-internal
+        - name: gateway-external
           namespace: gateway
       rules:
         - backendRefs:
