@@ -1,10 +1,10 @@
-appTemplate:
+app-template:
     controllers:
         prowlarr:
             containers:
                 app:
                     env:
-                        PROWLARR__AUTH__APIKEY: ENC[AES256_GCM,data:myrKdLceJ/2dzZS+864gMlLEYkh53n7r4A0a1JUJc8s=,iv:VmMIg2EggGnNE1IHFERpwWUktKPt0TRrLUaMon3SxE4=,tag:9HnIIIgAJbfCQVRXniETjw==,type:str]
+                        PROWLARR__AUTH__APIKEY: ENC[AES256_GCM,data:OVt6+W8liACmvDXsLBSP1IIpGpWPLPCEg3fzWUbWb9Y=,iv:ugGzlnWGJjUzvYLrOeclFvzZmqYgWYYscfOJWjXtDEA=,tag:yxrZELD6VjptzwILxB7KuQ==,type:str]
 sops:
     age:
         - recipient: age1hnmh393g3qaf2szdjkyrd7jsven9wzvgpud4207vzrfywmuvdassvperqc
@@ -25,7 +25,7 @@ sops:
             ZEYvdjZIK0ZNNnRTZkNwWU9wSVhtMjAKQ/8M0fsK+cId05zraHE6LJg3YQuMTXSH
             v7UJtiCbiuacj+bWQlF6YPjVOheL6Ux6IX1s80IIsFaL1TWlK5Rcwg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-01-25T08:44:45Z"
-    mac: ENC[AES256_GCM,data:bTZK3yDVOtYlOOL7J70xShoOEYWx4EpE1jqYpe+qw738X/cr5qPV5P8USV6SqoYucaXxWlHFxhOrZ8I67/GkQmEINfT2TWeo/l28/05pOCI9HpOF1eRj7LRL+KUTWmyFy0YOcgtozcJXJRGWT93fR5v8b5vg71zDyvXBOEKjhN0=,iv:hO+Xo90owSSeNgFhwIvPprlBXiJ1MjnIabu52mZ7HpY=,tag:ruYUHKUl/HUKnRRnuVckww==,type:str]
+    lastmodified: "2026-01-25T13:12:54Z"
+    mac: ENC[AES256_GCM,data:3k1FZtfD9NcOMEO/Hk7j3ZoF/dpCNXBo9AVeXpZhQAI6yaSnrCM9UIHQd3AOGKcJFZwTdW4l6lbFs5/EjoE+qM5jMNTMyteJrxQpqZ1KQ0Axxkm1mhLNI+2PSZpo6YfEaCJ4FGFwAT/NjcfRVM7r/AUkbQ2afmyrCpvRbOyi3yI=,iv:ENTvx3xHSCogRUFRk4C/ED4fCsIPrVZfoIM9zI9H26g=,tag:OM8raRSj67NhgChIacsUuQ==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.11.0
