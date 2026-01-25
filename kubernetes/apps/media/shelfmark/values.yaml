@@ -90,6 +90,8 @@ app-template:
       accessMode: ReadWriteOnce
       size: 256Mi
     books:
-      existingClaim: books
+      existingClaim: audiobookshelf-books
     audiobooks:
-      existingClaim: audiobooks
+      existingClaim: audiobookshelf-audiobooks
+    media:
+      existingClaim: qbittorrent-media
