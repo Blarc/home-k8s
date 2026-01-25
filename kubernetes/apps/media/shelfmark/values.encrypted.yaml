@@ -1,6 +1,6 @@
 app-template:
   controllers:
-    prowlarr:
+    shelfmark:
       containers:
         app:
           env:
