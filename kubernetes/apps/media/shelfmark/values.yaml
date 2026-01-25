@@ -39,7 +39,7 @@ app-template:
               custom: true
               spec:
                 httpGet:
-                  path: /
+                  path: /api/health
                   port: *port
                 initialDelaySeconds: 0
                 periodSeconds: 10
