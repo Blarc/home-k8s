@@ -43,9 +43,9 @@ app-template:
                   path: /api/health
                   port: *port
                 initialDelaySeconds: 0
-                periodSeconds: 15
-                timeoutSeconds: 6
-                failureThreshold: 6
+                periodSeconds: 60
+                timeoutSeconds: 60
+                failureThreshold: 3
             readiness: *probes
           securityContext:
             capabilities:
