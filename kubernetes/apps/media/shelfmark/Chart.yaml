@@ -1,0 +1,9 @@
+apiVersion: v2
+name: shelfmark
+description: A Helm chart for shelfmark
+dependencies:
+  - name: app-template
+    version: 4.6.2
+    repository: oci://ghcr.io/bjw-s-labs/helm
+type: application
+version: 1.0.0

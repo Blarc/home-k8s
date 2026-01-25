@@ -1,0 +1,8 @@
+app-template:
+  controllers:
+    prowlarr:
+      containers:
+        app:
+          env:
+            PROWLARR_API_KEY: da483a77e1814cd08cea98b4f7b9bf63
+            HARDCOVER_API_KEY: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJIYXJkY292ZXIiLCJ2ZXJzaW9uIjoiOCIsImp0aSI6ImE2Nzc3NGZlLTA0M2UtNDhkNC1iZTI5LWU5ZWNlZGVlYWIyMiIsImFwcGxpY2F0aW9uSWQiOjIsInN1YiI6IjcwNDY3IiwiYXVkIjoiMSIsImlkIjoiNzA0NjciLCJsb2dnZWRJbiI6dHJ1ZSwiaWF0IjoxNzY5MTk2NDcxLCJleHAiOjE4MDA3MzI0NzEsImh0dHBzOi8vaGFzdXJhLmlvL2p3dC9jbGFpbXMiOnsieC1oYXN1cmEtYWxsb3dlZC1yb2xlcyI6WyJ1c2VyIl0sIngtaGFzdXJhLWRlZmF1bHQtcm9sZSI6InVzZXIiLCJ4LWhhc3VyYS1yb2xlIjoidXNlciIsIlgtaGFzdXJhLXVzZXItaWQiOiI3MDQ2NyJ9LCJ1c2VyIjp7ImlkIjo3MDQ2N319.8JWz8-Y9mmlssvzOSYcGW5l3pqw3Xg5hX-PVwcrEy6A

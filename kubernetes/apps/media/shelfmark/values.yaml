@@ -1,0 +1,87 @@
+app-template:
+  controllers:
+    shelfmark:
+      annotations:
+        reloader.stakater.com/auto: "true"
+      containers:
+        app:
+          image:
+            repository: ghcr.io/calibrain/shelfmark
+            tag: 1.0.2
+          env:
+            PUID: 1000
+            PGID: 1000
+            FLASK_PORT: &port 80
+            TZ: Europe/Ljubljana
+            BOOK_LANGUAGE: "en,sl"
+            SEARCH_MODE: "universal"
+            METADATA_PROVIDER: "hardcover"
+            METADATA_PROVIDER_AUDIOBOOK: "hardcover"
+            DEFAULT_RELEASE_SOURCE: "direct_download"
+            INGEST_DIR: "/books"
+            FILE_ORGANIZATION: "organize"
+            TEMPLATE_ORGANIZE: "{Author}/{Series}/{Title}/{Title} {Series}, Book {SeriesPosition}"
+            HARDLINK_TORRENTS_AUDIOBOOK: "false"
+            DESTINATION_AUDIOBOOK: "/audiobooks"
+            FILE_ORGANIZATION_AUDIOBOOK: "organize"
+            TEMPLATE_AUDIOBOOK_ORGANIZE: "{Author}/{Series}/{Title}/{Title} {Series}, Book {SeriesPosition} {PartNumber}"
+            MAX_CONCURRENT_DOWNLOADS: "3"
+            HARDCOVER_ENABLED: "true"
+            PROWLARR_ENABLED: "true"
+            PROWLARR_URL: "http://prowlarr.arr:80"
+            PROWLARR_TORRENT_CLIENT: "qbittorrent"
+            QBITTORRENT_URL: "https://qbittorrent.blarc.my.id"
+            QBITTORRENT_CATEGORY: "books"
+            QBITTORRENT_CATEGORY_AUDIOBOOK: "audiobooks"
+          probes:
+            liveness: &probes
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /
+                  port: *port
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+                failureThreshold: 3
+            readiness: *probes
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: [ "ALL" ] }
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              memory: 1Gi
+  defaultPodOptions:
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: OnRootMismatch
+  service:
+    app:
+      ports:
+        http:
+          port: *port
+  route:
+    app:
+      hostnames:
+        - "{{ .Release.Name }}.blarc.my.id"
+      parentRefs:
+        - name: gateway-internal
+          namespace: gateway
+  persistence:
+    config:
+      type: persistentVolumeClaim
+      storageClass: topolvm-thin
+      accessMode: ReadWriteOnce
+      size: 256Mi
+    books:
+      existingClaim: books
+    audiobooks:
+      existingClaim: audiobooks
