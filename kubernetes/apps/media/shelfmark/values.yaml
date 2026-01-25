@@ -28,7 +28,7 @@ app-template:
             MAX_CONCURRENT_DOWNLOADS: "3"
             HARDCOVER_ENABLED: "true"
             PROWLARR_ENABLED: "true"
-            PROWLARR_URL: "http://prowlarr.arr:80"
+            PROWLARR_URL: "http://prowlarr.media:80"
             PROWLARR_TORRENT_CLIENT: "qbittorrent"
             QBITTORRENT_URL: "https://qbittorrent.blarc.my.id"
             QBITTORRENT_CATEGORY: "books"
