@@ -65,12 +65,12 @@ app-template:
       type: persistentVolumeClaim
       storageClass: topolvm-thin
       accessMode: ReadWriteOnce
-      size: 256Mi
+      size: 1Gi
     metadata:
       type: persistentVolumeClaim
       storageClass: topolvm-thin
       accessMode: ReadWriteOnce
-      size: 256Mi
+      size: 1Gi
     books:
       type: persistentVolumeClaim
       storageClass: nfs
