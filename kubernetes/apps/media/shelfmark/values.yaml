@@ -33,6 +33,7 @@ app-template:
             QBITTORRENT_URL: "https://qbittorrent.blarc.my.id"
             QBITTORRENT_CATEGORY: "books"
             QBITTORRENT_CATEGORY_AUDIOBOOK: "audiobooks"
+            DEBUG: "true"
           probes:
             liveness: &probes
               enabled: true
