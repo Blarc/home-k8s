@@ -30,7 +30,7 @@ argo-cd:
   repoServer:
     image:
       repository: ghcr.io/blarc/home-k8s/argo-cd
-      tag: v3.2.6-cd651ebe
+      tag: v3.2.6-e585d251
       imagePullPolicy: Always
     imagePullSecrets:
       - name: argocd-gitlab-registry-secret
