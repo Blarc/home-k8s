@@ -1,0 +1,52 @@
+---
+- name: Energy Optimizations
+  hosts: NAS
+  become: true
+  vars:
+    energy_optimisations:
+      cpu_governor: schedutil
+      vm_swappiness: 10
+
+  tasks:
+    - name: Install energy optimisation utilities
+      apt:
+        name:
+          - linux-cpupower
+        state: present
+        update_cache: yes
+
+    - name: Install CPU governor service
+      copy:
+        dest: /etc/systemd/system/cpu-governor.service
+        mode: "0644"
+        content: |
+          [Unit]
+          Description=Set CPU frequency governor
+          After=multi-user.target
+
+          [Service]
+          Type=oneshot
+          ExecStart=/usr/bin/cpupower frequency-set -g {{ energy_optimisations.cpu_governor }}
+
+          [Install]
+          WantedBy=multi-user.target
+      notify: Reload systemd
+
+    - name: Ensure CPU governor service is enabled
+      systemd:
+        name: cpu-governor.service
+        state: started
+        enabled: yes
+
+    - name: Configure vm.swappiness
+      sysctl:
+        name: vm.swappiness
+        value: "{{ energy_optimisations.vm_swappiness }}"
+        state: present
+        sysctl_set: yes
+        reload: yes
+
+  handlers:
+    - name: Reload systemd
+      systemd:
+        daemon_reload: yes
