@@ -99,6 +99,7 @@ app-template:
           addr = "http://localhost:80"
     default-config:
       data:
+        # good example: https://git.ebu.io/manikanta09876/2024/-/blob/main/qBittorrent/config/qBittorrent.conf
         qBittorrent.conf: |
           [AutoRun]
           enabled=false
