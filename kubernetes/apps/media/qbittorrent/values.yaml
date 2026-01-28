@@ -123,6 +123,7 @@ app-template:
           Session\TempPath=/media/incomplete/
           Session\TempPathEnabled=true
           Session\QueueingSystemEnabled=false
+          Session\GlobalMaxSeedingMinutes=14400
           
           [Preferences]
           Connection\PortRangeMin=6881
