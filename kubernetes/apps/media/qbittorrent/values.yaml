@@ -122,6 +122,7 @@ app-template:
           Session\DefaultSavePath=/media/
           Session\TempPath=/media/incomplete/
           Session\TempPathEnabled=true
+          Session\QueueingSystemEnabled=false
           
           [Preferences]
           Connection\PortRangeMin=6881
