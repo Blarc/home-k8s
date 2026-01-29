@@ -1,0 +1,6 @@
+docker-mailserver:
+  fullnameOverride: docker-mailserver
+  certificate: docker-mailserver-certificate
+  deployment:
+    env:
+      OVERRIDE_HOSTNAME: mail.blarc.my.id
