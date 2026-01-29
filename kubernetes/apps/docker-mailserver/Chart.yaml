@@ -1,0 +1,8 @@
+apiVersion: v2
+dependencies:
+  - name: docker-mailserver
+    repository: https://docker-mailserver.github.io/docker-mailserver-helm
+    version: 5.1.1
+description: Helm chart to deploy docker-mailserver
+name: docker-mailserver
+version: 1.0.0
