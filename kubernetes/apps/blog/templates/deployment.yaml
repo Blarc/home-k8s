@@ -26,7 +26,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: blog
-          image: ghcr.io/blarc/blog:latest@sha256:dda203ffd6cae1214c1e109d62f31346f94d26f73d0052062c18c54ac05e4bac
+          image: ghcr.io/blarc/blog:latest@sha256:446564ee21066e9fe9d6e82b3daee6cf8def82848d65affbd1c4ba43cd9cc74e
           imagePullPolicy: Always
           securityContext:
             allowPrivilegeEscalation: false
