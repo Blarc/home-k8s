@@ -19,11 +19,20 @@ traefik:
 
   ports:
     web:
+      port: 8000
+      exposedPort: 80
+      expose:
+        default: true
       redirections:
         entryPoint:
           to: websecure
           scheme: https
           permanent: true
+    websecure:
+      port: 8443
+      exposedPort: 443
+      expose:
+        default: true
     web-external:
       port: 9000
       exposedPort: 80
