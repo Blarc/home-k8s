@@ -12,8 +12,8 @@ argo-cd:
       hostnames:
         - argo-cd.blarc.my.id
       parentRefs:
-        - name: gateway-internal
-          namespace: gateway
+        - name: internal
+          namespace: traefik
   controller:
     replicas: 1
     roleRules:

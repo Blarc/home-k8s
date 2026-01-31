@@ -9,5 +9,5 @@ podinfo:
     hostnames:
       - podinfo.blarc.my.id
     parentRefs:
-      - name: gateway-internal
-        namespace: gateway
+      - name: internal
+        namespace: traefik

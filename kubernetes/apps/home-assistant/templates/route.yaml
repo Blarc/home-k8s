@@ -4,8 +4,8 @@ metadata:
   name: home-assistant
 spec:
   parentRefs:
-    - name: gateway-internal
-      namespace: gateway
+    - name: internal
+      namespace: traefik
   hostnames:
     - "home-assistant.blarc.my.id"
   rules:

@@ -58,8 +58,8 @@ app-template:
       hostnames:
         - "{{ .Release.Name }}.blarc.my.id"
       parentRefs:
-        - name: gateway-internal
-          namespace: gateway
+        - name: internal
+          namespace: traefik
       rules:
         - backendRefs:
             - identifier: app

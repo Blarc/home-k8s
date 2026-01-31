@@ -10,8 +10,8 @@ kube-prometheus-stack:
         hostnames:
           - alertmanager.blarc.my.id
         parentRefs:
-          - name: gateway-internal
-            namespace: gateway
+          - name: internal
+            namespace: traefik
     alertmanagerSpec:
       alertmanagerConfiguration:
         name: alertmanager
@@ -44,8 +44,8 @@ kube-prometheus-stack:
       main:
         enabled: true
         parentRefs:
-          - name: gateway-internal
-            namespace: gateway
+          - name: internal
+            namespace: traefik
         hostnames:
           - "prometheus.blarc.my.id"
     prometheusSpec:

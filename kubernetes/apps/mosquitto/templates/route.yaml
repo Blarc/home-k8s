@@ -4,8 +4,8 @@ metadata:
   name: mosquitto
 spec:
   parentRefs:
-    - name: gateway-internal
-      namespace: gateway
+    - name: internal
+      namespace: traefik
   hostnames:
     - "mosquitto.blarc.my.id"
   rules:

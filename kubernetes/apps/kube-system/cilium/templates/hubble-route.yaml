@@ -6,8 +6,8 @@ metadata:
   namespace: kube-system
 spec:
   parentRefs:
-    - name: gateway-internal
-      namespace: gateway
+    - name: internal
+      namespace: traefik
   hostnames:
     - "hubble.blarc.my.id"
   rules:

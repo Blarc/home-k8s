@@ -5,8 +5,8 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   parentRefs:
-    - name: gateway-internal
-      namespace: gateway
+    - name: internal
+      namespace: traefik
   hostnames:
     - "paperless.blarc.my.id"
   rules:

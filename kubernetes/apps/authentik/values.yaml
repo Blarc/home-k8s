@@ -43,8 +43,8 @@ authentik:
         hostnames:
           - "authentik.blarc.my.id"
         parentRefs:
-          - name: gateway-external
-            namespace: gateway
+          - name: external
+            namespace: traefik
     volumes:
       - name: postgres-creds
         secret:

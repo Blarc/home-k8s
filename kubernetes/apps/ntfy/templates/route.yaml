@@ -5,8 +5,8 @@ metadata:
   namespace: ntfy
 spec:
   parentRefs:
-    - name: gateway-external
-      namespace: gateway
+    - name: external
+      namespace: traefik
   hostnames:
     - "ntfy.blarc.my.id"
   rules:

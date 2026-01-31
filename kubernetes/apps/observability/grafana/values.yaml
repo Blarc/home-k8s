@@ -157,8 +157,8 @@ grafana:
     main:
       enabled: true
       parentRefs:
-        - name: gateway-internal
-          namespace: gateway
+        - name: internal
+          namespace: traefik
       hostnames:
         - "grafana.blarc.my.id"
   persistence:

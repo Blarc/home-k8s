@@ -5,8 +5,8 @@ metadata:
   namespace: storage
 spec:
   parentRefs:
-    - name: gateway-internal
-      namespace: gateway
+    - name: internal
+      namespace: traefik
   hostnames:
     - "registry.blarc.my.id"
   rules:
