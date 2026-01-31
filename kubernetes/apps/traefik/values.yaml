@@ -19,23 +19,21 @@ traefik:
 
   ports:
     web:
-      http:
-        redirections:
-          entryPoint:
-            to: websecure
-            scheme: https
-            permanent: true
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
     web-external:
-      port: 9080
+      port: 9000
       exposedPort: 80
       expose:
         external: true
-      http:
-        redirections:
-          entryPoint:
-            to: websecure
-            scheme: https
-            permanent: true
+      redirections:
+        entryPoint:
+          to: websecure-external
+          scheme: https
+          permanent: true
     websecure-external:
       port: 9443
       exposedPort: 443
