@@ -5,8 +5,8 @@ metadata:
   namespace: ad-mediation-service
 spec:
   parentRefs:
-    - name: gateway-external
-      namespace: gateway
+    - name: external
+      namespace: traefik
   hostnames:
     - "ad-mediation-service.blarc.my.id"
   rules:
