@@ -1,0 +1,56 @@
+traefik:
+  fullnameOverride: traefik
+  providers:
+    kubernetesCRD:
+      enabled: false
+    kubernetesIngress:
+      enabled: false
+    kubernetesGateway:
+      enabled: true
+
+  logs:
+    general:
+      level: INFO
+    access:
+      enabled: true
+
+  ingressClass:
+    enabled: false
+
+  ports:
+    web:
+      http:
+        redirections:
+          entryPoint:
+            to: websecure
+            scheme: https
+            permanent: true
+    web-external:
+      port: 9080
+      exposedPort: 80
+      expose:
+        external: true
+      http:
+        redirections:
+          entryPoint:
+            to: websecure
+            scheme: https
+            permanent: true
+    websecure-external:
+      port: 9443
+      exposedPort: 443
+      expose:
+        external: true
+
+  # Gateways are defined as templates
+  gateway:
+    enabled: false
+
+  service:
+    annotations:
+      lbipam.cilium.io/ips: "192.168.1.228"
+    additionalServices:
+      external:
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: "192.168.1.229"

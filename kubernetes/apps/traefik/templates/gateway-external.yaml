@@ -1,0 +1,29 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: external
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    external-dns.alpha.kubernetes.io/target: "193.77.155.77"
+spec:
+  gatewayClassName: traefik
+  listeners:
+    - protocol: HTTPS
+      port: 9443
+      name: websecure-external
+      hostname: "*.blarc.my.id"
+      tls:
+        certificateRefs:
+          - kind: Secret
+            name: external-certificate
+            # Keep this for argo
+            group: ''
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              external: "true"
+
+
