@@ -1,0 +1,23 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: internal
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  gatewayClassName: traefik
+  listeners:
+    - protocol: HTTPS
+      port: 443
+      name: https-internal
+      hostname: "*.blarc.my.id"
+      tls:
+        certificateRefs:
+          - kind: Secret
+            name: internal-certificate
+            # Keep this for argo
+            group: ''
+      allowedRoutes:
+        namespaces:
+          from: All

@@ -1,0 +1,36 @@
+traefik:
+  fullnameOverride: traefik
+  providers:
+    kubernetesCRD:
+      enabled: false
+    kubernetesIngress:
+      enabled: false
+    kubernetesGateway:
+      enabled: true
+
+  ingressClass:
+    enabled: false
+
+  ports:
+    web:
+      port: 80
+      http:
+        redirections:
+          entryPoint:
+            to: websecure
+            scheme: https
+            permanent: true
+    websecure:
+      port: 443
+      tls:
+        enabled: true
+
+  logs:
+    general:
+      level: INFO
+    access:
+      enabled: true
+
+  # Gateways are defined as templates
+  gateway:
+    enabled: false
