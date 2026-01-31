@@ -5,8 +5,8 @@ metadata:
   namespace: blog
 spec:
   parentRefs:
-    - name: gateway-internal
-      namespace: gateway
+    - name: internal
+      namespace: traefik
   hostnames:
     - "blog.blarc.my.id"
   rules:
