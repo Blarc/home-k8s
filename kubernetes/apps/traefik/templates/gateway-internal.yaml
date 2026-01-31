@@ -8,6 +8,13 @@ metadata:
 spec:
   gatewayClassName: traefik
   listeners:
+    - protocol: HTTP
+      port: 8000
+      name: web
+      hostname: "*.blarc.my.id"
+      allowedRoutes:
+        namespaces:
+          from: All
     - protocol: HTTPS
       port: 8443
       name: websecure
