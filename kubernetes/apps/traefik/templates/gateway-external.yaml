@@ -9,6 +9,16 @@ metadata:
 spec:
   gatewayClassName: traefik
   listeners:
+    - protocol: HTTP
+      port: 9000
+      name: web-external
+      hostname: "*.blarc.my.id"
+      allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              external: "true"
     - protocol: HTTPS
       port: 9443
       name: websecure-external
