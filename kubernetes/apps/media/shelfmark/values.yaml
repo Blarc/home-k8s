@@ -7,8 +7,7 @@ app-template:
         app:
           image:
             repository: ghcr.io/calibrain/shelfmark
-            # tag: v1.0.3
-            tag: dev
+            tag: sha-a560089
           env:
             PUID: 1000
             PGID: 1000
