@@ -2,7 +2,7 @@ apiVersion: v2
 dependencies:
   - name: reloader
     repository: oci://ghcr.io/stakater/charts
-    version: 2.2.7
+    version: 2.2.8
 description: Helm chart to deploy reloader
 name: reloader
 version: 1.0.0
