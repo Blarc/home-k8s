@@ -1,0 +1,14 @@
+openclaw:
+  app-template:
+    networkpolicies:
+      main:
+        enabled: true
+        rules:
+          ingress:
+            - from:
+                - namespaceSelector:
+                    matchLabels:
+                      kubernetes.io/metadata.name: traefik
+              ports:
+                - protocol: TCP
+                  port: 18789
