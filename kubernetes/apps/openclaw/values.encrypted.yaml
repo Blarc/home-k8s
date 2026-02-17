@@ -7,6 +7,7 @@ openclaw:
                         env:
                             GEMINI_API_KEY: ENC[AES256_GCM,data:ebtmx4fOmp8jU2JJXhf3Tu/soahA0DdEm5iaEcaPo7C+LWxpP4+h,iv:/h2YPlC9YHIwhqHFsYAJZ3HMUn6bCJ2yuaEozJ6qTes=,tag:4jmx7fSH774yNeIg/+eYMw==,type:str]
                             OPENCLAW_GATEWAY_TOKEN: ENC[AES256_GCM,data:ugS4rUsZaw/Qb45Y4e5t2PsY6Ov8Lwg2HQ==,iv:dE9xLNIfReEzAdAhozhmruMGqiJA206m8J8+0oBUneI=,tag:ZVP9kB6CMf5UxkQkiJ3Fbg==,type:str]
+                            MOONSHOT_API_KEY: ENC[AES256_GCM,data:FpBXJeInyAeMvrunHIJnpAnOSR7CMDrF+gv4+KFebpZRN9zq8pTxW6u1ZWolv8BDNvlYN6OYrjvJaftdq1Rpq/Rdg50RMA==,iv:92SomOofhyszk4F8CEHekWqQtUJc3MFKM6WDsxYuXlg=,tag:VtAMsd/4zfKwK3ZS89MdxA==,type:str]
 sops:
     age:
         - recipient: age1hnmh393g3qaf2szdjkyrd7jsven9wzvgpud4207vzrfywmuvdassvperqc
@@ -27,7 +28,7 @@ sops:
             d1FsVzlIRGNkMFcvSXpqKytXUUZ1OTgKjNRYKxyXaJ7HU7EYt2bzkRBgyIoo9NlV
             0OUQpAjue0tp+gnFcBwFvzjlmI6Cuy0pbaXhz8ZLTWfq1y1Ec2LFSw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-02-16T17:46:50Z"
-    mac: ENC[AES256_GCM,data:Ov206dw9ctgM/PHmF0jXoqw6B9SyNAYhtCVg6YSM6yJhQ1BfOsWnoSgKn0ErRVNzU8bvXQFROJUPAEZPtOS9OVj1S+BofDQuBMTXkUmvDuChumRJSv0/eIe2Aq6qekoN4PnkVKHtKMj0Z/laIfMIaAuF7tqTTHjN4kbjKDBy7zY=,iv:Jc2vlEhSEsIjGMw653yJyDe+DhEGFslAY81SN7esMZQ=,tag:czxBtIs52O2slt6jMoB6Mw==,type:str]
+    lastmodified: "2026-02-17T17:37:02Z"
+    mac: ENC[AES256_GCM,data:XQ1sh0K6N6VZKnj5cqxa0XVaImbEtxq2Zk5eqfjy0+Ps/GlhEGAQE3cIxYwK+iIYpFwFT2OwAahKBuH47Uxsy1dtEegOrohD+Lf63Zen6ADZD0JYMRbiiK019Ocv8LiwcBVK7pSRLWyJfg9Ec2x42BEHWrw6L3TeSczLbHv+H3Q=,iv:Ob36xs0OFjEQW/SXwb/X9fcUEBvz2A0JgK7fnciOLII=,tag:T4g57SteC1HYzQvIIVZs5A==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.11.0
