@@ -12,3 +12,139 @@ openclaw:
               ports:
                 - protocol: TCP
                   port: 18789
+    configMaps:
+      config:
+        enabled: true
+        data:
+          # OpenClaw configuration - JSON5 format
+          # Sensitive values use ${ENV_VAR} substitution from environment secret
+          # language=json5
+          openclaw.json: |
+            {
+              // Gateway configuration
+              "gateway": {
+                "port": 18789,
+                "mode": "local",
+                // IMPORTANT: trustedProxies uses exact IP matching only
+                // - CIDR notation is NOT supported - list each proxy IP individually
+                // - IPv6 exact addresses may work but are untested
+                // - Recommend single-stack IPv4 deployments for simplicity
+                "trustedProxies": ["10.0.0.1"]
+              },
+
+              // Browser configuration (Chromium sidecar)
+              "browser": {
+                "enabled": true,
+                "defaultProfile": "default",
+                "profiles": {
+                  "default": {
+                    "cdpUrl": "http://localhost:9222",
+                    "color": "#4285F4"
+                  }
+                }
+              },
+            
+              // Models configuration
+              "models": {
+                "mode": "merge",
+                "providers": {
+                  "nvidia-nim": {
+                    "baseUrl": "https://integrate.api.nvidia.com/v1",
+                    "apiKey": "${MOONSHOT_API_KEY}",
+                    "api": "openai-completions",
+                    "models": [
+                      {
+                        "id": "moonshotai/kimi-k2.5",
+                        "name": "Kimi K2.5 (NVIDIA)",
+                        "reasoning": false,
+                        "input": [
+                          "text"
+                        ],
+                        "cost": {
+                          "input": 0,
+                          "output": 0,
+                          "cacheRead": 0,
+                          "cacheWrite": 0
+                        },
+                        "contextWindow": 200000,
+                        "maxTokens": 8192
+                      }
+                    ]
+                  }
+                }
+              },
+                   
+              // Agent configuration
+              "agents": {
+                "defaults": {
+                  "workspace": "/home/node/.openclaw/workspace",
+                  "model": {
+                    "primary": "kimi"
+                  },
+                  "models": {
+                    "nvidia-nim/moonshotai/kimi-k2.5": {
+                      "alias": "kimi"
+                    }
+                  },
+                  "userTimezone": "Europe/Ljubljana",
+                  "timeoutSeconds": 600,
+                  "maxConcurrent": 1
+                },
+                "list": [
+                  {
+                    "id": "main",
+                    "default": true,
+                    "identity": {
+                      "name": "OpenClaw",
+                      "emoji": "🦞"
+                    }
+                  }
+                ]
+              },
+
+              // Session management
+              "session": {
+                "scope": "per-sender",
+                "store": "/home/node/.openclaw/sessions",
+                "reset": {
+                  "mode": "idle",
+                  "idleMinutes": 60
+                }
+              },
+
+              // Logging
+              "logging": {
+                "level": "info",
+                "consoleLevel": "info",
+                "consoleStyle": "compact",
+                "redactSensitive": "tools"
+              },
+
+              // Tools configuration
+              "tools": {
+                "profile": "full",
+                "web": {
+                  "search": {
+                    "enabled": false
+                  },
+                  "fetch": {
+                    "enabled": true
+                  }
+                }
+              }
+
+              // Channel configuration can be added here:
+              // "channels": {
+              //   "telegram": {
+              //     "botToken": "${TELEGRAM_BOT_TOKEN}",
+              //     "enabled": true
+              //   },
+              //   "discord": {
+              //     "token": "${DISCORD_BOT_TOKEN}"
+              //   },
+              //   "slack": {
+              //     "botToken": "${SLACK_BOT_TOKEN}",
+              //     "appToken": "${SLACK_APP_TOKEN}"
+              //   }
+              // }
+            }
