@@ -95,8 +95,8 @@ openclaw:
                     "id": "main",
                     "default": true,
                     "identity": {
-                      "name": "OpenClaw",
-                      "emoji": "🦞"
+                      "name": "Guppi",
+                      "emoji": "🤖"
                     }
                   }
                 ]
