@@ -2,7 +2,7 @@ apiVersion: v2
 dependencies:
   - name: openclaw
     repository: https://serhanekicii.github.io/openclaw-helm
-    version: 1.3.17
+    version: 1.3.18
 description: Helm chart to deploy OpenClaw
 name: openclaw
 version: 1.0.0
