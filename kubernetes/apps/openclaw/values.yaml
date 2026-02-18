@@ -148,3 +148,31 @@ openclaw:
               //   }
               // }
             }
+    controllers:
+      main:
+        initContainers:
+          init-skills:
+            command:
+              - sh
+              - -c
+              - |
+                cd /home/node/.openclaw/workspace && mkdir -p skills
+                npx -y clawhub login --token "${CLAWHUB_TOKEN}" --no-browser
+                npx -y clawhub whoami
+                for skill in gog self-improving-agent github proactive-agent; do
+                  attempt=1
+                  max_attempts=5
+                  while :; do
+                    if npx -y clawhub install "$skill" --no-input --force; then
+                      break
+                    fi
+                    if [ "$attempt" -ge "$max_attempts" ]; then
+                      echo "ERROR: Failed to install skill after ${max_attempts} attempts: $skill"
+                      exit 1
+                    fi
+                    backoff=$((attempt * 15))
+                    echo "Install failed for $skill. Retrying in ${backoff}s (attempt ${attempt}/${max_attempts})..."
+                    sleep "$backoff"
+                    attempt=$((attempt + 1))
+                  done
+                done
