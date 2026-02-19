@@ -2,7 +2,7 @@ apiVersion: v2
 dependencies:
   - name: kube-prometheus-stack
     repository: oci://ghcr.io/prometheus-community/charts
-    version: 82.1.0
+    version: 82.1.1
 description: Helm chart to deploy kube-prometheus-stack
 name: kube-prometheus-stack
 version: 1.0.0
