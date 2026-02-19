@@ -37,7 +37,7 @@ spec:
               mountPath: /opt/adguardhome/conf
       containers:
         - name: {{ .Release.Name }}
-          image: docker.io/adguard/adguardhome:v0.107.71 # renovate: docker=docker.io/adguard/adguardhome
+          image: docker.io/adguard/adguardhome:v0.107.72 # renovate: docker=docker.io/adguard/adguardhome
           securityContext:
             # DHCP needs to bind to raw sockets
             allowPrivilegeEscalation: true
