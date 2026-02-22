@@ -4,7 +4,7 @@
 ARG ARGOCD_VERSION="v3.3.1"
 FROM quay.io/argoproj/argocd:$ARGOCD_VERSION
 # renovate: datasource=github-releases depName=getsops/sops
-ARG SOPS_VERSION=3.11.0
+ARG SOPS_VERSION=3.12.1
 # renovate: datasource=github-releases depName=kubernetes/kubectl
 ARG KUBECTL_VERSION=1.35.0
 # renovate: datasource=github-releases depName=helmfile/vals
