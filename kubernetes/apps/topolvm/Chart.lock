@@ -1,6 +1,6 @@
 dependencies:
 - name: topolvm
   repository: https://topolvm.github.io/topolvm
-  version: 15.9.0
-digest: sha256:232085982441fd249c223f3d9830c3be63816c03bfa8ba260a34cad50d1c9368
-generated: "2026-01-05T09:30:02.631528575Z"
+  version: 16.0.0
+digest: sha256:f45d743ffa9da56f7d04a599bbd1097e4a82b762683325bb2b97a1bf809511cd
+generated: "2026-03-11T04:08:49.252882809Z"
