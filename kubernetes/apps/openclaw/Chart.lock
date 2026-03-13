@@ -1,6 +1,6 @@
 dependencies:
 - name: openclaw
   repository: https://serhanekicii.github.io/openclaw-helm
-  version: 1.4.5
-digest: sha256:1924bbacc2651dc54021fd9052f3ae502fb097d58499b95c75eb12caeb8b54a5
-generated: "2026-03-08T07:29:31.087007115Z"
+  version: 1.4.9
+digest: sha256:a18c8138b5964389dd4911db603a69e09697cb7584babee702cb229dc6ad74be
+generated: "2026-03-13T07:43:08.844836683Z"
