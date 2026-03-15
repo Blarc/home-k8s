@@ -59,5 +59,19 @@ entries:
           authentik_core.group,
           [name, "Public"],
         ]
+  - id: matejm
+    model: authentik_core.user
+    identifiers:
+      username: matejm
+    attrs:
+      name: Matej Mesojedec
+      password: !Env MATEJM_PASSWORD
+      email: !Env MATEJM_EMAIL
+      type: internal
+      groups:
+        - !Find [
+          authentik_core.group,
+          [ name, "Public" ],
+        ]
 
 
