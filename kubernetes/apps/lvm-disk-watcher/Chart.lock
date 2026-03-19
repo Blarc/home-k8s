@@ -1,6 +1,6 @@
 dependencies:
 - name: lvm-disk-watcher
   repository: oci://oci.trueforge.org/truecharts
-  version: 4.6.2
-digest: sha256:389015ddbac58b3505434d4f0b6d62eae50ebb9696c582dc71156d02e9994ed1
-generated: "2026-03-12T20:31:50.493686294Z"
+  version: 5.0.0
+digest: sha256:56f9844de57e44ce3d9c0a62809129982aa2281938e331abee85cdaf8581e05c
+generated: "2026-03-19T16:56:06.089877247Z"
