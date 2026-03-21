@@ -7,7 +7,7 @@ app-template:
         app:
           image:
             repository: ghcr.io/calibrain/shelfmark
-            tag: v1.2.0
+            tag: v1.2.1
           env:
             PUID: 1000
             PGID: 1000
