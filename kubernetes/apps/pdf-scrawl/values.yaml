@@ -58,3 +58,10 @@ app-template:
             - path:
                 type: PathPrefix
                 value: /
+  # TODO: temporary
+  persistence:
+    tmp:
+      type: persistentVolumeClaim
+      storageClass: topolvm-thin
+      accessMode: ReadWriteOnce
+      size: 1Gi
