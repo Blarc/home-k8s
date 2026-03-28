@@ -1,0 +1,60 @@
+app-template:
+  controllers:
+    pdf-scrawl:
+      containers:
+        app:
+          image:
+            repository: ghcr.io/blarc/pdf-scrawl
+            tag: latest
+          env:
+            TZ: Europe/Ljubljana
+          probes:
+            liveness: &probes
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /health
+                  port: &port 1234
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+                failureThreshold: 3
+            readiness: *probes
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: [ "ALL" ] }
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              memory: 1Gi
+  defaultPodOptions:
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: OnRootMismatch
+  service:
+    app:
+      ports:
+        http:
+          port: *port
+  route:
+    app:
+      hostnames:
+        - "{{ .Release.Name }}.blarc.my.id"
+      parentRefs:
+        - name: internal
+          namespace: traefik
+      rules:
+        - backendRefs:
+            - identifier: app
+              port: *port
+          matches:
+            - path:
+                type: PathPrefix
+                value: /
