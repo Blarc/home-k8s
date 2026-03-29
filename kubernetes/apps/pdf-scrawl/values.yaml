@@ -6,6 +6,7 @@ app-template:
           image:
             repository: ghcr.io/blarc/pdf-scrawl
             tag: latest
+            pullPolicy: Always
           env:
             TZ: Europe/Ljubljana
           probes:
