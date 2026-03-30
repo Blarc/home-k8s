@@ -29,7 +29,7 @@ spec:
           image: registry.k8s.io/external-dns/external-dns:v0.20.0
           env:
             - name: ETCD_URLS
-              value: http://etcd-headless.etcd.svc.cluster.local:2379
+              value: http://etcd.etcd.svc.cluster.local:2379
           args:
             - --source=gateway-httproute
 #            - --source=gateway-tlsroute
