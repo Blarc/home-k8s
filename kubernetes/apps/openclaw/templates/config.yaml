@@ -77,6 +77,15 @@ data:
         "consoleStyle": "compact",
         "redactSensitive": "tools"
       },
+      // Gateway Control UI origin allowlist for reverse-proxied UI access.
+      "gateway": {
+        "controlUi": {
+          "allowedOrigins": [
+            "https://openclaw.blarc.my.id"
+          ],
+          "dangerouslyAllowHostHeaderOriginFallback": true
+        }
+      },
       // Tools configuration
       "tools": {
         "profile": "full",
