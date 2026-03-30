@@ -1,3 +1,4 @@
+# https://github.com/openclaw-rocks/openclaw-operator/blob/main/docs/api-reference.md
 apiVersion: openclaw.rocks/v1alpha1
 kind: OpenClawInstance
 metadata:
@@ -17,3 +18,7 @@ spec:
     configMapRef:
       name: openclaw
       key: openclaw.json5
+  security:
+    networkPolicy:
+      allowedIngressNamespaces:
+        - traefik
