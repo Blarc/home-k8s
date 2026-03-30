@@ -1,0 +1,16 @@
+apiVersion: openclaw.rocks/v1alpha1
+kind: OpenClawInstance
+metadata:
+  name: guppi
+spec:
+  envFrom:
+    - secretRef:
+        name: openclaw
+  storage:
+    persistence:
+      enabled: true
+      size: 10Gi
+  config:
+    configMapRef:
+      name: openclaw
+      key: openclaw.json5
