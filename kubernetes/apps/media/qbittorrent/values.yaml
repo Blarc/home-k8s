@@ -49,7 +49,7 @@ app-template:
             capabilities: { drop: [ "ALL" ] }
           resources:
             requests:
-              cpu: 100m
+              cpu: 10m
               memory: 128Mi
             limits:
               memory: 2Gi

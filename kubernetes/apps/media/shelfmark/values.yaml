@@ -52,7 +52,7 @@ app-template:
               drop: [ "NET_RAW" ]
           resources:
             requests:
-              cpu: 100m
+              cpu: 10m
               memory: 128Mi
             limits:
               memory: 1Gi
