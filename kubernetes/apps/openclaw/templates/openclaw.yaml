@@ -14,10 +14,10 @@ spec:
     persistence:
       enabled: true
       size: 10Gi
-  config:
-    configMapRef:
-      name: openclaw
-      key: openclaw.json5
+{{/*  config:*/}}
+{{/*    configMapRef:*/}}
+{{/*      name: openclaw*/}}
+{{/*      key: openclaw.json5*/}}
   security:
     networkPolicy:
       allowedIngressNamespaces:
