@@ -6,6 +6,9 @@ spec:
   envFrom:
     - secretRef:
         name: openclaw
+  resources:
+    requests:
+      cpu: 10m
   storage:
     persistence:
       enabled: true
