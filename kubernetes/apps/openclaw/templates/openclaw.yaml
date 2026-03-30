@@ -22,3 +22,6 @@ spec:
     networkPolicy:
       allowedIngressNamespaces:
         - traefik
+  gateway:
+    controlUiOrigins:
+      - https://openclaw.blarc.my.id
