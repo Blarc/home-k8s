@@ -1,6 +1,6 @@
 dependencies:
 - name: openclaw-operator
   repository: oci://ghcr.io/openclaw-rocks/charts
-  version: 0.25.0
-digest: sha256:00946d1bb4c4eff4974098265da767ad5ec1a0ad9859614bab663da1373751bb
-generated: "2026-03-31T08:56:09.324046705Z"
+  version: 0.25.1
+digest: sha256:3b462beec501f8a5cca44a50c0099d504981a4f61bca13c38bbdb8df264c6149
+generated: "2026-04-01T16:51:36.937319315Z"
