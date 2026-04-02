@@ -2,7 +2,7 @@ apiVersion: v2
 dependencies:
   - name: topolvm
     repository: https://topolvm.github.io/topolvm
-    version: 16.0.0
+    version: 16.0.1
 description: Helm chart to deploy topolvm
 name: topolvm
 version: 1.0.0
