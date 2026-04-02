@@ -2,7 +2,7 @@ apiVersion: v2
 dependencies:
   - name: lvm-disk-watcher
     repository: oci://oci.trueforge.org/truecharts
-    version: 5.0.0
+    version: 5.0.1
 description: Helm chart to deploy lvm-disk-watcher
 name: lvm-disk-watcher
 version: 1.0.0
