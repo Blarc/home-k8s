@@ -1,0 +1,31 @@
+app-template:
+    controllers:
+        pdf-scrawl:
+            containers:
+                app:
+                    env:
+                        SESSION_SECRET: ENC[AES256_GCM,data:jC56M3V2ezhd6TatGCY6DCuiFABy7C8toKM8RTbTwuY=,iv:A7VkOLR2A5dg2LxzrW34XUY6T6YToPfdh0sCoq/eeMA=,tag:quBnIApCQke7EDpRua6lDQ==,type:str]
+sops:
+    age:
+        - recipient: age1hnmh393g3qaf2szdjkyrd7jsven9wzvgpud4207vzrfywmuvdassvperqc
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBndEZYRE5QRGEvTXh6NFY3
+            TjFZam9Bck9xa3NtSnYvYzlWNThTbjBJQWlrCkkycy9NZ3hRbjBSS2VqNDF2clZp
+            a1FRanFyM25rVWlib2VlMEduZldsK00KLS0tIFJWVzltUEQxMHUxNTlkbDBYZ3pV
+            Vml4V3ZaeDFZYm5zSFI1c2dRVU1EWnMKtzln0r8TD+2+2MxNDaw7p4IyVADdmIiA
+            xwFctqb8IaHaNgdx5j8UzgV9taQPYs6EOpR5oL1YJkBrdnGU+ux1cA==
+            -----END AGE ENCRYPTED FILE-----
+        - recipient: age1mm90zkg8lsmpqa7gya9p2prsj8yfq774gjm6dkamkkvwugen7ywse5w97z
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAyRkgzWDVodjV0eW9YTWVF
+            c3dtZEFCeGJPRE5FWlR2RElvTjQ4NEdCN1E4Cm1rMVJRYngyNThrck84S2dnamxB
+            a2gxTGNRRFVHeWpFVmJKbXBHSVhYS00KLS0tIEhwN2JuYXZHRlA3UCsyZXZUYUdF
+            ZThvL3gvVitLSHBzUW13MTJYUzM1d1kKLqKwyblydtRY95vojmlGM12O8q0Zsvky
+            VkhIY79IplRH4BTh0KVbRadtOKFUJ+2KEmi3W7UhEzow4Fck1L30Vg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2026-04-03T08:01:33Z"
+    mac: ENC[AES256_GCM,data:fz+2xeD4FfP9yj1kDIMgzQITgZdEsyzhXgp3T97S2ImQ5JAvzKqclm4p1Ue2aMjzxYWEeI4OU3EpJkUBUx37oIaDtgtY1vyLXzw/xoOV4B9wseMzkzw8AW3hwsuLUqO7wjQ01F8bteslSg2AUMSIs0WyAO3Zc1AxZmAUmZBHXDw=,iv:O3QOdxVt3NIJ4EBLIty+7rmNKgFRt01btkoXx3dGYuI=,tag:ks62zu8Szn/bv+QOXxlM6Q==,type:str]
+    unencrypted_suffix: _unencrypted
+    version: 3.12.2
