@@ -10,6 +10,7 @@ app-template:
                         NODE_ENV: ENC[AES256_GCM,data:Q4FIC2RWvyXVnw==,iv:AISLEQOI0kKFpHoFyKrk8+26x9ujQ4oAGTbfzdwxarM=,tag:H30wgXit0E/+i62Ysn3aPA==,type:str]
                         HOST: ENC[AES256_GCM,data:E8wk0QXrVA==,iv:W5DYVTofr2C9UJ0iBfGXoMCci1nOO1UpC6r83L/mJNo=,tag:X8MdKPH6CfyHhuWfBLkBLQ==,type:str]
                         PORT: ENC[AES256_GCM,data:B4mZyA==,iv:6SRyFlpjF4kezxpwnmziipOdmcRBfHGYDXlRI1fvrkM=,tag:D8QZp7QQBF2nykNwptAiqA==,type:int]
+                        PDF_DIR: ENC[AES256_GCM,data:WKQrwg==,iv:LwbvVyY+H4k+194FLhTOIyyFp6dINqFd6jLSzA8T89k=,tag:E0RPUlUdg7XGRgkwjMeiXA==,type:str]
 sops:
     age:
         - recipient: age1hnmh393g3qaf2szdjkyrd7jsven9wzvgpud4207vzrfywmuvdassvperqc
@@ -30,7 +31,7 @@ sops:
             ZThvL3gvVitLSHBzUW13MTJYUzM1d1kKLqKwyblydtRY95vojmlGM12O8q0Zsvky
             VkhIY79IplRH4BTh0KVbRadtOKFUJ+2KEmi3W7UhEzow4Fck1L30Vg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-04-07T08:41:44Z"
-    mac: ENC[AES256_GCM,data:ouRdJL9i2+XKhE+Tr8r7jMj7Yl99bBqOD/1uRgX0ijwH7/tbvkw7j/J9imFK2mb3Hv5pU3t2McMDRhIJmeMwaAnR20XWLVGnAuwo5r32DwZ4ZCztlkw9Gxp+vnh8/jQL6ps9MBRHya1CHjowv+KYYrTLe4kgs0hmE9lbraD8Jio=,iv:8K0FZUOq2oX5lHEZ/STyco6Da2a+Z6Bjdjidamzuhtk=,tag:XGFgxu/alKj85h95c4ec7Q==,type:str]
+    lastmodified: "2026-04-07T10:50:55Z"
+    mac: ENC[AES256_GCM,data:DkEexpfma5icm+PaX0pXg0Ijx82ZSo8Bl+IcYAAAbXakoRZYSWJ6DmGgvFd7ltjIllHMDIQtB7FC0fRbAqPlsGsVRt6laiYUROTQUeqdDl4EMn+IOzuKZprI73ZsLJaNNCzmFFZy80IxtRAv+zjDyGfwN03nA2rZhlGfGrsrIV0=,iv:ugkKZCXaHqMq5cCUziJ74mjGjaVyRV5oKTFZp21PAow=,tag:bL+9obKo+WCsN0oQgj4QhQ==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.12.2
