@@ -7,6 +7,7 @@ app-template:
                         COOKIE_NAME: ENC[AES256_GCM,data:OrnN5NFHpw==,iv:BvTc+zKQLxRW/D0XX3Z4QIq8dgLyL5limNSxJ97t5Q0=,tag:+eKyHQuAa90j8JVejzVAYg==,type:str]
                         COOKIE_SALT: ENC[AES256_GCM,data:GxZLPd8TT40XRgZ0FRNjaw==,iv:F0yphv2tdMVVFUVfWVDOyaPTLJzuievNj1ZICzhSw3w=,tag:3lXpewIa8Ch2rV+Lb2t9qA==,type:str]
                         COOKIE_SECRET: ENC[AES256_GCM,data:CcgGlLF6oLsv6nKF4o08eaaR0yXRqS621S9LAnRy8D8=,iv:VKlCgUYm9yxRF907sGvin/3fQBBXU2T1Q0p6G3YaBG4=,tag:ZdAYIO+zQ/LndrNajivRfg==,type:str]
+                        NODE_ENV: ENC[AES256_GCM,data:Q4FIC2RWvyXVnw==,iv:AISLEQOI0kKFpHoFyKrk8+26x9ujQ4oAGTbfzdwxarM=,tag:H30wgXit0E/+i62Ysn3aPA==,type:str]
 sops:
     age:
         - recipient: age1hnmh393g3qaf2szdjkyrd7jsven9wzvgpud4207vzrfywmuvdassvperqc
@@ -27,7 +28,7 @@ sops:
             ZThvL3gvVitLSHBzUW13MTJYUzM1d1kKLqKwyblydtRY95vojmlGM12O8q0Zsvky
             VkhIY79IplRH4BTh0KVbRadtOKFUJ+2KEmi3W7UhEzow4Fck1L30Vg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-04-07T08:34:19Z"
-    mac: ENC[AES256_GCM,data:TzsToZsvy4P9fRfQY/Th3ptDSwdBtNVFFxTSpAtUhUNzM3kpdEht7kTFk9P/lyNYyQRYF/o/gt03qO3XjPsILu5Zno4TapTvDjr5fehjVlxgqMP5Slek/Zjq5uEmACTaOI8g+84tiMnv2szhVsPjr6Tt8rEhpkn84i1mgMSCVRs=,iv:lGQvWhNnvwdTZ2zhku7TJtDosOQZk6ERMEBZyNBRBdg=,tag:PD3gPITw9ErDCg5BcvwD2A==,type:str]
+    lastmodified: "2026-04-07T08:40:00Z"
+    mac: ENC[AES256_GCM,data:XzaX0VI/FN3TrUHAeRrvWL7Fe5adAnYRLGAKepsBGuNzpwGuulXwaD1+8HLe0ix5minVljbIYyY7EFTs8HgM7Y/CxE9RRfwAyOFq5ykt87hlVmlW8kCbjOyyE+Zt/3+TyBmdh+0+Lxe7Drxf6K7TYqxNpamhbpFOeoI7AzcvYXE=,iv:JY41QDGQ6Ig5L8T+jiRtjYN68hgzB8PBJNR4XcUe8TA=,tag:2WmgjDzXhF3tl4iIC1+zIg==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.12.2
