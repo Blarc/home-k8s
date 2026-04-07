@@ -4,7 +4,9 @@ app-template:
             containers:
                 app:
                     env:
-                        SESSION_SECRET: ENC[AES256_GCM,data:jC56M3V2ezhd6TatGCY6DCuiFABy7C8toKM8RTbTwuY=,iv:A7VkOLR2A5dg2LxzrW34XUY6T6YToPfdh0sCoq/eeMA=,tag:quBnIApCQke7EDpRua6lDQ==,type:str]
+                        COOKIE_NAME: ENC[AES256_GCM,data:OrnN5NFHpw==,iv:BvTc+zKQLxRW/D0XX3Z4QIq8dgLyL5limNSxJ97t5Q0=,tag:+eKyHQuAa90j8JVejzVAYg==,type:str]
+                        COOKIE_SALT: ENC[AES256_GCM,data:GxZLPd8TT40XRgZ0FRNjaw==,iv:F0yphv2tdMVVFUVfWVDOyaPTLJzuievNj1ZICzhSw3w=,tag:3lXpewIa8Ch2rV+Lb2t9qA==,type:str]
+                        COOKIE_SECRET: ENC[AES256_GCM,data:CcgGlLF6oLsv6nKF4o08eaaR0yXRqS621S9LAnRy8D8=,iv:VKlCgUYm9yxRF907sGvin/3fQBBXU2T1Q0p6G3YaBG4=,tag:ZdAYIO+zQ/LndrNajivRfg==,type:str]
 sops:
     age:
         - recipient: age1hnmh393g3qaf2szdjkyrd7jsven9wzvgpud4207vzrfywmuvdassvperqc
@@ -25,7 +27,7 @@ sops:
             ZThvL3gvVitLSHBzUW13MTJYUzM1d1kKLqKwyblydtRY95vojmlGM12O8q0Zsvky
             VkhIY79IplRH4BTh0KVbRadtOKFUJ+2KEmi3W7UhEzow4Fck1L30Vg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-04-03T08:01:33Z"
-    mac: ENC[AES256_GCM,data:fz+2xeD4FfP9yj1kDIMgzQITgZdEsyzhXgp3T97S2ImQ5JAvzKqclm4p1Ue2aMjzxYWEeI4OU3EpJkUBUx37oIaDtgtY1vyLXzw/xoOV4B9wseMzkzw8AW3hwsuLUqO7wjQ01F8bteslSg2AUMSIs0WyAO3Zc1AxZmAUmZBHXDw=,iv:O3QOdxVt3NIJ4EBLIty+7rmNKgFRt01btkoXx3dGYuI=,tag:ks62zu8Szn/bv+QOXxlM6Q==,type:str]
+    lastmodified: "2026-04-07T08:34:19Z"
+    mac: ENC[AES256_GCM,data:TzsToZsvy4P9fRfQY/Th3ptDSwdBtNVFFxTSpAtUhUNzM3kpdEht7kTFk9P/lyNYyQRYF/o/gt03qO3XjPsILu5Zno4TapTvDjr5fehjVlxgqMP5Slek/Zjq5uEmACTaOI8g+84tiMnv2szhVsPjr6Tt8rEhpkn84i1mgMSCVRs=,iv:lGQvWhNnvwdTZ2zhku7TJtDosOQZk6ERMEBZyNBRBdg=,tag:PD3gPITw9ErDCg5BcvwD2A==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.12.2
