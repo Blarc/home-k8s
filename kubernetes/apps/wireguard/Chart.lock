@@ -1,6 +1,6 @@
 dependencies:
 - name: wireguard-operator
   repository: https://nccloud.github.io/charts
-  version: 0.2.1
-digest: sha256:7cd36674ab2ce085fb84d2296948f3fefc06cdbd7b3e4060583070097b9ce79b
-generated: "2026-02-25T12:59:49.031883199Z"
+  version: 0.3.0
+digest: sha256:e37e76ae54b06aac8c1759126a9a705ccbf9bb445f8467734b61032831f27fa6
+generated: "2026-04-08T15:07:34.500295001Z"
