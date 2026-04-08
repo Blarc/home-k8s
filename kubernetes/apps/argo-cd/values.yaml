@@ -57,3 +57,8 @@ argo-cd:
         secrets+age-import, secrets+age-import-kubernetes,
         secrets, secrets+literal,
         https
+
+argocd-image-updater:
+  fullnameOverride: argo-cd-image-updater
+  crds:
+    keep: false
