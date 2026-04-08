@@ -49,7 +49,7 @@ coredns:
             fallthrough
             stubzones
             path /blarcdns
-            endpoint http://etcd-headless.etcd.svc.cluster.local:2379
+            endpoint http://etcd.etcd.svc.cluster.local:2379
         # Domain's TLD does not support DNSSEC.
         # - name: dnssec
         #   parameters: blarc.my.id
