@@ -1,12 +1,53 @@
-etcd:
-  image:
-    repository: bitnamilegacy/etcd
-  auth:
-    rbac:
-      create: false
-
+app-template:
+  controllers:
+    etcd:
+      # type: statefulset
+      containers:
+        app:
+          image:
+            repository: quay.io/coreos/etcd
+            tag: v3.6.10
+            pullPolicy: IfNotPresent
+          env:
+            - name: K8S_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: SERVICE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['app.kubernetes.io/name']
+            - name: ETCDCTL_ENDPOINTS
+              value: $(HOSTNAME).$(SERVICE_NAME):2379
+            - name: URI_SCHEME
+              value: "http"
+          command:
+            - /usr/local/bin/etcd
+          args:
+            - --name=$(HOSTNAME)
+            - --data-dir=/data
+            - --wal-dir=/data/wal
+            - --listen-peer-urls=$(URI_SCHEME)://0.0.0.0:2380
+            - --listen-client-urls=$(URI_SCHEME)://0.0.0.0:2379
+            - --advertise-client-urls=$(URI_SCHEME)://$(HOSTNAME).$(SERVICE_NAME):2379
+            - --initial-cluster-state=new
+            - --initial-cluster-token=etcd-$(K8S_NAMESPACE)
+            - --initial-cluster=$(HOSTNAME)=$(URI_SCHEME)://$(HOSTNAME).$(SERVICE_NAME):2380
+            - --initial-advertise-peer-urls=$(URI_SCHEME)://$(HOSTNAME).$(SERVICE_NAME):2380
+            - --listen-metrics-urls=http://0.0.0.0:8080
+  service:
+    app:
+      ports:
+        etcd-client:
+          port: 2379
+        etcd-server:
+          port: 2380
+        etcd-metrics:
+          port: 8080
   persistence:
-    enabled: false
-
-  preUpgradeJob:
-    enabled: false
+    data:
+      type: emptyDir
