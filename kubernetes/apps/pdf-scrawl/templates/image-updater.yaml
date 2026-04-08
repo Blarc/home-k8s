@@ -1,0 +1,17 @@
+apiVersion: argocd-image-updater.argoproj.io/v1alpha1
+kind: ImageUpdater
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  namespace: "argo-cd"
+  applicationRefs:
+    - namePattern: {{ .Release.Name }}
+      images:
+        - alias: latest
+          imageName: ghcr.io/blarc/pdf-scrawl:latest
+          manifestTargets:
+            helm:
+              tag: "app-template.controllers.pdf-scrawl.containers.app.image.tag"
+      commonUpdateSettings:
+        updateStrategy: "digest"
