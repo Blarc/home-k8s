@@ -9,6 +9,7 @@ app-template:
             pullPolicy: Always
           env:
             TZ: Europe/Ljubljana
+            DATABASE_URL: /data/db.sqlite3
           probes:
             liveness: &probes
               enabled: true
@@ -62,6 +63,11 @@ app-template:
   # TODO: temporary
   persistence:
     tmp:
+      type: persistentVolumeClaim
+      storageClass: topolvm-thin
+      accessMode: ReadWriteOnce
+      size: 1Gi
+    data:
       type: persistentVolumeClaim
       storageClass: topolvm-thin
       accessMode: ReadWriteOnce
