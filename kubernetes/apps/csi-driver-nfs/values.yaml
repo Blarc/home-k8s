@@ -3,6 +3,7 @@ csi-driver-nfs:
     create: true
     name: nfs
     parameters:
+      # this needs to match with value in nas/playbooks/setup_static_ip.yaml
       server: 192.168.1.13
       share: /storage/k8s-vols
       # Useful for ZFS to ensure pods can write

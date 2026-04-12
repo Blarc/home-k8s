@@ -1,0 +1,52 @@
+---
+- name: Configure static IP on Debian (ifupdown)
+  hosts: NAS
+  become: true
+  vars:
+    interface_name: enp2s0
+    # this needs to match with value in kubernetes/apps/csi-driver-nfs/values.yaml
+    static_ip: 192.168.1.13
+    netmask: 255.255.255.0
+    gateway: 192.168.1.1
+    dns_servers:
+      - 192.168.1.1
+  tasks:
+    - name: Backup /etc/network/interfaces
+      copy:
+        src: /etc/network/interfaces
+        dest: "/etc/network/interfaces.bak-ansible-{{ ansible_facts.date_time.date }}"
+        remote_src: true
+        mode: '0644'
+
+    - name: Remove DHCP IPv4 stanza for interface
+      replace:
+        path: /etc/network/interfaces
+        regexp: '^iface {{ interface_name }} inet dhcp\n'
+        replace: ''
+
+    - name: Remove IPv6 autoconfig stanza for interface
+      replace:
+        path: /etc/network/interfaces
+        regexp: '^iface {{ interface_name }} inet6 auto\n'
+        replace: ''
+
+    - name: Ensure static IPv4 and disabled IPv6 are configured
+      blockinfile:
+        path: /etc/network/interfaces
+        marker: "# {mark} ANSIBLE MANAGED STATIC IP"
+        insertafter: '^allow-hotplug {{ interface_name }}'
+        block: |
+          iface {{ interface_name }} inet static
+              address {{ static_ip }}
+              netmask {{ netmask }}
+              gateway {{ gateway }}
+              dns-nameservers {{ dns_servers | join(' ') }}
+
+          iface {{ interface_name }} inet6 manual
+      notify: Restart networking
+
+  handlers:
+    - name: Restart networking
+      service:
+        name: networking
+        state: restarted
