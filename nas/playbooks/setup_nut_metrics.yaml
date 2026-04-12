@@ -1,0 +1,79 @@
+---
+- name: Install and configure NUT Prometheus exporter
+  hosts: NAS
+  become: true
+
+  vars:
+    nut_exporter_version: "3.2.5"
+    nut_exporter_port: 9199
+
+    nut_host: "127.0.0.1"
+    nut_username: "exporter"
+
+  tasks:
+    - name: Load encrypted credentials
+      community.sops.load_vars:
+        file: vars/setup_nut_server.encrypted.yaml
+
+    - name: Ensure required packages are installed
+      apt:
+        name:
+          - curl
+        state: present
+        update_cache: yes
+
+    - name: Create dedicated user for exporter
+      user:
+        name: nut-exporter
+        system: true
+        shell: /usr/sbin/nologin
+        create_home: false
+
+    - name: Download nut_exporter binary
+      get_url:
+        url: "https://github.com/DRuggeri/nut_exporter/releases/download/v{{ nut_exporter_version }}/nut_exporter-v{{ nut_exporter_version }}-linux-amd64"
+        dest: /usr/local/bin/nut_exporter
+        mode: "0755"
+
+    - name: Create systemd service for nut_exporter
+      copy:
+        dest: /etc/systemd/system/nut-exporter.service
+        mode: "0644"
+        content: |
+          [Unit]
+          Description=NUT Prometheus Exporter
+          After=network.target nut-server.service
+
+          [Service]
+          User=nut-exporter
+          Group=nut-exporter
+          Environment="NUT_EXPORTER_PASSWORD={{ nut_monitor_password }}"
+          ExecStart=/usr/local/bin/nut_exporter \
+            --nut.server={{ nut_host }} \
+            --nut.username=exporter \
+            --web.listen-address=:{{ nut_exporter_port }}
+
+          Restart=always
+          RestartSec=5
+
+          [Install]
+          WantedBy=multi-user.target
+
+    - name: Reload systemd
+      systemd:
+        daemon_reload: true
+
+    - name: Enable and start nut_exporter
+      systemd:
+        name: nut-exporter
+        enabled: true
+        state: started
+
+    - name: Check exporter is responding
+      uri:
+        url: "http://127.0.0.1:{{ nut_exporter_port }}/metrics"
+        return_content: false
+      register: exporter_check
+      retries: 5
+      delay: 2
+      until: exporter_check.status == 200

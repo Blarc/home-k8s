@@ -131,6 +131,11 @@ grafana:
         gnetId: 19105
         revision: 9
         datasource: Prometheus
+      nut-exporter:
+        url: https://raw.githubusercontent.com/DRuggeri/nut_exporter/refs/heads/master/dashboard/dashboard.json
+        datasource:
+          - name: DS_PROMETHEUS
+            value: Prometheus
   sidecar:
     dashboards:
       enabled: true

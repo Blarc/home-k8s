@@ -77,6 +77,14 @@ kube-prometheus-stack:
         - job_name: "node-exporter"
           static_configs:
             - targets: [ '192.168.1.13:9100' ]
+        - job_name: nut-primary
+          metrics_path: /ups_metrics
+          static_configs:
+            - targets: [ '192.168.1.13:9199' ]
+              labels:
+                ups: "primary"
+          params:
+            ups: [ "primary" ]
   prometheus-node-exporter:
     fullnameOverride: node-exporter
     prometheus:

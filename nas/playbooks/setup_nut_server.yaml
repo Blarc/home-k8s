@@ -60,6 +60,10 @@
           [monslave]
               password = {{ nut_monitor_password }}
               upsmon slave
+          
+          [exporter]
+              password = {{ nut_monitor_password }}
+              upsmon slave
       notify: Restart NUT
 
     - name: Configure NUT daemon listen address
