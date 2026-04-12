@@ -11,7 +11,7 @@ creation_rules:
     age: age1mm90zkg8lsmpqa7gya9p2prsj8yfq774gjm6dkamkkvwugen7ywse5w97z
   - path_regex: talos/*/.*sops.ya?ml
     age: age1mm90zkg8lsmpqa7gya9p2prsj8yfq774gjm6dkamkkvwugen7ywse5w97z
-  - path_regex: kubernetes/.*/values.encrypted.yaml
+  - path_regex: .*/.*.encrypted.yaml
     key_groups:
       - age:
           # argo-cd

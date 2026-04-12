@@ -1,0 +1,165 @@
+---
+- name: Setup NUT server on NAS
+  hosts: NAS
+  become: true
+  vars:
+    nut_ups_name: ups
+    nut_ups_driver: usbhid-ups
+    nut_ups_port: auto
+  tasks:
+    - name: Load encrypted credentials
+      community.sops.load_vars:
+        file: vars/setup_nut_server.encrypted.yaml
+    - name: Install NUT packages
+      apt:
+        name:
+          - nut
+          - nut-server
+          - nut-client
+          - curl
+        state: present
+        update_cache: yes
+
+    - name: Ensure nut group exists
+      group:
+        name: nut
+        state: present
+
+    - name: Set NUT to server mode
+      lineinfile:
+        path: /etc/nut/nut.conf
+        regexp: '^MODE='
+        line: 'MODE=netserver'
+      notify: Restart NUT
+
+    - name: Configure UPS device
+      copy:
+        dest: /etc/nut/ups.conf
+        mode: '0640'
+        owner: root
+        group: nut
+        content: |
+          [{{ nut_ups_name }}]
+              driver = {{ nut_ups_driver }}
+              port = {{ nut_ups_port }}
+              desc = "NAS UPS"
+              pollinterval = 15
+      notify: Restart NUT
+
+    - name: Configure NUT users for server and clients
+      copy:
+        dest: /etc/nut/upsd.users
+        mode: '0600'
+        owner: root
+        group: nut
+        content: |
+          [monmaster]
+              password = {{ nut_monitor_password }}
+              upsmon master
+
+          [monslave]
+              password = {{ nut_monitor_password }}
+              upsmon slave
+      notify: Restart NUT
+
+    - name: Configure NUT daemon listen address
+      copy:
+        dest: /etc/nut/upsd.conf
+        mode: '0640'
+        owner: root
+        group: nut
+        content: |
+          LISTEN 127.0.0.1 3493
+          LISTEN {{ ansible_facts['default_ipv4']['address'] }} 3493
+      notify: Restart NUT
+
+    - name: Install NUT Ntfy notify script
+      copy:
+        dest: /usr/local/sbin/nut-ntfy-notify.sh
+        mode: '0750'
+        owner: root
+        group: root
+        content: |
+          #!/bin/sh
+          set -eu
+
+          NTFY_TOPIC_NAME="{{ nut_ntfy_topic_name }}"
+
+          if [ -z "$NTFY_TOPIC_NAME" ]; then
+            exit 0
+          fi
+
+          EVENT="${NOTIFYTYPE:-UNKNOWN}"
+          UPS="${UPSNAME:-{{ nut_ups_name }}}"
+          HOST="$(hostname -f 2>/dev/null || hostname)"
+          TS="$(date "+%Y-%m-%d %H:%M:%S %Z")"
+          MESSAGE="[${TS}] ⚡ UPS ${EVENT} on ${HOST} (${UPS})"
+
+          curl -fsS \
+            -H "Priority: high" \
+            -d "${MESSAGE}" \
+            https://ntfy.sh/"${NTFY_TOPIC_NAME}" >/dev/null || true
+      notify: Restart NUT
+
+    - name: Configure local upsmon on NAS (master)
+      copy:
+        dest: /etc/nut/upsmon.conf
+        mode: '0600'
+        owner: root
+        group: nut
+        content: |
+          RUN_AS_USER nut
+          MONITOR {{ nut_ups_name }}@localhost 1 monmaster {{ nut_monitor_password }} master
+          MINSUPPLIES 1
+          SHUTDOWNCMD "/sbin/shutdown -h now"
+          POLLFREQ 5
+          POLLFREQALERT 5
+          HOSTSYNC 15
+          DEADTIME 15
+          POWERDOWNFLAG /etc/killpower
+          FINALDELAY 0
+          NOTIFYCMD /usr/local/sbin/nut-ntfy-notify.sh
+          NOTIFYFLAG ONLINE SYSLOG+EXEC
+          NOTIFYFLAG ONBATT SYSLOG+EXEC
+          NOTIFYFLAG LOWBATT SYSLOG+EXEC
+          NOTIFYFLAG FSD SYSLOG+EXEC
+          NOTIFYFLAG COMMOK SYSLOG+EXEC
+          NOTIFYFLAG COMMBAD SYSLOG+EXEC
+          NOTIFYFLAG NOCOMM SYSLOG+EXEC
+          NOTIFYFLAG SHUTDOWN SYSLOG+EXEC
+          NOTIFYFLAG REPLBATT SYSLOG+EXEC
+      notify: Restart NUT
+
+    - name: Ensure NUT services are enabled and started
+      service:
+        name: "{{ item }}"
+        enabled: yes
+        state: started
+      loop:
+        - nut-server
+        - nut-monitor
+
+    - name: Check UPS status
+      command: upsc {{ nut_ups_name }}@localhost
+      register: ups_status
+      changed_when: false
+      failed_when: ups_status.rc != 0
+
+    - name: Show UPS status
+      debug:
+        var: ups_status.stdout_lines
+
+    - name: Test Ntfy alert
+      command: /usr/local/sbin/nut-ntfy-notify.sh
+      environment:
+        NOTIFYTYPE: TEST
+        UPSNAME: "{{ nut_ups_name }}"
+
+  handlers:
+    - name: Restart NUT
+      service:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        - nut-server
+        - nut-monitor
