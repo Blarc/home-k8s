@@ -83,8 +83,6 @@ kube-prometheus-stack:
             - targets: [ '192.168.1.13:9199' ]
               labels:
                 ups: "primary"
-          params:
-            ups: [ "primary" ]
   prometheus-node-exporter:
     fullnameOverride: node-exporter
     prometheus:
