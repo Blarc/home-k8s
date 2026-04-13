@@ -59,7 +59,7 @@ kube-prometheus-stack:
       walCompression: true
       enableFeatures:
         - memory-snapshot-on-shutdown
-      retention: 14d
+      retention: 1d
       retentionSize: 5GB
       resources:
         requests:
