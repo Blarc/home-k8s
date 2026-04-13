@@ -1,3 +1,4 @@
+nut_admin_password: ENC[AES256_GCM,data:+u4wCiHQlGHS/h/Uk4uSkAH+Oow5,iv:CCb9gw7/oSLiy5aFXhh3ds2hDbQ1Zi6cxtX6/6gNq/A=,tag:N/8Cx2PGOFJaBO1qQhpV5Q==,type:str]
 nut_monitor_password: ENC[AES256_GCM,data:mjM4CX83Y0VwtrYOwFxDjJ4kpIcGzA==,iv:yAI/O+AkaM4WhRJCw4lYC8a0UEWc0PJ88wOjN+G+Z5U=,tag:xn2tbhgrKyPmmX1D1RZe7g==,type:str]
 nut_ntfy_topic_name: ENC[AES256_GCM,data:ZyxDmlOLy03q09U2mCX+M+jTovi3KvhuhuUbB7CWD4FBvgjZ8enYwvY7N2w=,iv:Nbe9m+rIKFci/cmjJcfvc8mpDR1g6VeF75dAu4YLUV4=,tag:o2O5S/No7kW4t70LMaAylg==,type:str]
 sops:
@@ -20,7 +21,7 @@ sops:
         aC9YOGQ0d1dUY2VEN0E4V0ltQUVTVXcKaLSBRFlEtcQDCVPKH6Wh4PsbZYx9rraT
         OC+F8dvWdoYp0kLAnqMW5zqKQcpRO5vApYAMuC8xpfJOgo+cYLP9CA==
         -----END AGE ENCRYPTED FILE-----
-  lastmodified: "2026-04-12T16:45:04Z"
-  mac: ENC[AES256_GCM,data:TxkIxqXWDIA0zUuUUwPlc//X4JDR4NyWwjDOw0LrHc97/A76LJWWMIbWWYnP3/L44FYzzicu2E5+sklvKO/uLGDeblFHBaBXfzoyMxnHu3H3tVo1l03MC846e2f1gJr5KxMXfw5UYc8m8+dTvhTjh3mdgrDuNbN0nw756KzMR/s=,iv:07afu8XDxp2zjBkCvbSHA9OL45zQIDFFtvb2P1K9J28=,tag:g4+VeR464TozlJRBmHWeSQ==,type:str]
+  lastmodified: "2026-04-13T11:52:39Z"
+  mac: ENC[AES256_GCM,data:ZQNHKFBDSCSiR3QwS0NY7B22hgrkEZvKF6/Y8ew2Z0aT/ZzBqkRa4a/nwozYKx8RyrmXIDoXyJRDQBcpJ6U29InHrD1hY6/4Pq74eGCwSiH4WbkFfj26HnnYBh2JJEbVX69lsmqMk6qqAvSVtIkIuG7HaP2PzwgLZLeqfQTAcvY=,iv:mpBlUniu1xf3wLm1s0t9SKsj8wwooaUOLQFONacmWqI=,tag:Y7W2Hwl7RFfqByN//NBg8g==,type:str]
   unencrypted_suffix: _unencrypted
   version: 3.12.2

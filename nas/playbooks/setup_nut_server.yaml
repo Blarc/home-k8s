@@ -6,6 +6,8 @@
     nut_ups_name: ups
     nut_ups_driver: usbhid-ups
     nut_ups_port: auto
+    nut_battery_charge_low: 50
+    nut_battery_runtime_low: 300
   tasks:
     - name: Load encrypted credentials
       community.sops.load_vars:
@@ -49,22 +51,44 @@
     - name: Configure NUT users for server and clients
       copy:
         dest: /etc/nut/upsd.users
-        mode: '0600'
+        mode: '0640'
         owner: root
         group: nut
         content: |
-          [monmaster]
+          [upsadmin]
+              password = {{ nut_admin_password }}
+              actions = SET
+              instcmds = ALL
+          
+          [monprimary]
               password = {{ nut_monitor_password }}
-              upsmon master
+              upsmon primary
 
-          [monslave]
+          [monsecondary]
               password = {{ nut_monitor_password }}
-              upsmon slave
+              upsmon secondary
           
           [exporter]
               password = {{ nut_monitor_password }}
-              upsmon slave
+              upsmon secondary
       notify: Restart NUT
+
+    - name: Read current battery.charge.low
+      command: upsc {{ nut_ups_name }}@localhost
+      register: upsc_out
+      changed_when: false
+
+    - name: Set battery.charge.low
+      command: >
+        upsrw -s battery.charge.low={{ nut_battery_charge_low }}
+        -u upsadmin -p {{ nut_admin_password }} {{ nut_ups_name }}@localhost
+      when: "'battery.charge.low: ' ~ (nut_battery_charge_low | string) not in upsc_out.stdout"
+
+    - name: Set battery.runtime.low
+      command: >
+        upsrw -s battery.runtime.low={{ nut_battery_runtime_low }}
+        -u upsadmin -p {{ nut_admin_password }} {{ nut_ups_name }}@localhost
+      when: "'battery.runtime.low: ' ~ (nut_battery_runtime_low | string) not in upsc_out.stdout"
 
     - name: Configure NUT daemon listen address
       copy:
@@ -105,7 +129,7 @@
             https://ntfy.sh/"${NTFY_TOPIC_NAME}" >/dev/null || true
       notify: Restart NUT
 
-    - name: Configure local upsmon on NAS (master)
+    - name: Configure local upsmon on NAS (primary)
       copy:
         dest: /etc/nut/upsmon.conf
         mode: '0600'
@@ -113,7 +137,7 @@
         group: nut
         content: |
           RUN_AS_USER nut
-          MONITOR {{ nut_ups_name }}@localhost 1 monmaster {{ nut_monitor_password }} master
+          MONITOR {{ nut_ups_name }}@localhost 1 monprimary {{ nut_monitor_password }} primary
           MINSUPPLIES 1
           SHUTDOWNCMD "/sbin/shutdown -h now"
           POLLFREQ 5
@@ -121,7 +145,8 @@
           HOSTSYNC 15
           DEADTIME 15
           POWERDOWNFLAG /etc/killpower
-          FINALDELAY 0
+          # Shut down 3 minutes after the FSD, so Talos shuts down first
+          FINALDELAY 180
           NOTIFYCMD /usr/local/sbin/nut-ntfy-notify.sh
           NOTIFYFLAG ONLINE SYSLOG+EXEC
           NOTIFYFLAG ONBATT SYSLOG+EXEC
