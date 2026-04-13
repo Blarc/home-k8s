@@ -6,15 +6,15 @@
 3. Plug to PC and boot from USB.
 4. Apply config:
    ```bash
-   talosctl apply-config --nodes=192.168.1.17 --file=./clusterconfig/home-control-plane-1.yaml --insecure
+   talosctl apply-config --nodes=192.168.1.16 --file=./clusterconfig/home-multi-role.yaml --insecure
    ```
 5. Bootstrap the control plane:
    ```bash
-   talosctl bootstrap --nodes 192.168.1.17 --endpoints 192.168.1.17 --talosconfig=./clusterconfig/talosconfig
+   talosctl bootstrap --nodes 192.168.1.16 --endpoints 192.168.1.16 --talosconfig=./clusterconfig/talosconfig
    ```
 6. Retrieve kubeconfig:
    ```bash
-   talosctl kubeconfig -n 192.168.1.17
+   talosctl kubeconfig -n 192.168.1.16
    ```
 
 ## Static IP for nodes
