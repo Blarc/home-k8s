@@ -106,7 +106,7 @@
         dest: /usr/local/sbin/nut-ntfy-notify.sh
         mode: '0750'
         owner: root
-        group: root
+        group: nut
         content: |
           #!/bin/sh
           set -eu
