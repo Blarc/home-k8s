@@ -7,7 +7,7 @@
     nut_ups_driver: usbhid-ups
     nut_ups_port: auto
     nut_battery_charge_low: 50
-    nut_battery_runtime_low: 300
+    nut_battery_runtime_low: 600
   tasks:
     - name: Load encrypted credentials
       community.sops.load_vars:
@@ -145,8 +145,8 @@
           HOSTSYNC 15
           DEADTIME 15
           POWERDOWNFLAG /etc/killpower
-          # Shut down 3 minutes after the FSD, so Talos shuts down first
-          FINALDELAY 180
+          # Shut down 5 minutes after the FSD, so Talos shuts down first
+          FINALDELAY 300
           NOTIFYCMD /usr/local/sbin/nut-ntfy-notify.sh
           NOTIFYFLAG ONLINE SYSLOG+EXEC
           NOTIFYFLAG ONBATT SYSLOG+EXEC
