@@ -2,7 +2,7 @@ apiVersion: v2
 dependencies:
   - name: openclaw-operator
     repository: oci://ghcr.io/openclaw-rocks/charts
-    version: 0.26.2
+    version: 0.27.0
 description: Helm chart to deploy openclaw-operator
 name: openclaw-operator
 version: 1.0.0
