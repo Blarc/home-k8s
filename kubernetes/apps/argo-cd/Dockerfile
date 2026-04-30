@@ -1,7 +1,7 @@
 # BASED ON https://github.com/jkroepke/helm-secrets/wiki/ArgoCD-Integration#option-1-custom-docker-image
 
 # renovate: datasource=github-releases depName=argoproj/argo-cd
-ARG ARGOCD_VERSION="v3.3.8"
+ARG ARGOCD_VERSION=v3.3.9
 FROM quay.io/argoproj/argocd:$ARGOCD_VERSION
 # renovate: datasource=github-releases depName=getsops/sops
 ARG SOPS_VERSION=3.12.2
