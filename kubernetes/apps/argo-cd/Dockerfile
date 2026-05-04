@@ -8,7 +8,7 @@ ARG SOPS_VERSION=3.12.2
 # renovate: datasource=github-releases depName=kubernetes/kubectl
 ARG KUBECTL_VERSION=1.35.0
 # renovate: datasource=github-releases depName=helmfile/vals
-ARG VALS_VERSION=0.43.9
+ARG VALS_VERSION=0.44.0
 # renovate: datasource=github-releases depName=FiloSottile/age
 ARG AGE_VERSION=1.3.1
 # renovate: datasource=github-releases depName=jkroepke/helm-secrets
