@@ -63,6 +63,41 @@ app-template:
             - path:
                 type: PathPrefix
                 value: /
+  networkpolicies:
+    app:
+      controller: cod2-statistics
+      policyTypes:
+        - Ingress
+        - Egress
+      rules:
+        ingress:
+          - from:
+              - namespaceSelector:
+                  matchLabels:
+                    kubernetes.io/metadata.name: traefik
+            ports:
+              - protocol: TCP
+                port: *port
+        egress:
+          - to:
+              - namespaceSelector:
+                  matchLabels:
+                    kubernetes.io/metadata.name: observability
+                podSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: loki
+            ports:
+              - protocol: TCP
+                port: 3100
+          - to:
+              - namespaceSelector:
+                  matchLabels:
+                    kubernetes.io/metadata.name: kube-system
+            ports:
+              - protocol: UDP
+                port: 53
+              - protocol: TCP
+                port: 53
   persistence:
     data:
       type: persistentVolumeClaim
