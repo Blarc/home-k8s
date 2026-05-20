@@ -1,0 +1,16 @@
+apiVersion: argocd-image-updater.argoproj.io/v1alpha1
+kind: ImageUpdater
+metadata:
+  name: {{ .Release.Name }}
+  namespace: argo-cd
+spec:
+  applicationRefs:
+    - namePattern: {{ .Release.Name }}
+      images:
+        - alias: latest
+          imageName: ghcr.io/blarc/cod2-statistics:latest
+          manifestTargets:
+            helm:
+              tag: app-template.controllers.cod2-statistics.containers.app.image.tag
+      commonUpdateSettings:
+        updateStrategy: "digest"
