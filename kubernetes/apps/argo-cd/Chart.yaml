@@ -2,7 +2,7 @@ apiVersion: v2
 dependencies:
   - name: argo-cd
     repository: https://argoproj.github.io/argo-helm
-    version: 9.5.15
+    version: 9.5.16
   - name: argocd-image-updater
     repository: https://argoproj.github.io/argo-helm
     version: 1.2.2
