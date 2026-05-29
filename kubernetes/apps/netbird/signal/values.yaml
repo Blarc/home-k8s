@@ -1,0 +1,84 @@
+app-template:
+  controllers:
+    signal:
+      annotations:
+        reloader.stakater.com/auto: "true"
+      containers:
+        app:
+          image:
+            repository: ghcr.io/netbirdio/signal
+            tag: 0.67.3
+          env:
+            TZ: Europe/Ljubljana
+          args:
+            - "--port"
+            - "{{ .Values.signal.service.port }}"
+            - "--log-level"
+            - "{{ .Values.signal.logLevel }}"
+            - "--log-file"
+            - "console"
+          ports:
+            - name: grpc
+              containerPort: 80
+              protocol: TCP
+            - name: metrics
+              containerPort: 9090
+              protocol: TCP
+          probes:
+            liveness: &probes
+              enabled: true
+              custom: true
+              spec:
+                initialDelaySeconds: 5
+                periodSeconds: 5
+                tcpSocket:
+                  port: grpc
+            readiness: *probes
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: false
+            capabilities:
+              drop: [ ALL ]
+              add: [ NET_ADMIN, NET_RAW, PERFMON, BPF ]
+          resources:
+            requests:
+              cpu: 10mß
+              memory: 32Mi
+            limits:
+              memory: 32Mi
+  defaultPodOptions:
+    securityContext:
+      seccompProfile:
+        type: RuntimeDefault
+  service:
+    signal:
+      type: ClusterIP
+      ports:
+        http:
+          port: 80
+          protocol: TCP
+          # appProtocol: kubernetes.io/h2c
+    signal-metrics:
+      type: ClusterIP
+      ports:
+        metrics:
+          port: 9090
+          protocol: TCP
+  route:
+    signal:
+      hostnames:
+        - "netbird.blarc.my.id"
+      parentRefs:
+        - name: internal
+          namespace: traefik
+      rules:
+        - backendRefs:
+            - identifier: signal
+              port: 80
+          matches:
+            - headers:
+                - name: Content-Type
+                  value: application/grpc
+              method:
+                service: signalexchange.SignalExchange

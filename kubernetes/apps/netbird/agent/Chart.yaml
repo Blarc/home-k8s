@@ -1,0 +1,9 @@
+apiVersion: v2
+name: netbird-dashboard
+description: A Helm chart for netbird-dashboard
+dependencies:
+  - name: app-template
+    version: 5.0.1
+    repository: oci://ghcr.io/bjw-s-labs/helm
+type: application
+version: 1.0.0

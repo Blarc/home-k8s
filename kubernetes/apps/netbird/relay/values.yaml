@@ -1,0 +1,77 @@
+app-template:
+  controllers:
+    relay:
+      annotations:
+        reloader.stakater.com/auto: "true"
+      containers:
+        app:
+          image:
+            repository: ghcr.io/netbirdio/relay
+            tag: 0.67.3
+          env:
+            TZ: Europe/Ljubljana
+            NB_LISTEN_ADDRESS: ":33080"
+            NB_EXPOSED_ADDRESS: rels://netbird.blarc.my.id:443/relay
+          ports:
+            - name: http
+              containerPort: 33080
+              protocol: TCP
+            - name: metrics
+              containerPort: 9090
+              protocol: TCP
+          probes:
+            liveness: &probes
+              enabled: true
+              custom: true
+              spec:
+                initialDelaySeconds: 5
+                periodSeconds: 5
+                tcpSocket:
+                  port: http
+            readiness: *probes
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: false
+            capabilities:
+              drop: [ ALL ]
+              add: [ NET_ADMIN, NET_RAW, PERFMON, BPF ]
+          resources:
+            requests:
+              memory: 32Mi
+              cpu: 10m
+            limits:
+              memory: 32Mi
+  defaultPodOptions:
+    securityContext:
+      seccompProfile:
+        type: RuntimeDefault
+  service:
+    relay:
+      type: ClusterIP
+      ports:
+        http:
+          port: 33080
+          protocol: TCP
+          # appProtocol: kubernetes.io/h2c
+    relay-metrics:
+      type: ClusterIP
+      ports:
+        metrics:
+          port: 9090
+          protocol: TCP
+  route:
+    relay:
+      hostnames:
+        - "netbird.blarc.my.id"
+      parentRefs:
+        - name: internal
+          namespace: traefik
+      rules:
+        - backendRefs:
+            - identifier: relay
+              port: 33080
+          matches:
+            - path:
+                type: PathPrefix
+                value: /relay

@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: netbird-config
+data:
+  config.json: |
+    {
+      "Stuns": [
+        {
+          "Proto": "udp",
+          "URI": "stun:coturn.blarc.my.id:5349",
+          "Username": "",
+          "Password": null
+        }
+      ],
+      "TURNConfig": {
+        "Turns": [
+          {
+            "Proto": "udp",
+            "URI": "turn:coturn.blarc.my.id:5349",
+            "Username": "{{ .Values.turn.user }}",
+            "Password": "{{ .Values.turn.password }}"
+          }
+        ],
+        "CredentialsTTL": "12h0m0s",
+        "Secret": "secret",
+        "TimeBasedCredentials": false
+      },
+      "Relay": {
+        "Addresses": [
+          "rels://netbird.blarc.my.id:443/relay"
+        ],
+        "CredentialsTTL": "24h",
+        "Secret": "{{ .Values.relay.secret }}"
+      },
+      "Signal": {
+        "Proto": "https",
+        "URI": "netbird.blarc.my.id:443",
+        "Username": "",
+        "Password": null
+      },
+      "Datadir": "/var/lib/netbird/",
+      "DataStoreEncryptionKey": "{{ .Values.datastore.encryptionKey }}",
+      "HttpConfig": {
+        "AuthAudience": "{{ .Values.auth.clientId }}",
+        "AuthUserIDClaim": "sub",
+        "OIDCConfigEndpoint": "https://authentik.blarc.my.id/.well-known/openid-configuration",
+        "IdpSignKeyRefreshEnabled": false
+      },
+      "IdpManagerConfig": {},
+      "DeviceAuthorizationFlow": {},
+      "PKCEAuthorizationFlow": {
+        "ProviderConfig": {
+          "Audience": "netbird",
+          "ClientID": "{{ .Values.auth.clientId }}",
+          "ClientSecret": "{{ .Values.auth.clientSecret }}",
+          "Domain": "",
+          "Scope": "openid profile email offline_access",
+          "RedirectURLs": [
+            "http://localhost:53000",
+            "http://localhost:54000"
+          ],
+          "UseIDToken": "true"
+        }
+      }
+    }

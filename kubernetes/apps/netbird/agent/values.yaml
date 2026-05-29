@@ -1,0 +1,64 @@
+app-template:
+  controllers:
+    dashboard:
+      annotations:
+        reloader.stakater.com/auto: "true"
+      containers:
+        app:
+          image:
+            repository: ghcr.io/netbirdio/netbird
+            tag: 0.67.3
+          env:
+            TZ: Europe/Ljubljana
+            NB_HOSTNAME: talos-agent
+            NB_LOG_LEVEL: info
+            NB_MANAGEMENT_URL: https://netbird.blarc.my.id
+            NB_ADMIN_URL: https://netbird.blarc.my.id
+          args:
+            - "--port"
+            - "{{ .Values.dashboard.service.port }}"
+            - "--log-level"
+            - "{{ .Values.dashboard.logLevel }}"
+            - "--log-file"
+            - "console"
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+            - name: metrics
+              containerPort: 9090
+              protocol: TCP
+          probes:
+            liveness: &probes
+              enabled: true
+              custom: true
+              spec:
+                failureThreshold: 3
+                initialDelaySeconds: 15
+                periodSeconds: 10
+                timeoutSeconds: 3
+                tcpSocket:
+                  port: http
+            readiness: *probes
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+            capabilities:
+              drop: [ ALL ]
+              add: [ NET_ADMIN, NET_RAW, PERFMON, BPF ]
+          resources:
+            requests:
+              memory: 32Mi
+              cpu: 10m
+            limits:
+              memory: 32Mi
+  defaultPodOptions:
+    securityContext:
+      seccompProfile:
+        type: RuntimeDefault
+      sysctls:
+        # Considered unsafe, need to enable with kubelet argument.
+        # see https://kubernetes.io/docs/tasks/administer-cluster/sysctl-cluster/#enabling-unsafe-sysctls
+        - name: net.ipv4.conf.all.src_valid_mark
+          value: "1"

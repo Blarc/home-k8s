@@ -1,0 +1,96 @@
+app-template:
+  controllers:
+    dashboard:
+      annotations:
+        reloader.stakater.com/auto: "true"
+      containers:
+        app:
+          image:
+            repository: ghcr.io/netbirdio/dashboard
+            tag: v2.36.0
+          env:
+            TZ: Europe/Ljubljana
+            AUTH_AUDIENCE: netbird
+            AUTH_AUTHORITY: https://authentik.blarc.my.id
+            AUTH_REDIRECT_URI: /callback
+            AUTH_SILENT_REDIRECT_URI: /silent-callback
+            AUTH_SUPPORTED_SCOPES: openid profile email
+            USE_AUTH0: false
+            NETBIRD_MGMT_API_ENDPOINT: https://netbird.blarc.my.id
+            NETBIRD_MGMT_GRPC_API_ENDPOINT: https://netbird.blarc.my.id
+            NETBIRD_TOKEN_SOURCE: idToken
+          args:
+            - "--port"
+            - "{{ .Values.dashboard.service.port }}"
+            - "--log-level"
+            - "{{ .Values.dashboard.logLevel }}"
+            - "--log-file"
+            - "console"
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+            - name: metrics
+              containerPort: 9090
+              protocol: TCP
+          probes:
+            liveness: &probes
+              enabled: true
+              custom: true
+              spec:
+                livenessProbe:
+                  initialDelaySeconds: 5
+                  periodSeconds: 5
+                  httpGet:
+                    path: /
+                    port: http
+            readiness: *probes
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+            capabilities:
+              drop: [ ALL ]
+              add: [ NET_BIND_SERVICE, CHOWN, SETGID, SETUID, DAC_OVERRIDE ]
+          resources:
+            requests:
+              memory: 64Mi
+              cpu: 10m
+            limits:
+              memory: 64Mi
+  persistence:
+    tmp:
+      type: emptyDir
+  defaultPodOptions:
+    securityContext:
+      seccompProfile:
+        type: RuntimeDefault
+  service:
+    dashboard:
+      type: ClusterIP
+      ports:
+        http:
+          port: 80
+          protocol: TCP
+          # appProtocol: kubernetes.io/h2c
+    dashboard-metrics:
+      type: ClusterIP
+      ports:
+        metrics:
+          port: 9090
+          protocol: TCP
+  route:
+    dashboard:
+      hostnames:
+        - "netbird.blarc.my.id"
+      parentRefs:
+        - name: internal
+          namespace: traefik
+      rules:
+        - backendRefs:
+            - identifier: dashboard
+              port: 80
+          matches:
+            - path:
+                type: PathPrefix
+                value: /

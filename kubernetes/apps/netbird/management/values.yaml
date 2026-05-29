@@ -1,0 +1,119 @@
+app-template:
+  controllers:
+    management:
+      annotations:
+        reloader.stakater.com/auto: "true"
+      containers:
+        app:
+          image:
+            repository: ghcr.io/netbirdio/management
+            tag: 0.67.3
+          env:
+            TZ: Europe/Ljubljana
+          args:
+            - --port=80
+            - --log-file=console
+            - --log-level=info
+            - --disable-anonymous-metrics=true
+            - --single-account-mode-domain=blarc.netbird
+            - --dns-domain=blarc.netbird
+            - --idp-sign-key-refresh-enabled
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+            - name: grpc
+              containerPort: 33073
+              protocol: TCP
+            - name: metrics
+              containerPort: 9090
+              protocol: TCP
+          probes:
+            liveness: &probes
+              enabled: true
+              custom: true
+              spec:
+                failureThreshold: 3
+                initialDelaySeconds: 15
+                periodSeconds: 10
+                timeoutSeconds: 3
+                tcpSocket:
+                  port: http
+            readiness: *probes
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+            capabilities:
+              drop: [ ALL ]
+              add: [ NET_ADMIN, NET_RAW, PERFMON, BPF ]
+          resources:
+            requests:
+              cpu: 10m
+              memory: 512Mi
+            limits:
+              memory: 512Mi
+  defaultPodOptions:
+    securityContext:
+      seccompProfile:
+        type: RuntimeDefault
+  service:
+    management:
+      type: ClusterIP
+      ports:
+        http:
+          port: 80
+          protocol: TCP
+          # appProtocol: kubernetes.io/h2c
+    management-metrics:
+      type: ClusterIP
+      ports:
+        metrics:
+          port: 9090
+          protocol: TCP
+    management-grpc:
+      type: ClusterIP
+      ports:
+        grpc:
+          port: 33073
+          protocol: TCP
+          # appProtocol: kubernetes.io/h2c
+  persistence:
+    management:
+      type: persistentVolumeClaim
+      storageClass: topolvm-thin
+      accessMode: ReadWriteOnce
+      size: 512Mi
+      globalMounts:
+        - path: /var/lib/netbird
+  route:
+    management:
+      hostnames:
+        - "netbird.blarc.my.id"
+      parentRefs:
+        - name: internal
+          namespace: traefik
+      rules:
+        - backendRefs:
+            - identifier: management
+              port: 80
+          matches:
+            - path:
+                type: PathPrefix
+                value: /
+    management-grpc:
+      hostnames:
+        - "netbird.blarc.my.id"
+      parentRefs:
+        - name: internal
+          namespace: traefik
+      rules:
+        - backendRefs:
+            - identifier: management-grpc
+              port: 33073
+          matches:
+            - headers:
+                - name: Content-Type
+                  value: application/grpc
+              method:
+                service: management.ManagementService
