@@ -35,6 +35,7 @@ spec:
 #            - --source=gateway-tlsroute
 #            - --source=gateway-tcproute
 #            - --source=gateway-udproute
+            - --source=service
             - --provider=coredns
             - --coredns-prefix=/blarcdns/
             - --log-level=debug
