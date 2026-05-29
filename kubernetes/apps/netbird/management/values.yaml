@@ -107,7 +107,7 @@ app-template:
           matches:
             - path:
                 type: PathPrefix
-                value: /
+                value: /api
     management-grpc:
       kind: GRPCRoute
       hostnames:
