@@ -13,7 +13,7 @@ entries:
       authorization_flow:
         !Find [
           authentik_flows.flow,
-          [slug, "default-provider-authorization-implicit-consent"],
+          [slug, "default-provider-authorization-explicit-consent"],
         ]
       signing_key:
         !Find [
@@ -28,9 +28,9 @@ entries:
 
       client_type: confidential
       redirect_uris:
-        - url: https://netbird.blarc.my.id/auth/openid/callback
+        - url: https://netbird.blarc.my.id/callback
           matching_mode: strict
-        - url: https://netbird.blarc.my.id/auth/openid/mobile-redirect
+        - url: https://netbird.blarc.my.id/silent-callback
           matching_mode: strict
 
       client_id: !Env NETBIRD_PROVIDER_CLIENT_ID
