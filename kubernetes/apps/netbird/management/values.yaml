@@ -102,6 +102,7 @@ app-template:
                 type: PathPrefix
                 value: /
     management-grpc:
+      kind: GRPCRoute
       hostnames:
         - "netbird.blarc.my.id"
       parentRefs:

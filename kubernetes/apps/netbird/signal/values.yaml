@@ -67,6 +67,7 @@ app-template:
           protocol: TCP
   route:
     signal:
+      kind: GRPCRoute
       hostnames:
         - "netbird.blarc.my.id"
       parentRefs:
