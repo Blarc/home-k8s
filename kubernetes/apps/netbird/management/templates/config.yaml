@@ -44,7 +44,7 @@ data:
       "HttpConfig": {
         "AuthAudience": "{{ .Values.auth.clientId }}",
         "AuthUserIDClaim": "sub",
-        "OIDCConfigEndpoint": "https://authentik.blarc.my.id/.well-known/openid-configuration",
+        "OIDCConfigEndpoint": "https://authentik.blarc.my.id/application/o/netbird/.well-known/openid-configuration",
         "IdpSignKeyRefreshEnabled": false
       },
       "IdpManagerConfig": {},
