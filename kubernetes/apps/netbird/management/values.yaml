@@ -79,6 +79,13 @@ app-template:
           protocol: TCP
           # appProtocol: kubernetes.io/h2c
   persistence:
+    config:
+      type: configMap
+      name: management-config
+      defaultMode: 0644
+      globalMounts:
+        - path: /etc/netbird/management.json
+          subPath: management.json
     management:
       type: persistentVolumeClaim
       storageClass: topolvm-thin
@@ -102,6 +109,7 @@ app-template:
                 type: PathPrefix
                 value: /
     management-grpc:
+      kind: GRPCRoute
       hostnames:
         - "netbird.blarc.my.id"
       parentRefs:
@@ -115,5 +123,7 @@ app-template:
             - headers:
                 - name: Content-Type
                   value: application/grpc
+                  type: Exact
               method:
                 service: management.ManagementService
+                type: Exact

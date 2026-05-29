@@ -1,6 +1,6 @@
 app-template:
   controllers:
-    dashboard:
+    agent:
       annotations:
         reloader.stakater.com/auto: "true"
       containers:
@@ -14,13 +14,6 @@ app-template:
             NB_LOG_LEVEL: info
             NB_MANAGEMENT_URL: https://netbird.blarc.my.id
             NB_ADMIN_URL: https://netbird.blarc.my.id
-          args:
-            - "--port"
-            - "{{ .Values.dashboard.service.port }}"
-            - "--log-level"
-            - "{{ .Values.dashboard.logLevel }}"
-            - "--log-file"
-            - "console"
           ports:
             - name: http
               containerPort: 80

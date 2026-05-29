@@ -12,9 +12,9 @@ app-template:
             TZ: Europe/Ljubljana
           args:
             - "--port"
-            - "{{ .Values.signal.service.port }}"
+            - "80"
             - "--log-level"
-            - "{{ .Values.signal.logLevel }}"
+            - "info"
             - "--log-file"
             - "console"
           ports:
@@ -43,7 +43,7 @@ app-template:
               add: [ NET_ADMIN, NET_RAW, PERFMON, BPF ]
           resources:
             requests:
-              cpu: 10mß
+              cpu: 10m
               memory: 32Mi
             limits:
               memory: 32Mi
@@ -67,6 +67,7 @@ app-template:
           protocol: TCP
   route:
     signal:
+      kind: GRPCRoute
       hostnames:
         - "netbird.blarc.my.id"
       parentRefs:
@@ -79,6 +80,8 @@ app-template:
           matches:
             - headers:
                 - name: Content-Type
+                  type: Exact
                   value: application/grpc
               method:
                 service: signalexchange.SignalExchange
+                type: Exact

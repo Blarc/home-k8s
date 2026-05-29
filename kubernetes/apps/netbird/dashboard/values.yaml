@@ -6,7 +6,7 @@ app-template:
       containers:
         app:
           image:
-            repository: ghcr.io/netbirdio/dashboard
+            repository: docker.io/netbirdio/dashboard
             tag: v2.36.0
           env:
             TZ: Europe/Ljubljana
@@ -19,13 +19,6 @@ app-template:
             NETBIRD_MGMT_API_ENDPOINT: https://netbird.blarc.my.id
             NETBIRD_MGMT_GRPC_API_ENDPOINT: https://netbird.blarc.my.id
             NETBIRD_TOKEN_SOURCE: idToken
-          args:
-            - "--port"
-            - "{{ .Values.dashboard.service.port }}"
-            - "--log-level"
-            - "{{ .Values.dashboard.logLevel }}"
-            - "--log-file"
-            - "console"
           ports:
             - name: http
               containerPort: 80
@@ -38,12 +31,11 @@ app-template:
               enabled: true
               custom: true
               spec:
-                livenessProbe:
-                  initialDelaySeconds: 5
-                  periodSeconds: 5
-                  httpGet:
-                    path: /
-                    port: http
+                initialDelaySeconds: 5
+                periodSeconds: 5
+                httpGet:
+                  path: /
+                  port: http
             readiness: *probes
           securityContext:
             allowPrivilegeEscalation: false
