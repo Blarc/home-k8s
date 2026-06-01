@@ -11,7 +11,7 @@ app-template:
           env:
             TZ: Europe/Ljubljana
             AUTH_AUDIENCE: netbird
-            AUTH_AUTHORITY: https://authentik.blarc.my.id/application/o/netbird
+            AUTH_AUTHORITY: https://authentik.blarc.my.id/application/o/netbird/
             AUTH_REDIRECT_URI: /callback
             AUTH_SILENT_REDIRECT_URI: /silent-callback
             AUTH_SUPPORTED_SCOPES: openid profile email
