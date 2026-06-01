@@ -54,6 +54,9 @@ entries:
           authentik_core.propertymapping,
           [name, "authentik default OAuth Mapping: OpenID 'email'"],
         ]
+      grant_types:
+        - authorization_code
+        - refresh_token
 
   - id: application
     model: authentik_core.application
