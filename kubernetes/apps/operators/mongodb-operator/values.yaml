@@ -1,3 +1,0 @@
-community-operator:
-  operator:
-    watchNamespace: "*"
