@@ -82,7 +82,8 @@ app-template:
       seccompProfile:
         type: RuntimeDefault
   service:
-    app:
+    mongodb:
+      controller: mongodb
       type: ClusterIP
       ports:
         tcp:
