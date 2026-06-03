@@ -90,10 +90,13 @@ app-template:
               name: syslog
               protocol: UDP
           securityContext:
-            allowPrivilegeEscalation: false
+            allowPrivilegeEscalation: true
             readOnlyRootFilesystem: false
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
             capabilities:
-              drop: [ ALL ]
+              add: [ CHOWN, FOWNER, SETUID, SETGID, DAC_OVERRIDE ]
           resources:
             requests:
               memory: 64Mi
