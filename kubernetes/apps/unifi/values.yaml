@@ -200,7 +200,7 @@ app-template:
         mongodb:
           main:
           - path: /data/db
-    unifi-config:
+    config:
       type: persistentVolumeClaim
       storageClass: topolvm-thin
       accessMode: ReadWriteOnce
