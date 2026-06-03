@@ -1,4 +1,8 @@
 apiVersion: v2
 description: Helm chart to deploy Unifi network application
 name: unifi
+dependencies:
+  - name: app-template
+    version: 5.0.1
+    repository: oci://ghcr.io/bjw-s-labs/helm
 version: 1.0.0

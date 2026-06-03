@@ -1,0 +1,107 @@
+app-template:
+  controllers:
+    mongodb:
+      annotations:
+        reloader.stakater.com/auto: "true"
+      containers:
+        main:
+          image:
+            repository: docker.io/mongo
+            tag: 8.3.2
+          env:
+            TZ: Europe/Ljubljana
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: root
+            MONGO_USER: unifi
+            MONGO_PASS: unifi
+            MONGO_DBNAME: unifi
+            MONGO_AUTHSOURCE: admin
+          ports:
+            - containerPort: 27017
+              name: tcp
+              protocol: TCP
+          probes:
+            liveness: &probes
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: tcp
+            readiness: *probes
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 999
+            runAsGroup: 999
+            capabilities:
+              drop: [ ALL ]
+          resources:
+            requests:
+              memory: 64Mi
+              cpu: 10m
+            limits:
+              memory: 1Gi
+  configMaps:
+    mongo-init:
+      data:
+        #language=bash
+        init-user.sh: |-
+          #!/bin/bash
+          set -euo pipefail
+
+          if which mongosh > /dev/null 2>&1; then
+            mongo_init_bin='mongosh'
+          else
+            mongo_init_bin='mongo'
+          fi
+          "${mongo_init_bin}" <<EOF
+          use ${MONGO_AUTHSOURCE}
+          db.auth("${MONGO_INITDB_ROOT_USERNAME}", "${MONGO_INITDB_ROOT_PASSWORD}")
+          db.createUser({
+            user: "${MONGO_USER}",
+            pwd: "${MONGO_PASS}",
+            roles: [
+              "clusterMonitor",
+              { db: "${MONGO_DBNAME}", role: "dbOwner" },
+              { db: "${MONGO_DBNAME}_stat", role: "dbOwner" },
+              { db: "${MONGO_DBNAME}_audit", role: "dbOwner" },
+              { db: "${MONGO_DBNAME}_restore", role: "dbOwner" }
+            ]
+          })
+          EOF
+  defaultPodOptions:
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 999
+      runAsGroup: 999
+      fsGroup: 999
+      fsGroupChangePolicy: OnRootMismatch
+      seccompProfile:
+        type: RuntimeDefault
+  service:
+    app:
+      type: ClusterIP
+      ports:
+        tcp:
+          port: 27017
+          protocol: TCP
+  persistence:
+    init-script:
+      type: configMap
+      identifier: mongo-init
+      defaultMode: 0755
+      advancedMounts:
+        mongodb:
+          main:
+          - path: /docker-entrypoint-initdb.d/init-user.sh
+            subPath: init-user.sh
+    data:
+      type: persistentVolumeClaim
+      storageClass: topolvm-thin
+      accessMode: ReadWriteOnce
+      size: 1Gi
+      advancedMounts:
+        mongodb:
+          main:
+          - path: /data/db
