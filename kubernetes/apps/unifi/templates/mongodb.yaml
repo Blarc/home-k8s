@@ -12,6 +12,7 @@ spec:
       modes: ["SCRAM"]
   users:
     - name: unifi
+      db: admin
       passwordSecretRef:
         name: mongodb-unifi-password
       roles:
