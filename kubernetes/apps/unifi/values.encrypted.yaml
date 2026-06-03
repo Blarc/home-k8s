@@ -1,0 +1,27 @@
+mongodb:
+  unifi:
+    password: ENC[AES256_GCM,data:9Eu+A8h2MZdh5GIgy2HBV/oD9G6UDJX8bGw=,iv:ugi06DY7qGkpLZnVjZXScPY8TRLTcm59LLp7n0OemVs=,tag:5hubIjQ+fvn6nsBk1ZREaQ==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBLQlhLeDRvenJkVmpiTkhD
+        ZXo1UzNHeWdOcmNVTW10eEx3cURMelc4UEFRCkhGOEkxWWI5STJnd0hVMnNkNDdT
+        c0hFTHc3TnlqVlg2cStsNnZVQjVXMEkKLS0tIFNHalR5Q2RveTk3MjUrb0JVUHBY
+        aXBmeU9OZHJoSWVSSlE0LzE1Ymh1K2sKtOSOER4wFrM/g3NHsD1SZxDnsQk/uHlH
+        rKOZ3Gpr4wDt5JIjaAaTlgLfMroJt1Zsnie/8tanmQPTsWfZsxi0LQ==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1hnmh393g3qaf2szdjkyrd7jsven9wzvgpud4207vzrfywmuvdassvperqc
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBIbk9PUVRHQy9PbVRCVzVE
+        RXF0cC9hSkVVemViK3MzQlNXcTRLdVgwQWwwClJJYmgwK2NhRUhWNndlL3VtaVVj
+        c2ltN0JzN20yNE1wdldDTWoyMEYyQ3cKLS0tIGdyOFlJaUh0SHZFZERCMjV6MnVq
+        RDBFSCtZUloyL3JJa3R5UitsMS92TFUKSaKqGT1i5Yn9itDc/wBF11cQUSHY4Fle
+        bb4z26Jbcy0GjjkLLcr7hUe6xfJyeqc8pH6MxH6Jtw+VeCPmEQLvRQ==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1mm90zkg8lsmpqa7gya9p2prsj8yfq774gjm6dkamkkvwugen7ywse5w97z
+  lastmodified: "2026-06-03T12:36:59Z"
+  mac: ENC[AES256_GCM,data:kxmXy/fSrVzZ/UYmsNofbufUe+ADDBybKcD1tVMHFI0ZDRUTA2GVTVyxDbqUC5QevbW3E+NIVKrbBy1GIFYDuu8dE8rApuy+0joldC4aS8zEBGvkgXAF7y1PCwOkKYr2JdqOiDH6MULD7TQgZCBMPW78qfKpLrVwXzs6eNXJH9M=,iv:t1z9FVBGYnWa5Z/j/naILR3jUWytWma7VTNZCgq+VKk=,tag:0bB90Onsh0uVQ+ukJ60Csg==,type:str]
+  unencrypted_suffix: _unencrypted
+  version: 3.13.1

@@ -1,0 +1,27 @@
+apiVersion: mongodbcommunity.mongodb.com/v1
+kind: MongoDBCommunity
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  members: 1
+  type: ReplicaSet
+  version: 4.4.0
+  security:
+    authentication:
+      modes: ["SCRAM"]
+  users:
+    - name: unifi
+      passwordSecretRef:
+        name: mongodb-unifi-password
+      roles:
+        - name: clusterMonitor
+          db: admin
+        - name: dbOwner
+          db: unifi
+        - name: dbOwner
+          db: unifi_stat
+        - name: dbOwner
+          db: unifi_audit
+        - name: dbOwner
+          db: unifi_restore
