@@ -135,6 +135,41 @@ app-template:
     securityContext:
       seccompProfile:
         type: RuntimeDefault
+  persistence:
+    init-script:
+      type: configMap
+      identifier: mongo-init
+      defaultMode: 0755
+      advancedMounts:
+        mongodb:
+          main:
+            - path: /docker-entrypoint-initdb.d/init-user.sh
+              subPath: init-user.sh
+    tmp:
+      type: emptyDir
+      advancedMounts:
+        mongodb:
+          main:
+            - path: /tmp
+    data:
+      type: persistentVolumeClaim
+      storageClass: topolvm-thin
+      accessMode: ReadWriteOnce
+      size: 1Gi
+      forceRename: mongodb-data
+      advancedMounts:
+        mongodb:
+          main:
+            - path: /data/db
+    config:
+      type: persistentVolumeClaim
+      storageClass: topolvm-thin
+      accessMode: ReadWriteOnce
+      size: 1Gi
+      advancedMounts:
+        unifi:
+          main:
+            - path: /config
   service:
     mongodb:
       controller: mongodb
@@ -175,38 +210,18 @@ app-template:
 #        syslog:
 #          port: 5514
 #          protocol: UDP
-  persistence:
-    init-script:
-      type: configMap
-      identifier: mongo-init
-      defaultMode: 0755
-      advancedMounts:
-        mongodb:
-          main:
-          - path: /docker-entrypoint-initdb.d/init-user.sh
-            subPath: init-user.sh
-    tmp:
-      type: emptyDir
-      advancedMounts:
-        mongodb:
-          main:
-          - path: /tmp
-    data:
-      type: persistentVolumeClaim
-      storageClass: topolvm-thin
-      accessMode: ReadWriteOnce
-      size: 1Gi
-      forceRename: mongodb-data
-      advancedMounts:
-        mongodb:
-          main:
-          - path: /data/db
-    config:
-      type: persistentVolumeClaim
-      storageClass: topolvm-thin
-      accessMode: ReadWriteOnce
-      size: 1Gi
-      advancedMounts:
-        unifi:
-          main:
-          - path: /config
+  route:
+    dashboard:
+      hostnames:
+        - "unifi.blarc.my.id"
+      parentRefs:
+        - name: internal
+          namespace: traefik
+      rules:
+        - backendRefs:
+            - identifier: unifi
+              port: 8080
+          matches:
+            - path:
+                type: PathPrefix
+                value: /
