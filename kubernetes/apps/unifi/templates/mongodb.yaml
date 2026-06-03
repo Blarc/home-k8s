@@ -7,6 +7,9 @@ spec:
   members: 1
   type: ReplicaSet
   version: 4.4.0
+  statefulSet:
+    spec:
+      serviceAccountName: default
   security:
     authentication:
       modes: ["SCRAM"]
