@@ -9,6 +9,11 @@ metadata:
     lbipam.cilium.io/ips: 192.168.1.224
 spec:
   type: LoadBalancer
+  externalTrafficPolicy: Local
+  sessionAffinity: ClientIP
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800
   selector:
     app: cod2
   ports:
