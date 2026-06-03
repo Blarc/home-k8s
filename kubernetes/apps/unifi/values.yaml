@@ -96,6 +96,12 @@ app-template:
           main:
           - path: /docker-entrypoint-initdb.d/init-user.sh
             subPath: init-user.sh
+    tmp:
+      type: emptyDir
+      advancedMounts:
+        mongodb:
+          main:
+          - path: /tmp
     data:
       type: persistentVolumeClaim
       storageClass: topolvm-thin
