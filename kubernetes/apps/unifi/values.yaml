@@ -44,6 +44,59 @@ app-template:
               cpu: 10m
             limits:
               memory: 1Gi
+    unifi:
+      annotations:
+        reloader.stakater.com/auto: "true"
+      containers:
+        main:
+          image:
+            repository: lscr.io/linuxserver/unifi-network-application
+            tag: 10.3.58
+          env:
+            PUID: "1000"
+            PGID: "1000"
+            TZ: Europe/Ljubljana
+            MONGO_USER: unifi
+            MONGO_PASS: unifi
+            MONGO_HOST: unifi-db
+            MONGO_PORT: "27017"
+            MONGO_DBNAME: unifi
+            MONGO_AUTHSOURCE: admin
+            MEM_LIMIT: "1024"
+            MEM_STARTUP: "1024"
+          ports:
+            - containerPort: 8443
+              name: https
+              protocol: TCP
+            - containerPort: 3478
+              name: stun
+              protocol: UDP
+            - containerPort: 10001
+              name: discovery
+              protocol: UDP
+            - containerPort: 8080
+              name: inform
+              protocol: TCP
+            - containerPort: 1900
+              name: l2discover
+              protocol: UDP
+            - containerPort: 8843
+              name: guest-https
+              protocol: TCP
+            - containerPort: 8880
+              name: guest-http
+              protocol: TCP
+            - containerPort: 6789
+              name: speedtest
+              protocol: TCP
+            - containerPort: 5514
+              name: syslog
+              protocol: UDP
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: false
+            capabilities:
+              drop: [ ALL ]
   configMaps:
     mongo-init:
       data:
@@ -74,11 +127,6 @@ app-template:
           EOF
   defaultPodOptions:
     securityContext:
-      runAsNonRoot: true
-      runAsUser: 999
-      runAsGroup: 999
-      fsGroup: 999
-      fsGroupChangePolicy: OnRootMismatch
       seccompProfile:
         type: RuntimeDefault
   service:
@@ -90,6 +138,37 @@ app-template:
         tcp:
           port: 27017
           protocol: TCP
+    unifi:
+      controller: unifi
+      type: LoadBalancer
+      ports:
+        https:
+          port: 8443
+          protocol: TCP
+        stun:
+          port: 3478
+          protocol: UDP
+        discovery:
+          port: 10001
+          protocol: UDP
+        inform:
+          port: 8080
+          protocol: TCP
+#        l2discover:
+#          port: 1900
+#          protocol: UDP
+#        guest-https:
+#          port: 8843
+#          protocol: TCP
+#        guest-http:
+#          port: 8880
+#          protocol: TCP
+#        speedtest:
+#          port: 6789
+#          protocol: TCP
+#        syslog:
+#          port: 5514
+#          protocol: UDP
   persistence:
     init-script:
       type: configMap
@@ -115,3 +194,12 @@ app-template:
         mongodb:
           main:
           - path: /data/db
+    unifi-config:
+      type: persistentVolumeClaim
+      storageClass: topolvm-thin
+      accessMode: ReadWriteOnce
+      size: 1Gi
+      advancedMounts:
+        unifi:
+          main:
+          - path: /config
