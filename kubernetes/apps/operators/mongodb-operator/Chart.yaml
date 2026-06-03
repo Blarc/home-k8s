@@ -1,0 +1,8 @@
+apiVersion: v2
+dependencies:
+  - name: community-operator
+    repository: https://mongodb.github.io/helm-charts
+    version: 0.13.0
+description: Helm chart to deploy mongodb-kubernetes
+name: mongodb-kubernetes
+version: 1.0.0
