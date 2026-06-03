@@ -193,6 +193,7 @@ app-template:
       storageClass: topolvm-thin
       accessMode: ReadWriteOnce
       size: 1Gi
+      forceRename: mongodb-data
       advancedMounts:
         mongodb:
           main:
