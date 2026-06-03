@@ -1,6 +1,17 @@
-mongodb:
-  unifi:
-    password: ENC[AES256_GCM,data:9Eu+A8h2MZdh5GIgy2HBV/oD9G6UDJX8bGw=,iv:ugi06DY7qGkpLZnVjZXScPY8TRLTcm59LLp7n0OemVs=,tag:5hubIjQ+fvn6nsBk1ZREaQ==,type:str]
+app-template:
+  controllers:
+    mongodb:
+      containers:
+        main:
+          env:
+            TZ: ENC[AES256_GCM,data:dOfoLjGHABCDkP4SRhQOaw==,iv:jCzXE16fg0855FmreVi33wovOzvaAVgIOwHI39Rqd0I=,tag:z5ln234Vd0FPrWb/SwFwlA==,type:str]
+            MONGO_INITDB_ROOT_PASSWORD: ENC[AES256_GCM,data:Yd1utp4cJivAY6CdDjVB5/I1M4WzHg==,iv:Cp+aMf0qq28KFHoKwD/43Kl7t88g/E/WbTFBO7GANgo=,tag:kt+P8lljEjpJqaS3h6AXjA==,type:str]
+            MONGO_PASS: ENC[AES256_GCM,data:rrnJ8JDWVK64cUJij2rMTA3MKIQTFw==,iv:LnNDRkT8372Kuzte4lpq7TChqWYu+G8mOD2AUVqprUg=,tag:LXbTb4N98gEKO6d6zU1KpQ==,type:str]
+    unifi:
+      containers:
+        main:
+          env:
+            MONGO_PASS: ENC[AES256_GCM,data:j0unNE+ogaJyrAtdaE2Eke66mt5qmA==,iv:z4DgAp/s5U6bUb40ZUkZRazL979JiF627qFV1mxaZHA=,tag:F8KQAyPV+nPrKPdEiTkSww==,type:str]
 sops:
   age:
     - enc: |
@@ -21,7 +32,7 @@ sops:
         bb4z26Jbcy0GjjkLLcr7hUe6xfJyeqc8pH6MxH6Jtw+VeCPmEQLvRQ==
         -----END AGE ENCRYPTED FILE-----
       recipient: age1mm90zkg8lsmpqa7gya9p2prsj8yfq774gjm6dkamkkvwugen7ywse5w97z
-  lastmodified: "2026-06-03T12:36:59Z"
-  mac: ENC[AES256_GCM,data:kxmXy/fSrVzZ/UYmsNofbufUe+ADDBybKcD1tVMHFI0ZDRUTA2GVTVyxDbqUC5QevbW3E+NIVKrbBy1GIFYDuu8dE8rApuy+0joldC4aS8zEBGvkgXAF7y1PCwOkKYr2JdqOiDH6MULD7TQgZCBMPW78qfKpLrVwXzs6eNXJH9M=,iv:t1z9FVBGYnWa5Z/j/naILR3jUWytWma7VTNZCgq+VKk=,tag:0bB90Onsh0uVQ+ukJ60Csg==,type:str]
+  lastmodified: "2026-06-03T17:36:30Z"
+  mac: ENC[AES256_GCM,data:U2msZ9KuFrb/9IzctQSictBhSqM1Zpnd+A2PryBxmR3eL8quBv1trH1SZZfhpvTWRMEK8VEuc4Xof48ppCtV9Xk56C/nzJk4qi3fJExrNkKaJSQKYUAl97xF48sTINqIdS1mIWuGBV6ZgsgepCtQxVTm1xHJpZIK1644E3XS8Ec=,iv:X5Hwt6pBKpIyEajtsQOR/KzsasO8aQjl4CeqUr4ABNY=,tag:z5P3ybq9z32E+VyIPC5mRA==,type:str]
   unencrypted_suffix: _unencrypted
   version: 3.13.1
