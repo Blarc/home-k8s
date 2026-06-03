@@ -15,6 +15,7 @@ spec:
       db: admin
       passwordSecretRef:
         name: {{ .Release.Name }}-mongodb-password
+      # https://github.com/mongodb/mongodb-kubernetes-operator/issues/1744
       scramCredentialsSecretName: {{ .Release.Name }}-mongodb
       roles:
         - name: clusterMonitor
