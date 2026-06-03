@@ -15,6 +15,7 @@ spec:
       db: admin
       passwordSecretRef:
         name: mongodb-unifi-password
+      scramCredentialsSecretName: mongodb-unifi
       roles:
         - name: clusterMonitor
           db: admin
