@@ -1,7 +1,7 @@
 apiVersion: mongodbcommunity.mongodb.com/v1
 kind: MongoDBCommunity
 metadata:
-  name: {{ .Release.Name }}
+  name: {{ .Release.Name }}-mongodb
   namespace: {{ .Release.Namespace }}
 spec:
   members: 1
@@ -14,8 +14,8 @@ spec:
     - name: unifi
       db: admin
       passwordSecretRef:
-        name: mongodb-unifi-password
-      scramCredentialsSecretName: mongodb-unifi
+        name: {{ .Release.Name }}-mongodb-password
+      scramCredentialsSecretName: {{ .Release.Name }}-mongodb
       roles:
         - name: clusterMonitor
           db: admin
