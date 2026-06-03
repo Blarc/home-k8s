@@ -1,6 +1,7 @@
 app-template:
   controllers:
     mongodb:
+      forceRename: mongodb
       annotations:
         reloader.stakater.com/auto: "true"
       containers:
