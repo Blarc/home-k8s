@@ -40,7 +40,7 @@ entries:
       client_id: !Env NETBIRD_PROVIDER_CLIENT_ID
       client_secret: !Env NETBIRD_PROVIDER_CLIENT_SECRET
 
-      access_code_validity: minutes=1
+      access_code_validity: minutes=10
       access_token_validity: minutes=5
       refresh_token_validity: days=30
 
