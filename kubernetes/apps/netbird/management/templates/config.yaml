@@ -60,7 +60,8 @@ data:
             "http://localhost:53000",
             "http://localhost:54000"
           ],
-          "UseIDToken": true
+          "UseIDToken": true,
+          "DisablePromptLogin": true
         }
       }
     }
