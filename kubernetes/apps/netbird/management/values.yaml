@@ -64,7 +64,7 @@ app-template:
         http:
           port: 80
           protocol: TCP
-          # appProtocol: kubernetes.io/h2c
+          appProtocol: kubernetes.io/h2c
     management-metrics:
       type: ClusterIP
       ports:
