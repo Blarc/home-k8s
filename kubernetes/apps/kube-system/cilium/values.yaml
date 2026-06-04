@@ -66,6 +66,11 @@ cilium:
 
   gatewayAPI:
     enabled: true
+
+  # https://github.com/cilium/cilium/issues/43814
+  extraConfig:
+    proxy-stream-idle-timeout-seconds: "3600"
+
   envoy:
     securityContext:
       capabilities:
