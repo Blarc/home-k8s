@@ -58,6 +58,10 @@ entries:
           authentik_core.propertymapping,
           [name, "authentik default OAuth Mapping: OpenID 'email'"],
         ]
+        - !Find [
+          authentik_core.propertymapping,
+          [name, "authentik default OAuth Mapping: OpenID 'offline_access'"],
+        ]
       grant_types:
         - authorization_code
         - refresh_token
