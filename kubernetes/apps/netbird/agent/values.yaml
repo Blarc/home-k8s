@@ -21,18 +21,6 @@ app-template:
             - name: metrics
               containerPort: 9090
               protocol: TCP
-          probes:
-            liveness: &probes
-              enabled: true
-              custom: true
-              spec:
-                failureThreshold: 10
-                initialDelaySeconds: 30
-                periodSeconds: 15
-                timeoutSeconds: 15
-                tcpSocket:
-                  port: http
-            readiness: *probes
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: false
