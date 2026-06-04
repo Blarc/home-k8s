@@ -4,7 +4,7 @@ app-template:
       containers:
         app:
           env:
-            NB_SETUP_KEY: ENC[AES256_GCM,data:0OL489jO2hgXofGFO3UJZ+hzUuIJfDTtXCatURgaGurJ1/i2,iv:oyEI1DmntiFls2knrFuVEk1h4PG8SpTVQu8tG9TGN5E=,tag:pM9GmC/91i9iYOjGPqXIpA==,type:str]
+            NB_SETUP_KEY: ENC[AES256_GCM,data:ATpsLxpBjM4XdwPQxNjQ5C61T+DnH3BLIpWIn3Faib4YpW5K,iv:Fl+xBf6wp+w13MDfvZHc+FsKf2uzvTwCg+jo4kAMKVM=,tag:NX+t50guxmSUoS3a5djbGQ==,type:str]
 sops:
   age:
     - enc: |
@@ -25,7 +25,7 @@ sops:
         xStyF9trChR4RuvHTcRuedK+tnDJF1GhHqdPNVZ/C2fFxnBDSKJXlQ==
         -----END AGE ENCRYPTED FILE-----
       recipient: age1mm90zkg8lsmpqa7gya9p2prsj8yfq774gjm6dkamkkvwugen7ywse5w97z
-  lastmodified: "2026-06-04T08:27:05Z"
-  mac: ENC[AES256_GCM,data:KB7LZgLJvlIPY6LPty7DVqm6VROLnf+q3RpFN8p52ioCKeKk3VjaeeJVyywBr2O25LI8C7BLNogcvEvUg0IXtg1NlruiK5GLBk/dSABw5Fcq9RzB3I7FQqrP/Rl6uZSoVptatUn3pxuKwI4dL8ChXAo9nDVMbbouo3f7rDcUCxM=,iv:ql/OdORMPDZOGrPB+uH+GnAFzZMq1Q3ZQr4Pp8U736A=,tag:oYtJ3Y0xDzIFF0tPtn7W+g==,type:str]
+  lastmodified: "2026-06-04T16:34:40Z"
+  mac: ENC[AES256_GCM,data:f1ZwyMUHVNtAbcg1bOYw/Rx8L5wvqdEhZqilmN+2osMH/YH51C7VmtnLomqlFSkICsaFJ6S8/aQnf2JDhayZqcG4KRan2MpIB1EcXadTYC2N82cQwqIAiDfaAXqSzF4ljeB/nfzo6lvGUPO+gXhO3tOdnqp19MC2i1iSEHEcazU=,iv:Y2h4oGswPzW6LSxfLA6+r2EziGC2ho3VdaIX/POROv4=,tag:I/7X6XGwe0FRt4VR3K2NwA==,type:str]
   unencrypted_suffix: _unencrypted
   version: 3.13.1
