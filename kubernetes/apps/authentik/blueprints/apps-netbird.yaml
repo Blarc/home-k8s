@@ -26,7 +26,7 @@ entries:
           [slug, "default-provider-invalidation-flow"],
         ]
 
-      client_type: confidential
+      client_type: public
       redirect_uris:
         - url: https://netbird.blarc.my.id/callback
           matching_mode: strict
