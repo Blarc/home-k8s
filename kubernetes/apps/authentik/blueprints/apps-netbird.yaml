@@ -44,7 +44,7 @@ entries:
       access_token_validity: minutes=5
       refresh_token_validity: days=30
 
-      sub_mode: hashed_user_id
+      sub_mode: user_id
       property_mappings:
         - !Find [
           authentik_core.propertymapping,
