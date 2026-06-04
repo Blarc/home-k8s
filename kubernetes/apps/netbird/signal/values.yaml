@@ -68,7 +68,7 @@ app-template:
       hostnames:
         - "netbird.blarc.my.id"
       parentRefs:
-        - name: internal
+        - name: external
           namespace: traefik
       rules:
         - backendRefs:

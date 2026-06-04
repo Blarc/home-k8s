@@ -4,3 +4,4 @@ metadata:
   name: netbird
   labels:
     pod-security.kubernetes.io/enforce: privileged
+    external: "true"
