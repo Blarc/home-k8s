@@ -14,7 +14,7 @@ app-template:
             AUTH_AUTHORITY: https://authentik.blarc.my.id/application/o/netbird/
             AUTH_REDIRECT_URI: /callback
             AUTH_SILENT_REDIRECT_URI: /silent-callback
-            AUTH_SUPPORTED_SCOPES: openid profile email
+            AUTH_SUPPORTED_SCOPES: openid profile email offline_access
             USE_AUTH0: false
             NETBIRD_MGMT_API_ENDPOINT: https://netbird.blarc.my.id
             NETBIRD_MGMT_GRPC_API_ENDPOINT: https://netbird.blarc.my.id
