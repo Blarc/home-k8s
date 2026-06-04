@@ -65,19 +65,9 @@ app-template:
           port: 80
           protocol: TCP
           appProtocol: kubernetes.io/h2c
-    management-metrics:
-      type: ClusterIP
-      ports:
         metrics:
           port: 9090
           protocol: TCP
-    management-grpc:
-      type: ClusterIP
-      ports:
-        grpc:
-          port: 33073
-          protocol: TCP
-          # appProtocol: kubernetes.io/h2c
   persistence:
     config:
       type: configMap
@@ -117,8 +107,8 @@ app-template:
           namespace: traefik
       rules:
         - backendRefs:
-            - identifier: management-grpc
-              port: 33073
+            - identifier: management
+              port: 80
           matches:
             - headers:
                 - name: Content-Type

@@ -18,7 +18,7 @@ data:
           {
             "Proto": "udp",
             "URI": "turn:coturn.blarc.my.id:5349",
-            "Username": "{{ .Values.turn.user }}",
+            "Username": "{{ .Values.turn.username }}",
             "Password": "{{ .Values.turn.password }}"
           }
         ],

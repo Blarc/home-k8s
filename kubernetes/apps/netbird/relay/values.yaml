@@ -53,10 +53,6 @@ app-template:
         http:
           port: 33080
           protocol: TCP
-          # appProtocol: kubernetes.io/h2c
-    relay-metrics:
-      type: ClusterIP
-      ports:
         metrics:
           port: 9090
           protocol: TCP

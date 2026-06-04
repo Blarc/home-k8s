@@ -64,10 +64,6 @@ app-template:
         http:
           port: 80
           protocol: TCP
-          # appProtocol: kubernetes.io/h2c
-    dashboard-metrics:
-      type: ClusterIP
-      ports:
         metrics:
           port: 9090
           protocol: TCP
