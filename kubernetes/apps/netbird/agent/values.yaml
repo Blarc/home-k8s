@@ -26,10 +26,10 @@ app-template:
               enabled: true
               custom: true
               spec:
-                failureThreshold: 5
+                failureThreshold: 10
                 initialDelaySeconds: 30
                 periodSeconds: 15
-                timeoutSeconds: 5
+                timeoutSeconds: 15
                 tcpSocket:
                   port: http
             readiness: *probes
