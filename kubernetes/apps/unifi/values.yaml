@@ -1,167 +1,55 @@
 app-template:
   controllers:
-    mongodb:
-      forceRename: mongodb
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-      containers:
-        main:
-          image:
-            repository: docker.io/mongo
-            tag: 8.3.2
-          env:
-            TZ: Europe/Ljubljana
-            MONGO_INITDB_ROOT_USERNAME: root
-            MONGO_USER: unifi
-            MONGO_DBNAME: unifi
-            MONGO_AUTHSOURCE: admin
-          ports:
-            - containerPort: 27017
-              name: tcp
-              protocol: TCP
-          probes:
-            liveness: &probes
-              enabled: true
-              custom: true
-              spec:
-                tcpSocket:
-                  port: tcp
-            readiness: *probes
-          securityContext:
-            allowPrivilegeEscalation: false
-            readOnlyRootFilesystem: true
-            runAsNonRoot: true
-            runAsUser: 999
-            runAsGroup: 999
-            capabilities:
-              drop: [ ALL ]
-          resources:
-            requests:
-              memory: 64Mi
-              cpu: 10m
-            limits:
-              memory: 1Gi
     unifi:
       annotations:
         reloader.stakater.com/auto: "true"
       containers:
         main:
           image:
-            repository: lscr.io/linuxserver/unifi-network-application
-            tag: 10.3.58
+            repository: ghcr.io/lemker/unifi-os-server
+            tag: v1.2.0
           env:
-            PUID: "1000"
-            PGID: "1000"
             TZ: Europe/Ljubljana
-            MONGO_USER: unifi
-            MONGO_HOST: mongodb
-            MONGO_PORT: "27017"
-            MONGO_DBNAME: unifi
-            MONGO_AUTHSOURCE: admin
-            MEM_LIMIT: "1024"
-            MEM_STARTUP: "64"
-          ports:
-            - containerPort: 8443
-              name: https
-              protocol: TCP
-            - containerPort: 3478
-              name: stun
-              protocol: UDP
-            - containerPort: 10001
-              name: discovery
-              protocol: UDP
-            - containerPort: 8080
-              name: inform
-              protocol: TCP
-            - containerPort: 1900
-              name: l2discover
-              protocol: UDP
-            - containerPort: 8843
-              name: guest-https
-              protocol: TCP
-            - containerPort: 8880
-              name: guest-http
-              protocol: TCP
-            - containerPort: 6789
-              name: speedtest
-              protocol: TCP
-            - containerPort: 5514
-              name: syslog
-              protocol: UDP
+            HOST_IP:
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            UOS_SYSTEM_IP: "unifi.blarc.my.id"
           securityContext:
-            allowPrivilegeEscalation: true
-            readOnlyRootFilesystem: false
-            runAsNonRoot: false
-            runAsUser: 0
-            runAsGroup: 0
-            capabilities:
-              add: [ CHOWN, FOWNER, SETUID, SETGID, DAC_OVERRIDE ]
+            privileged: true
+          lifecycle:
+            postStart:
+              exec:
+                command: [ "/bin/bash", "-c", "echo $HOST_IP host.docker.internal >> /etc/hosts" ]
+          ports:
+            - containerPort: 11084
+              hostPort: 11084
+              hostIP: 127.0.0.1
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /api/ping
+                  port: 80
+                initialDelaySeconds: 10
+                periodSeconds: 60
+                timeoutSeconds: 5
+                successThreshold: 1
+                failureThreshold: 3
           resources:
             requests:
               memory: 64Mi
-              cpu: 10m
+              cpu: 100m
             limits:
-              memory: 1Gi
-  configMaps:
-    mongo-init:
-      data:
-        #language=bash
-        init-user.sh: |-
-          #!/bin/bash
-          set -euo pipefail
-
-          if which mongosh > /dev/null 2>&1; then
-            mongo_init_bin='mongosh'
-          else
-            mongo_init_bin='mongo'
-          fi
-          "${mongo_init_bin}" <<EOF
-          use ${MONGO_AUTHSOURCE}
-          db.auth("${MONGO_INITDB_ROOT_USERNAME}", "${MONGO_INITDB_ROOT_PASSWORD}")
-          db.createUser({
-            user: "${MONGO_USER}",
-            pwd: "${MONGO_PASS}",
-            roles: [
-              "clusterMonitor",
-              { db: "${MONGO_DBNAME}", role: "dbOwner" },
-              { db: "${MONGO_DBNAME}_stat", role: "dbOwner" },
-              { db: "${MONGO_DBNAME}_audit", role: "dbOwner" },
-              { db: "${MONGO_DBNAME}_restore", role: "dbOwner" }
-            ]
-          })
-          EOF
+              memory: 4Gi
   defaultPodOptions:
     securityContext:
       seccompProfile:
         type: RuntimeDefault
   persistence:
-    init-script:
-      type: configMap
-      identifier: mongo-init
-      defaultMode: 0755
-      advancedMounts:
-        mongodb:
-          main:
-            - path: /docker-entrypoint-initdb.d/init-user.sh
-              subPath: init-user.sh
-    tmp:
-      type: emptyDir
-      advancedMounts:
-        mongodb:
-          main:
-            - path: /tmp
     data:
-      type: persistentVolumeClaim
-      storageClass: topolvm-thin
-      accessMode: ReadWriteOnce
-      size: 1Gi
-      forceRename: mongodb-data
-      advancedMounts:
-        mongodb:
-          main:
-            - path: /data/db
-    config:
       type: persistentVolumeClaim
       storageClass: topolvm-thin
       accessMode: ReadWriteOnce
@@ -169,47 +57,67 @@ app-template:
       advancedMounts:
         unifi:
           main:
-            - path: /config
+            - path: /persistent
+              subPath: persistent
+            - path: /var/log
+              subPath: log
+            - path: /data
+              subPath: data
+            - path: /srv
+              subPath: srv
+            - path: /var/lib/unifi
+              subPath: unifi
+            - path: /var/lib/mongodb
+              subPath: mongodb
+            - path: /etc/rabbitmq/ssl
+              subPath: rabbitmq
   service:
-    mongodb:
-      controller: mongodb
-      forceRename: mongodb
-      type: ClusterIP
-      ports:
-        tcp:
-          port: 27017
-          protocol: TCP
     unifi:
       controller: unifi
-      type: LoadBalancer
+      type: ClusterIP
       ports:
-        https:
-          port: 8443
+        webui:
+          port: 443
+          protocol: TCP
+        rtp:
+          port: 5005
+          protocol: TCP
+        id-hub:
+          port: 9543
+          protocol: TCP
+        mobile-speedtest:
+          port: 6789
+          protocol: TCP
+        communication:
+          port: 8080
+          protocol: TCP
+        hotspot-secured:
+          port: 8444
           protocol: TCP
         stun:
           port: 3478
           protocol: UDP
-        discovery:
-          port: 10001
+        syslog:
+          port: 5514
           protocol: UDP
-        inform:
-          port: 8080
+        discovery:
+          port: 10003
+          protocol: UDP
+        support-files:
+          port: 28082
           protocol: TCP
-#        l2discover:
-#          port: 1900
-#          protocol: UDP
-#        guest-https:
-#          port: 8843
-#          protocol: TCP
-#        guest-http:
-#          port: 8880
-#          protocol: TCP
-#        speedtest:
-#          port: 6789
-#          protocol: TCP
-#        syslog:
-#          port: 5514
-#          protocol: UDP
+        aqmps:
+          port: 5671
+          protocol: TCP
+        hotspot-redirect-0:
+          port: 8880
+          protocol: TCP
+        hotspot-redirect-1:
+          port: 8881
+          protocol: TCP
+        hotspot-redirect-2:
+          port: 8882
+          protocol: TCP
   route:
     dashboard:
       hostnames:
@@ -220,7 +128,7 @@ app-template:
       rules:
         - backendRefs:
             - identifier: unifi
-              port: 8080
+              port: 443
           matches:
             - path:
                 type: PathPrefix
