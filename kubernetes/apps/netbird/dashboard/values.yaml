@@ -10,7 +10,7 @@ app-template:
             tag: v2.38.1
           env:
             TZ: Europe/Ljubljana
-            AUTH_AUDIENCE: netbird
+            # AUTH_AUDIENCE: netbird
             AUTH_AUTHORITY: https://authentik.blarc.my.id/application/o/netbird/
             AUTH_REDIRECT_URI: /callback
             AUTH_SILENT_REDIRECT_URI: /silent-callback

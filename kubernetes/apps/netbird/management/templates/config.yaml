@@ -51,7 +51,7 @@ data:
       "DeviceAuthorizationFlow": {},
       "PKCEAuthorizationFlow": {
         "ProviderConfig": {
-          "Audience": "netbird",
+          "Audience": "{{ .Values.auth.clientId }}",
           "ClientID": "{{ .Values.auth.clientId }}",
           "ClientSecret": "{{ .Values.auth.clientSecret }}",
           "Domain": "",
