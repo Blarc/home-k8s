@@ -32,6 +32,10 @@ entries:
           matching_mode: strict
         - url: https://netbird.blarc.my.id/silent-callback
           matching_mode: strict
+        - url: http://localhost:53000
+          matching_mode: strict
+        - url: http://localhost:54000
+          matching_mode: strict
 
       client_id: !Env NETBIRD_PROVIDER_CLIENT_ID
       client_secret: !Env NETBIRD_PROVIDER_CLIENT_SECRET
