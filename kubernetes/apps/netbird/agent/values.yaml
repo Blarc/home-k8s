@@ -45,7 +45,7 @@ app-template:
               memory: 32Mi
               cpu: 10m
             limits:
-              memory: 32Mi
+              memory: 256Mi
   defaultPodOptions:
     securityContext:
       seccompProfile:
