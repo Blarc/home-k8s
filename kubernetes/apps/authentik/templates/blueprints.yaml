@@ -14,6 +14,8 @@ data:
 {{ .Files.Get "blueprints/apps-immich.yaml" | indent 4 }}
   apps-netbird.yaml: |
 {{ .Files.Get "blueprints/apps-netbird.yaml" | indent 4 }}
+  apps-sftpgo.yaml: |
+{{ .Files.Get "blueprints/apps-sftpgo.yaml" | indent 4 }}
   groups.yaml: |
 {{ .Files.Get "blueprints/groups.yaml" | indent 4 }}
   users.yaml: |
