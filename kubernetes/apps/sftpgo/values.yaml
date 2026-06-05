@@ -25,6 +25,19 @@ sftpgo:
     limits:
      memory: 1Gi
 
+  config:
+    data_provider:
+      users_base_dir: /srv/sftpgo/data
+
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: data
+
+  volumeMounts:
+    - name: data
+      mountPath: /srv/sftpgo/data
+
   persistence:
     # -- Enable persistent storage for the /var/lib/sftpgo directory, saving state of the default sqlite db.
     enabled: true
