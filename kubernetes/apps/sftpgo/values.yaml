@@ -28,6 +28,15 @@ sftpgo:
   config:
     data_provider:
       users_base_dir: /srv/sftpgo/data
+    httpd:
+      bindings:
+        oidc:
+          config_url: https://authentik.blarc.my.id/application/o/sftpgo/.well-known/openid-configuration
+          redirect_base_url: https://sftpgo.blarc.my.id
+          username_field: "preferred_username"
+          role_field: "sftpgo_role"
+          implicit_roles: false
+          custom_fields: []
 
   volumes:
     - name: data
