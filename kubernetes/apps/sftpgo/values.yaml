@@ -28,15 +28,22 @@ sftpgo:
   config:
     data_provider:
       users_base_dir: /srv/sftpgo/data
+      pre_login_hook: /src/sftpgo/hooks/pre-login-hook.sh
 
   volumes:
     - name: data
       persistentVolumeClaim:
         claimName: data
+    - name: pre-login-hook
+      configMap:
+        name: pre-login-hook
+        defaultMode: 0755
 
   volumeMounts:
     - name: data
       mountPath: /srv/sftpgo/data
+    - name: pre-login-hook
+      mountPath: /src/sftpgo/hooks
 
   persistence:
     # -- Enable persistent storage for the /var/lib/sftpgo directory, saving state of the default sqlite db.

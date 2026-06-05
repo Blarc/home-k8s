@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pre-login-hook
+data:
+  pre-login-hook.sh: |
+    #!/bin/sh
+    # Create a user on OIDC login if it doesn't exist.
+    #
+    # https://docs.sftpgo.com/2.6/dynamic-user-mod/
+
+    # Extract fields from user JSON.
+    # USER_ID=$(echo "$SFTPGO_LOGIND_USER" | jq -r '.id')
+    # USERNAME=$(echo "$SFTPGO_LOGIND_USER" | jq -r '.username')
+
+    USER_ID=$(echo "$SFTPGO_LOGIND_USER" | sed -n 's/.*"id":[[:space:]]*\([0-9]*\).*/\1/p')
+    USERNAME=$(echo "$SFTPGO_LOGIND_USER" | sed -n 's/.*"username":[[:space:]]*"\([^"]*\)".*/\1/p')
+
+    # Only proceed if the user doesn't exist.
+    [ "$USER_ID" != 0 ] && exit
+
+    # Only proceed if login method is OIDC.
+    [ "$SFTPGO_LOGIND_METHOD" != "IDP" ] && exit
+    [ "$SFTPGO_LOGIND_PROTOCOL" != "OIDC" ] && exit
+
+    # Write the user to stdout to create the user.
+    # https://github.com/drakkan/sftpgo/blob/2.6.x/openapi/openapi.yaml#L5847
+    cat <<EOF
+    {
+      "status": 1,
+      "username": "$USERNAME",
+      "has_password": false,
+      "permissions": {
+        "/": ["*"]
+      }
+    }
+    EOF
