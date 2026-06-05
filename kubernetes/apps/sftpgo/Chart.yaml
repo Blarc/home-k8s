@@ -1,0 +1,8 @@
+apiVersion: v2
+dependencies:
+  - name: sftpgo
+    repository: oci://ghcr.io/sftpgo/helm-charts
+    version: 0.46.0
+description: Helm chart to deploy sftpgo
+name: sftpgo
+version: 1.0.0

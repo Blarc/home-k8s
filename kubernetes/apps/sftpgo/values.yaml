@@ -1,0 +1,35 @@
+sftpgo:
+  revisionHistoryLimit: 3
+
+  gatewayApi:
+    httpRoutes:
+      ui:
+        enabled: true
+        hostnames:
+          - sftpgo.blarc.my.id
+        parentRefs:
+          - name: internal
+            namespace: traefik
+      api:
+        enabled: true
+        hostnames:
+          - sftpgo.blarc.my.id
+        parentRefs:
+          - name: internal
+            namespace: traefik
+
+  resources:
+    requests:
+      cpu: 10m
+      memory: 64Mi
+    limits:
+     memory: 1Gi
+
+  persistence:
+    # -- Enable persistent storage for the /var/lib/sftpgo directory, saving state of the default sqlite db.
+    enabled: true
+    pvc:
+      resources:
+        requests:
+          storage: 1Gi
+      storageClassName: "topolvm-thin"
