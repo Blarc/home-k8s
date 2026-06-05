@@ -12,6 +12,11 @@ sftpgo:
             role_field: ENC[AES256_GCM,data:kAIP3Rud8Kef8O8=,iv:jn7RafaycLGcc6mUr3rLogyuo9k54IhyMX5pbneTgIQ=,tag:FnYprhollDPTILakYdwu+g==,type:str]
             implicit_roles: ENC[AES256_GCM,data:3AEhFVo=,iv:SaVys1+w5aCt/xBtAIzHRGl8L80wzyGsBGtzhyPh5Bc=,tag:cYEwKTjhIrZ+ARakGc/8Fg==,type:bool]
             custom_fields: []
+            scopes:
+              - ENC[AES256_GCM,data:6hThoKKl,iv:7YW6T2AGDyVlgSvdnkw7f605vpvwcfu+REjARRowNbw=,tag:j2yBcYt6dKD/JvbawjhKPA==,type:str]
+              - ENC[AES256_GCM,data:t4847dGObg==,iv:+SobWCVaE3V7CKdizrGqL8GEPkujD7FvJ3wWoGY/xeo=,tag:0pyELK7UT7Tz919PgIRmpQ==,type:str]
+              - ENC[AES256_GCM,data:SGPQTPk=,iv:QoYTqY5QGu7cmkxIE1OhXUfB66YCGJNPoceXH8v+oAE=,tag:PFMwaxc0y99nAAHPY2Jd7Q==,type:str]
+              - ENC[AES256_GCM,data:IqgMuoIsnQGlkYcZWkE=,iv:I0qhZS+fQrjFZzYYGrg/wBfhqcwtEv9Z8E1BC8F3ZUU=,tag:wV2KuX3Wfu4u7Fr9UmQUcg==,type:str]
 sops:
   age:
     - enc: |
@@ -32,7 +37,7 @@ sops:
         2H2SxTpM40LBsovjMmfYzgoCoz8ScVJmO97taZEtwikXssWepkzJnA==
         -----END AGE ENCRYPTED FILE-----
       recipient: age1mm90zkg8lsmpqa7gya9p2prsj8yfq774gjm6dkamkkvwugen7ywse5w97z
-  lastmodified: "2026-06-05T18:14:25Z"
-  mac: ENC[AES256_GCM,data:YbO0cqgbkmEyO4gAF7evmQYQPip0Am+Eh4KcpPbgXgOYIlUSQkoU06CqaSORQJLe2egLjWN7RmuVSddypuJ8IM2xGhdkHO6c67+LpHuMro7kp4/jXU+cDT82Td/moTg8PFtfk0CDtxoJGvrEy2+zNJaFN0WLuRjcRYzBXvmooAY=,iv:Lh9uIhMkYXvaP0FUxL+3+bUyfnEBgaXDlmGeY7/ZB+s=,tag:0hplIZktXpT1BBiFSi95gg==,type:str]
+  lastmodified: "2026-06-05T18:42:43Z"
+  mac: ENC[AES256_GCM,data:xnfh7kYF8XoauoyaIUJTs0LYrF5BdWqDA4jCLSGzsRZ3JP+9UCiFHAtopgbqt/yLfjAac9X3ZnetLbBEXw0vvbhRkaYb7NVdrgQRheZPOxkuLZDsOLYUqAVL5egTV5mu0myB/34pJ5MdQ+MK+7s+ywFfYFX3vxmaMpsCNMtQ938=,iv:KeNGW3fPR16J91iShCVyvCjfzNL/eZukll9OBz5kZow=,tag:65t7E98EyMMKxRh3yXdbow==,type:str]
   unencrypted_suffix: _unencrypted
   version: 3.13.1
