@@ -1,6 +1,6 @@
 dependencies:
 - name: authentik
   repository: oci://ghcr.io/goauthentik/helm-charts
-  version: 2026.5.2
-digest: sha256:217a13bf1b63d7146bb352cd961dcbee6e920f0c9d30fef8b9d75e200aea9ac9
-generated: "2026-05-28T16:52:46.243835283Z"
+  version: 2026.5.3
+digest: sha256:f04e4983fd28f9bfa061c9f0c91e00abb2d6841272c74d8580c399c456cfcad8
+generated: "2026-06-11T22:00:54.335101523Z"
