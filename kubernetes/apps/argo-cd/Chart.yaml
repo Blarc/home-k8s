@@ -5,7 +5,7 @@ dependencies:
     version: 9.5.18
   - name: argocd-image-updater
     repository: https://argoproj.github.io/argo-helm
-    version: 1.2.2
+    version: 1.2.4
 description: Helm chart to deploy argo-cd
 name: argo-cd
 version: 1.0.0
