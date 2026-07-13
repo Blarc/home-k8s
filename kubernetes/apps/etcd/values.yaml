@@ -6,7 +6,7 @@ app-template:
         app:
           image:
             repository: quay.io/coreos/etcd
-            tag: v3.6.12
+            tag: v3.7.0
             pullPolicy: IfNotPresent
           env:
             - name: K8S_NAMESPACE
