@@ -59,6 +59,7 @@ traefik:
       lbipam.cilium.io/ips: "192.168.1.228"
     additionalServices:
       external:
-        type: LoadBalancer
+        spec:
+          type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: "192.168.1.229"
