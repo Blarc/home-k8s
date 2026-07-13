@@ -8,4 +8,4 @@ spec:
   storageClassName: nfs
   resources:
     requests:
-      storage: {{ .Values.immich.immich.persistence.library.size }}
+      storage: {{ .Values.libraryPvc.size }}

@@ -4,7 +4,6 @@ metadata:
   name: {{ .Release.Name }}
   namespace: argo-cd
 spec:
-  namespace: argo-cd
   applicationRefs:
     - namePattern: {{ .Release.Name }}
       images:

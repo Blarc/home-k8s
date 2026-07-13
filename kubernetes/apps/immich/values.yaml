@@ -1,3 +1,6 @@
+libraryPvc:
+  size: 1Ti
+
 immich:
   controllers:
     main:
@@ -30,7 +33,6 @@ immich:
     persistence:
       library:
         existingClaim: immich-data
-        size: 1Ti
     configuration:
       oauth:
         enabled: true
@@ -47,6 +49,7 @@ immich:
         type: persistentVolumeClaim
         storageClass: topolvm-thin
         size: 1Gi
+        accessMode: ReadWriteOnce
 
   machine-learning:
     persistence:
