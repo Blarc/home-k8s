@@ -164,6 +164,7 @@ app-template:
     media:
       storageClass: nfs
       size: 250Gi
+      # Should be ReadWriteMany, but it works with ReadWriteOnce, because we have only one node
       accessMode: ReadWriteOnce
       globalMounts:
         - path: /media
