@@ -120,7 +120,7 @@ app-template:
           Session\Port=50413
           Session\ResumeDataStorageType=SQLite
           Session\UseOSCache=true
-          Session\DefaultSavePath=/media/
+          Session\DefaultSavePath=/media/downloads/
           Session\TempPath=/media/incomplete/
           Session\TempPathEnabled=true
           Session\QueueingSystemEnabled=false
@@ -140,7 +140,7 @@ app-template:
           WebUI\Port=8080
           WebUI\ServerDomains=*
           WebUI\UseUPnP=false
-          Downloads\SavePath=/media/
+          Downloads\SavePath=/media/downloads/
           Downloads\TempPath=/media/incomplete/
           Downloads\TempPathEnabled=true
   persistence:
