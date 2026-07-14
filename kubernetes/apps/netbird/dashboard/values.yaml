@@ -7,7 +7,7 @@ app-template:
         app:
           image:
             repository: docker.io/netbirdio/dashboard
-            tag: v2.90.3
+            tag: v2.90.4
           env:
             TZ: Europe/Ljubljana
             # AUTH_AUDIENCE: netbird
