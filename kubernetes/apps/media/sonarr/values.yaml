@@ -1,0 +1,81 @@
+app-template:
+  controllers:
+    sonarr:
+      annotations:
+        reloader.stakater.com/auto: "true"
+      containers:
+        app:
+          image:
+            repository: ghcr.io/home-operations/sonarr
+            tag: 4.0.18.2978@sha256:2cd77fb3d81909a734d61bb8f71462044cb9d2f187e626a28a05a5c4e4be8fd2
+          env:
+            SONARR__APP__INSTANCENAME: Sonarr
+            SONARR__APP__THEME: dark
+            SONARR__AUTH__METHOD: External
+            SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
+            SONARR__LOG__DBENABLED: "False"
+            SONARR__LOG__LEVEL: info
+            SONARR__SERVER__PORT: &port 80
+            SONARR__UPDATE__BRANCH: develop
+            TZ: Europe/Ljubljana
+          probes:
+            liveness: &probes
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /ping
+                  port: *port
+                initialDelaySeconds: 5
+                periodSeconds: 10
+                timeoutSeconds: 5
+                failureThreshold: 5
+            readiness: *probes
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: [ "ALL" ] }
+          resources:
+            requests:
+              cpu: 10m
+            limits:
+              memory: 1Gi
+  defaultPodOptions:
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: OnRootMismatch
+  service:
+    app:
+      ports:
+        http:
+          port: *port
+  route:
+    app:
+      hostnames:
+        - "{{ .Release.Name }}.blarc.my.id"
+      parentRefs:
+        - name: internal
+          namespace: traefik
+      rules:
+        - backendRefs:
+            - identifier: app
+              port: *port
+          matches:
+            - path:
+                type: PathPrefix
+                value: /
+  persistence:
+    config:
+      type: persistentVolumeClaim
+      storageClass: topolvm-thin
+      accessMode: ReadWriteOnce
+      size: 256Mi
+    media:
+      existingClaim: qbittorrent-media
+      globalMounts:
+        - path: /media
+    tmp:
+      type: emptyDir

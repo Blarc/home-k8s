@@ -1,0 +1,31 @@
+app-template:
+  controllers:
+    sonarr:
+      containers:
+        app:
+          env:
+            SONARR__AUTH__APIKEY: ENC[AES256_GCM,data:YLgrRAlC2SQtMluzKSNaULRmyP1u0KHMSRU8kDJGaQY=,iv:NAQHeXO1l89MQR6HFXw6x7wpQdioaO74RIQkzGaYBdU=,tag:q4hHwLW/+tagBy6hV3c9gQ==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAwSlc1cGREOHN4M0E0bVlY
+        c3V2NGkwUUowb2Y2Yk10N0sxQU5vZWlsRzNRCnhkZTJ1anBpT2JueTJNQ05xbUZV
+        UkxJVUhPSDlKNVFuaFAzcUpqWkx1d0kKLS0tIHd1a0xPajM3akloMjQ3bGtJdEtk
+        cGxyb3lsV1JjZjU1dmlqVmFSWkk3M0EKt2bf2ag8fAM5sxfavNcjfwJ+i9bE/9UO
+        bAEB8DoKSvIfYWqV8Hmm9YNtloD5e+i2s5PqDAqHHsMN9B9/D1K9Ug==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1hnmh393g3qaf2szdjkyrd7jsven9wzvgpud4207vzrfywmuvdassvperqc
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB2aXI3RjdQQkVOOU5KMkJv
+        cUt1K08vY2wvRlV5V2Z3azd5SjhqWnArcUdJCk4yK2I3c29iWlMram9HZ0VKU1NX
+        QXY5THg4S0Q2ODMyTTY4UUpiWVNmYTAKLS0tIG9JS0NVTGNTdDdYbkF4Ritzbi9w
+        VU5mQkRVaEZ6STZ0cjZCYzUvMmlLd0kKcK4D2i4WBj47KaabSpgZPY/XeCOk9B9s
+        DO1w8Cq8V7Ng0xTQ+wKpEBaLZz/ekzyuaIp/9RA6aEXiJXnVX2Ch4A==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1mm90zkg8lsmpqa7gya9p2prsj8yfq774gjm6dkamkkvwugen7ywse5w97z
+  lastmodified: "2026-07-14T10:13:26Z"
+  mac: ENC[AES256_GCM,data:+x/sYvnrh8qXSoCe1VHIAL3a0Ga2pR7SlBavJdQPsgububl4U3QWacZz7CVtD0AuOs4i1yPblqv1QipilEQxjkVT32fbWTcGl2XLj00w4x4ysul6vesU1LiGIpA2yozVLh4LoZ7v0zHi/S5GbLzEQaYtrAUNTlwzyDCGW9dcKDE=,iv:L850/83dYoCqt5/BrLN8CaJZxBPF94nzCTrV9zxklkA=,tag:QCD1mFHc6ZY87GQwOlCbZg==,type:str]
+  unencrypted_suffix: _unencrypted
+  version: 3.13.2
