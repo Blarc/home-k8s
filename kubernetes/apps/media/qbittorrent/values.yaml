@@ -121,9 +121,11 @@ app-template:
           Session\ResumeDataStorageType=SQLite
           Session\UseOSCache=true
           Session\DefaultSavePath=/media/downloads/
+          Session\DisableAutoTMMByDefault=true
           Session\TempPath=/media/incomplete/
           Session\TempPathEnabled=true
           Session\QueueingSystemEnabled=false
+          Session\UseCategoryPathsInManualMode=true
           Session\GlobalMaxSeedingMinutes=43200
           
           [Preferences]
