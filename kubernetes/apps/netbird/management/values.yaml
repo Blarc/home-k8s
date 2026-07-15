@@ -7,7 +7,7 @@ app-template:
         app:
           image:
             repository: ghcr.io/netbirdio/management
-            tag: 0.74.4
+            tag: 0.74.6
           env:
             TZ: Europe/Ljubljana
           args:
