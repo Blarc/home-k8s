@@ -72,7 +72,7 @@ app-template:
       type: persistentVolumeClaim
       storageClass: topolvm-thin
       accessMode: ReadWriteOnce
-      size: 1Gi
+      size: 3Gi
     media:
       existingClaim: qbittorrent-media
       globalMounts:
