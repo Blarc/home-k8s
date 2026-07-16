@@ -67,7 +67,7 @@ app-template:
       type: persistentVolumeClaim
       storageClass: topolvm-thin
       accessMode: ReadWriteOnce
-      size: 256Mi
+      size: 3Gi
     cache:
       type: persistentVolumeClaim
       storageClass: topolvm-thin
