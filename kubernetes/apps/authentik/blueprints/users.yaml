@@ -25,6 +25,10 @@ entries:
         ]
         - !Find [
           authentik_core.group,
+          [name, "Jellyfin"],
+        ]
+        - !Find [
+          authentik_core.group,
           [name, "Public"],
         ]
   - id: masa
@@ -40,6 +44,10 @@ entries:
         - !Find [
           authentik_core.group,
           [name, "Media"],
+        ]
+        - !Find [
+          authentik_core.group,
+          [name, "Jellyfin"],
         ]
         - !Find [
           authentik_core.group,
@@ -73,5 +81,4 @@ entries:
           authentik_core.group,
           [ name, "Public" ],
         ]
-
 

@@ -12,6 +12,8 @@ data:
 {{ .Files.Get "blueprints/apps-paperless-ngx.yaml" | indent 4 }}
   apps-immich.yaml: |
 {{ .Files.Get "blueprints/apps-immich.yaml" | indent 4 }}
+  apps-jellyfin-ldap.yaml: |
+{{ .Files.Get "blueprints/apps-jellyfin-ldap.yaml" | indent 4 }}
   apps-netbird.yaml: |
 {{ .Files.Get "blueprints/apps-netbird.yaml" | indent 4 }}
   apps-sftpgo.yaml: |

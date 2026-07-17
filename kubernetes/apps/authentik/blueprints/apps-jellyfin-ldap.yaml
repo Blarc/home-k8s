@@ -1,0 +1,99 @@
+# yaml-language-server: $schema=https://goauthentik.io/blueprints/schema.json
+# yamllint disable
+---
+version: 1
+metadata:
+  name: Jellyfin LDAP
+entries:
+  - id: ldap_search
+    model: authentik_rbac.role
+    identifiers:
+      name: Jellyfin LDAP Search
+
+  - id: provider
+    model: authentik_providers_ldap.ldapprovider
+    identifiers:
+      name: blarc.my.id/jellyfin-ldap
+    permissions:
+      - role: !KeyOf ldap_search
+        permission: authentik_providers_ldap.search_full_directory
+    attrs:
+      authorization_flow:
+        !Find [
+          authentik_flows.flow,
+          [slug, "default-provider-authorization-implicit-consent"],
+        ]
+      invalidation_flow:
+        !Find [
+          authentik_flows.flow,
+          [slug, "default-provider-invalidation-flow"],
+        ]
+      base_dn: dc=blarc,dc=my,dc=id
+      search_mode: cached
+      bind_mode: cached
+      mfa_support: false
+
+  - id: application
+    model: authentik_core.application
+    identifiers:
+      slug: jellyfin
+    attrs:
+      name: Jellyfin
+      group: media
+      description: Media server for movies, shows, music, and photos.
+      icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/jellyfin.png
+      provider: !KeyOf provider
+      policy_engine_mode: any
+
+  - id: bind_user
+    model: authentik_core.user
+    identifiers:
+      username: jellyfin-ldap-bind
+    attrs:
+      name: Jellyfin LDAP Bind
+      type: service_account
+      roles:
+        - !KeyOf ldap_search
+
+  - id: bind_token
+    model: authentik_core.token
+    identifiers:
+      identifier: jellyfin-ldap-bind
+    attrs:
+      intent: app_password
+      user: !KeyOf bind_user
+      description: Jellyfin LDAP bind app password
+      expiring: false
+      expires: null
+      key: !Env JELLYFIN_LDAP_BIND_TOKEN
+
+  - id: outpost
+    model: authentik_outposts.outpost
+    identifiers:
+      name: jellyfin-ldap
+    attrs:
+      type: ldap
+      providers:
+        - !KeyOf provider
+      service_connection:
+        !Find [
+          authentik_outposts.kubernetesserviceconnection,
+          [local, true],
+        ]
+      config:
+        authentik_host: https://authentik.blarc.my.id
+        kubernetes_namespace: authentik
+        kubernetes_service_type: ClusterIP
+        kubernetes_replicas: 1
+        object_naming_template: ak-outpost-%(name)s
+        kubernetes_disabled_components:
+          - ingress
+          - httproute
+          - traefik middleware
+
+  - model: authentik_policies.policybinding
+    identifiers:
+      target: !KeyOf application
+      group: !Find [authentik_core.group, [name, "Jellyfin"]]
+    attrs:
+      order: 1

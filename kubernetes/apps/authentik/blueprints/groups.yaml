@@ -13,6 +13,10 @@ entries:
     model: authentik_core.group
     identifiers:
       name: Media
+  - id: jellyfin
+    model: authentik_core.group
+    identifiers:
+      name: Jellyfin
   - id: public
     model: authentik_core.group
     identifiers:
