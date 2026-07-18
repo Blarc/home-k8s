@@ -95,4 +95,18 @@ entries:
           authentik_core.group,
           [ name, "Jellyfin" ],
         ]
+  - id: retep
+    model: authentik_core.user
+    identifiers:
+      username: retep
+    attrs:
+      name: Peter Maležič
+      password: !Env RETEP_PASSWORD
+      email: !Env RETEP_EMAIL
+      type: internal
+      groups:
+        - !Find [
+          authentik_core.group,
+          [ name, "Jellyfin" ],
+        ]
 
