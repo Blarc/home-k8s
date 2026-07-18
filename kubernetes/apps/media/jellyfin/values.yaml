@@ -52,7 +52,7 @@ app-template:
       hostnames:
         - "{{ .Release.Name }}.blarc.my.id"
       parentRefs:
-        - name: internal
+        - name: external
           namespace: traefik
       rules:
         - backendRefs:
