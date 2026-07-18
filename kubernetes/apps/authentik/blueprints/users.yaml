@@ -81,4 +81,18 @@ entries:
           authentik_core.group,
           [ name, "Public" ],
         ]
+  - id: ranran
+    model: authentik_core.user
+    identifiers:
+      username: ranran
+    attrs:
+      name: Peter Maležič
+      password: !Env RANRAN_PASSWORD
+      email: !Env RANRAN_EMAIL
+      type: internal
+      groups:
+        - !Find [
+          authentik_core.group,
+          [ name, "Jellyfin" ],
+        ]
 
