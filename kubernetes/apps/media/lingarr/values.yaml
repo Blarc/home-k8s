@@ -1,0 +1,82 @@
+app-template:
+  controllers:
+    lingarr:
+      annotations:
+        reloader.stakater.com/auto: "true"
+      containers:
+        app:
+          image:
+            repository: ghcr.io/lingarr-translate/lingarr
+            tag: 1.2.4
+          env:
+            ASPNETCORE_URLS: http://+:9876
+            DB_CONNECTION: sqlite
+            DB_HANGFIRE_SQLITE_PATH: /app/config/Hangfire.db
+            SQLITE_DB_PATH: local.db
+            MAX_CONCURRENT_JOBS: "1"
+            TZ: Europe/Ljubljana
+          probes:
+            liveness: &probes
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /
+                  port: &containerPort 9876
+                initialDelaySeconds: 10
+                periodSeconds: 10
+                timeoutSeconds: 5
+                failureThreshold: 5
+            readiness: *probes
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: [ "ALL" ] }
+          resources:
+            requests:
+              cpu: 10m
+              memory: 128Mi
+            limits:
+              memory: 1Gi
+  defaultPodOptions:
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1654
+      runAsGroup: 1654
+      fsGroup: 1654
+      fsGroupChangePolicy: OnRootMismatch
+  service:
+    app:
+      ports:
+        http:
+          port: &port 80
+          targetPort: *containerPort
+  route:
+    app:
+      hostnames:
+        - "{{ .Release.Name }}.blarc.my.id"
+      parentRefs:
+        - name: internal
+          namespace: traefik
+      rules:
+        - backendRefs:
+            - identifier: app
+              port: *port
+          matches:
+            - path:
+                type: PathPrefix
+                value: /
+  persistence:
+    config:
+      type: persistentVolumeClaim
+      storageClass: topolvm-thin
+      accessMode: ReadWriteOnce
+      size: 256Mi
+      globalMounts:
+        - path: /app/config
+    media:
+      existingClaim: qbittorrent-media
+      globalMounts:
+        - path: /media
+    tmp:
+      type: emptyDir
