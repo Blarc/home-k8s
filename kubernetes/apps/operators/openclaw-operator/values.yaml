@@ -1,4 +1,0 @@
-openclaw-operator:
-  resources:
-    requests:
-      cpu: 10m

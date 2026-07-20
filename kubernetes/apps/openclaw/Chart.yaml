@@ -1,4 +1,0 @@
-apiVersion: v2
-description: Helm chart to deploy OpenClaw
-name: openclaw
-version: 1.0.0
