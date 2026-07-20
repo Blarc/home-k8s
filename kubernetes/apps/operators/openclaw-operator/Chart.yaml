@@ -2,7 +2,7 @@ apiVersion: v2
 dependencies:
   - name: openclaw-operator
     repository: oci://ghcr.io/paperclipinc/charts
-    version: 0.38.0
+    version: 0.38.1
 description: Helm chart to deploy openclaw-operator
 name: openclaw-operator
 version: 1.0.0
