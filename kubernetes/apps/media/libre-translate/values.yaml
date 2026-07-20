@@ -14,19 +14,33 @@ app-template:
             LT_LOAD_ONLY: en,sl
             TZ: Europe/Ljubljana
           probes:
-            liveness: &probes
+            startup:
               enabled: true
               custom: true
               spec:
-                exec:
-                  command:
-                    - ./venv/bin/python
-                    - scripts/healthcheck.py
-                initialDelaySeconds: 5
+                tcpSocket:
+                  port: *containerPort
                 periodSeconds: 10
-                timeoutSeconds: 4
-                failureThreshold: 4
-            readiness: *probes
+                failureThreshold: 180
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: *containerPort
+                initialDelaySeconds: 60
+                periodSeconds: 60
+                timeoutSeconds: 5
+                failureThreshold: 35
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                tcpSocket:
+                  port: *containerPort
+                periodSeconds: 30
+                timeoutSeconds: 5
+                failureThreshold: 3
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
