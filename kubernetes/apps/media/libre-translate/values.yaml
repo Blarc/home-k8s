@@ -1,0 +1,85 @@
+app-template:
+  controllers:
+    libretranslate:
+      annotations:
+        reloader.stakater.com/auto: "true"
+      containers:
+        app:
+          image:
+            repository: libretranslate/libretranslate
+            tag: v1.9.6
+          env:
+            LT_PORT: &containerPort 5000
+            LT_UPDATE_MODELS: true
+            LT_LOAD_ONLY: en,sl
+            TZ: Europe/Ljubljana
+          probes:
+            liveness: &probes
+              enabled: true
+              custom: true
+              spec:
+                exec:
+                  command:
+                    - ./venv/bin/python
+                    - scripts/healthcheck.py
+                initialDelaySeconds: 5
+                periodSeconds: 10
+                timeoutSeconds: 4
+                failureThreshold: 4
+            readiness: *probes
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: [ "ALL" ] }
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+            limits:
+              memory: 2Gi
+              cpu: 1
+  defaultPodOptions:
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1032
+      runAsGroup: 1032
+      fsGroup: 1032
+      fsGroupChangePolicy: OnRootMismatch
+  service:
+    app:
+      ports:
+        http:
+          port: &port 80
+          targetPort: *containerPort
+  route:
+    app:
+      hostnames:
+        - "{{ .Release.Name }}.blarc.my.id"
+      parentRefs:
+        - name: internal
+          namespace: traefik
+      rules:
+        - backendRefs:
+            - identifier: app
+              port: *port
+          matches:
+            - path:
+                type: PathPrefix
+                value: /
+  persistence:
+    models:
+      type: persistentVolumeClaim
+      storageClass: topolvm-thin
+      accessMode: ReadWriteOnce
+      size: 512Mi
+      globalMounts:
+        - path: /home/libretranslate/.local
+    config:
+      type: persistentVolumeClaim
+      storageClass: topolvm-thin
+      accessMode: ReadWriteOnce
+      size: 256Mi
+      globalMounts:
+        - path: /home/libretranslate/.config
+    tmp:
+      type: emptyDir

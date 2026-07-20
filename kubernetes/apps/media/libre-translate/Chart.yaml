@@ -1,0 +1,9 @@
+apiVersion: v2
+name: libretranslate
+description: A Helm chart for libretranslate apps
+dependencies:
+  - name: app-template
+    version: 5.0.1
+    repository: oci://ghcr.io/bjw-s-labs/helm
+type: application
+version: 1.0.0
