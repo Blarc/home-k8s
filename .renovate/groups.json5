@@ -54,6 +54,15 @@
             group: {
                 commitMessageTopic: "{{{groupName}}} group",
             },
+        },
+        {
+            description: "Netbird Group",
+            groupName: "Netbird",
+            matchDatasources: ["docker"],
+            matchPackageNames: ["/netbird/"],
+            group: {
+                commitMessageTopic: "{{{groupName}}} group",
+            },
         }
     ],
 }
