@@ -1,0 +1,8 @@
+intel-device-plugins-operator:
+  manager:
+    devices:
+      gpu: true
+  resources:
+    requests:
+      cpu: 10m
+      memory: 64Mi
