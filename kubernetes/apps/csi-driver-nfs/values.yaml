@@ -8,7 +8,7 @@ csi-driver-nfs:
       share: /storage/k8s-vols
       # Useful for ZFS to ensure pods can write
       mountPermissions: "0775"
-    reclaimPolicy: Delete
+    reclaimPolicy: Retain
     volumeBindingMode: WaitForFirstConsumer
     mountOptions:
       - nfsvers=4.2

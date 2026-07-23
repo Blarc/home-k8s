@@ -36,5 +36,14 @@ topolvm:
         allowVolumeExpansion: true
         additionalParameters:
           topolvm.io/device-class: "ssd-thin"
+    - name: topolvm-thin-retain
+      storageClass:
+        fsType: xfs
+        isDefaultClass: false
+        volumeBindingMode: WaitForFirstConsumer
+        allowVolumeExpansion: true
+        reclaimPolicy: Retain
+        additionalParameters:
+          topolvm.io/device-class: "ssd-thin"
   node:
     lvmdEmbedded: true
