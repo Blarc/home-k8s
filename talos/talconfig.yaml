@@ -1,7 +1,7 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
 clusterName: ${clusterName}
-talosVersion: 1.12.6
+talosVersion: 1.13.7
 kubernetesVersion: 1.35.3
 endpoint: https://192.168.1.16:6443
 
@@ -26,10 +26,13 @@ nodes:
     kernelModules:
       - name: dm_thin_pool
       - name: dm_mod
+      - name: i915
     schematic:
       customization:
         systemExtensions:
           officialExtensions:
+            - siderolabs/i915
+            - siderolabs/intel-ucode
             - siderolabs/nut-client
     extensionServices:
       # https://github.com/siderolabs/extensions/tree/main/power/nut-client

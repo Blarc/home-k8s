@@ -42,7 +42,8 @@ Docs: https://docs.siderolabs.com/talos/v1.8/configure-your-talos-cluster/lifecy
 
 Run the following command for each node
 ```bash
-talosctl upgrade --nodes 192.168.1.17 --endpoints 192.168.1.17 --image <copy-from-machine-configuration>
+image="$(yq e 'select(.machine.install.image != null) | .machine.install.image' clusterconfig/home-multi-role.yaml)"
+talosctl upgrade --nodes 192.168.1.16 --endpoints 192.168.1.16 --image "$image"
 ```
 To watch the upgrade logs use:
 ```bash
