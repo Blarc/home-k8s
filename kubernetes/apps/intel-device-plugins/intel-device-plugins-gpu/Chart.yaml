@@ -1,0 +1,8 @@
+apiVersion: v2
+dependencies:
+  - name: intel-device-plugins-gpu
+    repository: https://intel.github.io/helm-charts
+    version: 0.36.0
+description: Helm chart to deploy Intel Device GPU plugin
+name: intel-device-plugins-gpu
+version: 1.0.0
