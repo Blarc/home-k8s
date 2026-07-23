@@ -90,7 +90,7 @@ app-template:
         - path: /home/libretranslate/.local
     config:
       type: persistentVolumeClaim
-      storageClass: topolvm-thin
+      storageClass: topolvm-thin-retain
       accessMode: ReadWriteOnce
       size: 256Mi
       globalMounts:

@@ -63,12 +63,12 @@ app-template:
   persistence:
     config:
       type: persistentVolumeClaim
-      storageClass: topolvm-thin
+      storageClass: topolvm-thin-retain
       accessMode: ReadWriteOnce
       size: 1Gi
     metadata:
       type: persistentVolumeClaim
-      storageClass: topolvm-thin
+      storageClass: topolvm-thin-retain
       accessMode: ReadWriteOnce
       size: 1Gi
     books:
