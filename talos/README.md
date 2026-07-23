@@ -59,13 +59,13 @@ Docs: https://docs.siderolabs.com/kubernetes-guides/advanced-guides/upgrading-ku
 
 Run the following command
 ```bash
-talosctl --nodes 192.168.1.17 upgrade-k8s --to 1.34.0
+talosctl --nodes 192.168.1.16 upgrade-k8s --to 1.36.2
 ```
 
 ## Inspecting manifests of static pods
 Run the following command to list manifests of static pods for specific node:
 ```bash
-talosctl get manifests -n 192.168.1.17
+talosctl get manifests -n 192.168.1.16
 ```
 
 ## Talhelper
