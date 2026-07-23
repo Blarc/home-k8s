@@ -29,8 +29,8 @@ entries:
           [slug, "default-provider-invalidation-flow"],
         ]
       base_dn: dc=blarc,dc=my,dc=id
-      search_mode: cached
-      bind_mode: cached
+      search_mode: direct
+      bind_mode: direct
       mfa_support: false
 
   - id: application
