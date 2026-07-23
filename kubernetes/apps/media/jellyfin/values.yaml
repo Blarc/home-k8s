@@ -39,6 +39,9 @@ app-template:
       runAsNonRoot: true
       runAsUser: 1000
       runAsGroup: 1000
+      supplementalGroups:
+        - 44
+        - 109
       fsGroup: 1000
       fsGroupChangePolicy: OnRootMismatch
   service:
@@ -78,5 +81,10 @@ app-template:
       globalMounts:
         - path: /media
           readOnly: true
+    dri:
+      type: hostPath
+      hostPath: /dev/dri
+      globalMounts:
+        - path: /dev/dri
     tmp:
       type: emptyDir
