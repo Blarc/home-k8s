@@ -65,7 +65,7 @@ cilium:
     algorithm: maglev
 
   gatewayAPI:
-    enabled: true
+    enabled: false
 
   # https://github.com/cilium/cilium/issues/43814
   extraConfig:
