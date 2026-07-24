@@ -3,6 +3,7 @@ external-dns:
 
   provider:
     name: coredns
+  registry: noop
 
   env:
     - name: ETCD_URLS
@@ -24,6 +25,5 @@ external-dns:
     coredns-prefix: /blarcdns/
     crd-source-apiversion: externaldns.k8s.io/v1alpha1
     crd-source-kind: DNSEndpoint
-    txt-prefix: external-dns-%{record_type}.
 
   logLevel: debug
