@@ -1,0 +1,28 @@
+external-dns:
+  fullnameOverride: external-dns
+
+  provider:
+    name: coredns
+
+  env:
+    - name: ETCD_URLS
+      value: http://etcd.etcd.svc.cluster.local:2379
+
+  sources:
+    - gateway-httproute
+    - service
+    - crd
+
+  managedRecordTypes:
+    - A
+    - AAAA
+    - CNAME
+    - TXT
+    - MX
+
+  extraArgs:
+    coredns-prefix: /blarcdns/
+    crd-source-apiversion: externaldns.k8s.io/v1alpha1
+    crd-source-kind: DNSEndpoint
+
+  logLevel: debug
