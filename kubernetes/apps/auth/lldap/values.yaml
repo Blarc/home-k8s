@@ -113,7 +113,7 @@ app-template:
         LLDAP_SMTP_OPTIONS__SERVER: mail.blarc.my.id
         LLDAP_SMTP_OPTIONS__PORT: "465"
         LLDAP_SMTP_OPTIONS__SMTP_ENCRYPTION: TLS
-        LLDAP_SMTP_OPTIONS__FROM: LLDAP <noreply@blarc.my.id>
+        LLDAP_SMTP_OPTIONS__FROM: "Blarc's LLDAP <noreply@blarc.my.id>"
         RUST_LOG: warn
     bootstrap:
       forceRename: bootstrap-config
