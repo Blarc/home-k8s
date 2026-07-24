@@ -4,3 +4,9 @@ docker-mailserver:
   deployment:
     env:
       OVERRIDE_HOSTNAME: mail.blarc.my.id
+  service:
+    type: LoadBalancer
+    externalTrafficPolicy: Local
+    annotations:
+      lbipam.cilium.io/ips: "192.168.1.225"
+      external-dns.alpha.kubernetes.io/hostname: "mail.blarc.my.id"
