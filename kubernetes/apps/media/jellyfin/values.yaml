@@ -34,7 +34,7 @@ app-template:
               memory: 256Mi
               gpu.intel.com/i915: 1
             limits:
-              memory: 2Gi
+              memory: 4Gi
               gpu.intel.com/i915: 1
   defaultPodOptions:
     securityContext:
