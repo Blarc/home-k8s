@@ -1,0 +1,216 @@
+app-template:
+  global:
+    alwaysAppendIdentifierToResourceName: true
+
+  controllers:
+    lldap:
+      annotations:
+        reloader.stakater.com/auto: "true"
+      containers:
+        app:
+          image:
+            repository: ghcr.io/lldap/lldap
+            tag: 2026-07-19-alpine-rootless
+          envFrom:
+            - configMapRef:
+                identifier: config
+            - secretRef:
+                identifier: crypto
+            - secretRef:
+                identifier: credentials
+            - secretRef:
+                identifier: smtp
+          ports:
+            - name: ldap
+              containerPort: &ldapPort 3890
+            - name: web
+              containerPort: &webPort 17170
+          probes:
+            liveness: &probe
+              enabled: true
+              custom: true
+              spec:
+                exec:
+                  command:
+                    - /app/lldap
+                    - healthcheck
+                initialDelaySeconds: 5
+                periodSeconds: 10
+                timeoutSeconds: 5
+                failureThreshold: 5
+            readiness: *probe
+          securityContext: &containerSecurityContext
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+
+    bootstrap:
+      type: job
+      annotations:
+        argocd.argoproj.io/hook: PostSync
+        argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+      pod:
+        restartPolicy: OnFailure
+      containers:
+        app:
+          image:
+            repository: ghcr.io/lldap/lldap
+            tag: 2025-07-10-alpine-rootless
+          command:
+            - /app/bootstrap.sh
+          envFrom:
+            - configMapRef:
+                identifier: config
+            - configMapRef:
+                identifier: bootstrap
+          env:
+            LLDAP_ADMIN_USERNAME:
+              valueFrom:
+                secretKeyRef:
+                  name: lldap-credentials
+                  key: LLDAP_LDAP_USER_DN
+            LLDAP_ADMIN_PASSWORD:
+              valueFrom:
+                secretKeyRef:
+                  name: lldap-credentials
+                  key: LLDAP_LDAP_USER_PASS
+          securityContext: *containerSecurityContext
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+
+  defaultPodOptions:
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1001
+      runAsGroup: 1001
+      fsGroup: 1001
+      fsGroupChangePolicy: OnRootMismatch
+      seccompProfile:
+        type: RuntimeDefault
+
+  configMaps:
+    config:
+      forceRename: lldap-config
+      data:
+        TZ: Europe/Ljubljana
+        UID: "1001"
+        GID: "1001"
+        LLDAP_LDAP_BASE_DN: DC=blarc,DC=my,DC=id
+        LLDAP_HTTP_URL: https://lldap.blarc.my.id
+        LLDAP_SMTP_OPTIONS__ENABLE_PASSWORD_RESET: "true"
+        LLDAP_SMTP_OPTIONS__SERVER: mail.blarc.my.id
+        LLDAP_SMTP_OPTIONS__PORT: "465"
+        LLDAP_SMTP_OPTIONS__SMTP_ENCRYPTION: TLS
+        LLDAP_SMTP_OPTIONS__FROM: LLDAP <noreply@blarc.my.id>
+        RUST_LOG: warn
+    bootstrap:
+      forceRename: bootstrap-config
+      data:
+        LLDAP_URL: http://lldap-web:80
+        DO_CLEANUP: "true"
+
+  service:
+    web:
+      forceRename: lldap-web
+      controller: lldap
+      ports:
+        web:
+          port: 80
+          targetPort: *webPort
+    ldap:
+      forceRename: lldap
+      controller: lldap
+      ports:
+        ldap:
+          port: 389
+          targetPort: *ldapPort
+
+  route:
+    web:
+      hostnames:
+        - lldap.blarc.my.id
+      parentRefs:
+        - name: internal
+          namespace: traefik
+      rules:
+        - backendRefs:
+            - identifier: web
+              port: 80
+          matches:
+            - path:
+                type: PathPrefix
+                value: /
+
+  persistence:
+    data:
+      type: persistentVolumeClaim
+      storageClass: topolvm-thin-retain
+      accessMode: ReadWriteOnce
+      size: 256Mi
+      advancedMounts:
+        lldap:
+          app:
+            - path: /data
+    tmp:
+      type: emptyDir
+      advancedMounts:
+        bootstrap:
+          app:
+            - path: /tmp
+    groups:
+      type: custom
+      volumeSpec:
+        projected:
+          sources:
+            - secret:
+                name: lldap-bootstrap
+                items:
+                  - key: groups.json
+                    path: groups.json
+      advancedMounts:
+        bootstrap:
+          app:
+            - path: /bootstrap/group-configs
+              readOnly: true
+    user-schemas:
+      type: custom
+      volumeSpec:
+        projected:
+          sources:
+            - secret:
+                name: lldap-bootstrap
+                items:
+                  - key: user-schemas.json
+                    path: user-schemas.json
+      advancedMounts:
+        bootstrap:
+          app:
+            - path: /bootstrap/user-schemas
+              readOnly: true
+    users:
+      type: custom
+      volumeSpec:
+        projected:
+          sources:
+            - secret:
+                name: lldap-bootstrap
+                items:
+                  - key: users.json
+                    path: users.json
+      advancedMounts:
+        bootstrap:
+          app:
+            - path: /bootstrap/user-configs
+              readOnly: true
