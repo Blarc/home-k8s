@@ -1,6 +1,21 @@
 docker-mailserver:
   fullnameOverride: docker-mailserver
   certificate: docker-mailserver-certificate
+  configMaps:
+    dkim-signing.conf:
+      create: true
+      path: rspamd/override.d/dkim_signing.conf
+      data: |
+        enabled = true;
+        sign_authenticated = true;
+        sign_local = true;
+
+        domain {
+          blarc.my.id {
+            selector = "mail";
+            path = "/etc/rspamd/dkim/rsa-2048-mail-blarc.my.id.private.txt";
+          }
+        }
   deployment:
     env:
       OVERRIDE_HOSTNAME: mail.blarc.my.id

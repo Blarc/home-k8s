@@ -1,0 +1,22 @@
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: blarc-my-id-mail-auth
+spec:
+  endpoints:
+    - dnsName: blarc.my.id
+      recordType: TXT
+      targets:
+        - "v=spf1 ip4:193.77.155.77 -all"
+    - dnsName: _dmarc.blarc.my.id
+      recordType: TXT
+      targets:
+        - "v=DMARC1; p=none"
+    - dnsName: mail._domainkey.blarc.my.id
+      recordType: TXT
+      targets:
+        - "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApio+C3SplX6giA5dLFUWCCNO8K/rK3vemfVq9WxGLL87pe1eY0GdyQYdSy0DSEH/N0+tv03v/FabeJBxGDvnaNq2pJ5DLDvRJmktHSb+bmw082g75Uht36JHdtp3AYFaQzZddBy2lmWD0fvdZy1Veesq5Qn5pNOHUgaMevoXC2VN5+8JRCSAzIMHmWu2on3ZU8HANL3SpVO/LC1edbFEAX1iIJTgL9lIMw5mvHfM474dsQlMWBrr8TF8/aUJGCzwpThg+qg9Hyxa0doaYJMuplsZwOLMd0SEbRqCF8Vlw3Acf1FnK9PBI48bfzDud/KebT9w3/KEF0DK1fUOsSDJqQIDAQAB"
+    - dnsName: blarc.my.id
+      recordType: MX
+      targets:
+        - "10 mail.blarc.my.id"
