@@ -109,6 +109,10 @@ authelia:
           authorize_code: 1 minute
         cors:
           allowed_origins_from_client_redirect_uris: true
+        claims_policies:
+          sftpgo:
+            id_token:
+              - preferred_username
         jwks:
           - key_id: authelia-rs256
             algorithm: RS256
@@ -186,6 +190,7 @@ authelia:
             client_secret:
               path: /secrets/oidc/sftpgo.client_secret
             authorization_policy: one_factor
+            claims_policy: sftpgo
             consent_mode: implicit
             redirect_uris:
               - https://sftpgo.blarc.my.id/web/oidc/redirect
