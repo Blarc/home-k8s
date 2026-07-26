@@ -33,7 +33,7 @@ app-template:
             QBITTORRENT_URL: "http://qbittorrent.media:80"
             QBITTORRENT_CATEGORY: "books"
             QBITTORRENT_CATEGORY_AUDIOBOOK: "audiobooks"
-            DEBUG: "true"
+            DEBUG: "false"
           probes:
             liveness: &probes
               enabled: true

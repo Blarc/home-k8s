@@ -1,4 +1,32 @@
 csi-driver-nfs:
+  controller:
+    resources:
+      csiProvisioner:
+        limits:
+          memory: 64Mi
+      csiResizer:
+        limits:
+          memory: 64Mi
+      csiSnapshotter:
+        limits:
+          memory: 64Mi
+      livenessProbe:
+        limits:
+          memory: 32Mi
+      nfs:
+        limits:
+          memory: 32Mi
+  node:
+    resources:
+      livenessProbe:
+        limits:
+          memory: 32Mi
+      nodeDriverRegistrar:
+        limits:
+          memory: 32Mi
+      nfs:
+        limits:
+          memory: 32Mi
   storageClass:
     create: true
     name: nfs

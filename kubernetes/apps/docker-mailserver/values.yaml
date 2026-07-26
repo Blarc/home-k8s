@@ -19,6 +19,15 @@ docker-mailserver:
   deployment:
     env:
       OVERRIDE_HOSTNAME: mail.blarc.my.id
+    resources:
+      requests:
+        cpu: 100m
+        memory: 512Mi
+        ephemeral-storage: 100Mi
+      limits:
+        cpu: 1
+        memory: 1Gi
+        ephemeral-storage: 500Mi
   service:
     type: LoadBalancer
     externalTrafficPolicy: Local
