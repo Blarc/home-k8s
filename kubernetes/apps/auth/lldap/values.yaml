@@ -142,7 +142,7 @@ app-template:
       hostnames:
         - lldap.blarc.my.id
       parentRefs:
-        - name: external
+        - name: internal
           namespace: traefik
       rules:
         - backendRefs:
