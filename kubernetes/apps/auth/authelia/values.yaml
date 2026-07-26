@@ -70,7 +70,7 @@ authelia:
         implementation: lldap
         address: ldap://lldap.auth.svc.cluster.local:389
         base_dn: DC=blarc,DC=my,DC=id
-        user: uid=bind,ou=people,DC=blarc,DC=my,DC=id
+        user: uid=authelia_bind,ou=people,DC=blarc,DC=my,DC=id
     access_control:
       default_policy: one_factor
     session:

@@ -9,7 +9,7 @@ authelia:
       ldap:
         password:
           # Retrieved from the existing LLDAP bootstrap bind user; Authelia uses it to bind to and query LLDAP.
-          value: ENC[AES256_GCM,data:dqPiyT7fgfmn/HL1IKEQoNHy7N2ItufA5+4Un9cSWds=,iv:k66MyRbwGDCh0WXpOAyqE3AzR+esp8IG8/PiSm6Gpmc=,tag:ItFQslUFgDB9K8O9IwF8cg==,type:str]
+          value: ENC[AES256_GCM,data:UUIH1uV+52gHIKqBaE2FqrD1ThVCP+KjXU9kzKvnLKQ=,iv:NnvHyEDMw3nyI7KFKR2btnVUxww5372gjc0MoB7hZEU=,tag:SuheE7DeWBWDZ1r6ZV6TBg==,type:str]
     session:
       encryption_key:
         # Generated with openssl rand -base64 48; Authelia uses it to encrypt session data.
@@ -78,6 +78,6 @@ sops:
         -----END AGE ENCRYPTED FILE-----
       recipient: age1mm90zkg8lsmpqa7gya9p2prsj8yfq774gjm6dkamkkvwugen7ywse5w97z
   encrypted_comment_regex: .*
-  lastmodified: "2026-07-26T13:20:59Z"
-  mac: ENC[AES256_GCM,data:3fU9nRUsiqoMIN21kKjfP9qRCDwB/biPiFm8sdxHm7HuPDAWsueCutripaaK4PXIV9LiMs9PB7/gZnq9yparUDS8rY/YBsJolVomGyyS9YMsm4O+knp8BJaodfXCX4DnnxdJX1oZoU63NfrJh9yHxFsPI83pzukhxChCjMGA++w=,iv:dR+JeMQx+arLbirgRfv69FKat4t2iGOXISX0urReHv0=,tag:GTsa8el5F2JICpWltAQd3Q==,type:str]
+  lastmodified: "2026-07-26T18:59:45Z"
+  mac: ENC[AES256_GCM,data:XtfaxVZ+tnkRPoCG+v1cEPiyTqRoSX9q6c/k2O6gEd2OhW8rv0OpfmO0d7T1gm3+l++etJ3Myh7PydV2Lp4wU6fu6I/Duf9KnjaZly75/Wzh5xopy4BUQOY2Ua6pu+KtiHlgGajcLwQu783rsq5kHgaOzPub18BuoIbsnJiGNSw=,iv:H+EDWYN24zDDe4W1pKu7lCpgkB9ekdFMNmwzzbFsKB0=,tag:23NDy9J/EYgX/iKaeAE9UQ==,type:str]
   version: 3.13.2
