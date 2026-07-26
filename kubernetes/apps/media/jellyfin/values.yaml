@@ -3,6 +3,23 @@ app-template:
     jellyfin:
       annotations:
         reloader.stakater.com/auto: "true"
+      initContainers:
+        enable-metrics:
+          image:
+            repository: ghcr.io/jellyfin/jellyfin
+            tag: 10.11.11
+          command:
+            - /bin/sh
+            - -ec
+            - |
+              config=/config/config/system.xml
+              if [ -f "$config" ] && grep -q '<EnableMetrics>' "$config"; then
+                sed -i 's#<EnableMetrics>false</EnableMetrics>#<EnableMetrics>true</EnableMetrics>#' "$config"
+              fi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: [ "ALL" ] }
       containers:
         app:
           image:
@@ -57,6 +74,17 @@ app-template:
         - name: external
           namespace: traefik
       rules:
+        - filters:
+            - type: RequestRedirect
+              requestRedirect:
+                path:
+                  type: ReplaceFullPath
+                  replaceFullPath: /
+                statusCode: 302
+          matches:
+            - path:
+                type: Exact
+                value: /metrics
         - backendRefs:
             - identifier: app
               port: *port
@@ -64,6 +92,14 @@ app-template:
             - path:
                 type: PathPrefix
                 value: /
+  serviceMonitor:
+    app:
+      endpoints:
+        - port: http
+          interval: 30s
+          path: /metrics
+          scheme: http
+          scrapeTimeout: 30s
   persistence:
     config:
       type: persistentVolumeClaim
