@@ -126,6 +126,7 @@ authelia:
               path: /secrets/oidc/immich.client_secret
             authorization_policy: one_factor
             consent_mode: implicit
+            token_endpoint_auth_method: client_secret_post
             redirect_uris:
               - app.immich:///oauth-callback
               - https://immich.blarc.my.id/auth/login
