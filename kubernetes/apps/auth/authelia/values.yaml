@@ -108,8 +108,16 @@ authelia:
           id_token: 1 hour
           authorize_code: 1 minute
         cors:
+          endpoints:
+            - token
+            - userinfo
           allowed_origins_from_client_redirect_uris: true
         claims_policies:
+          netbird:
+            id_token:
+              - email
+              - name
+              - preferred_username
           sftpgo:
             id_token:
               - preferred_username
@@ -150,10 +158,14 @@ authelia:
             client_secret:
               path: /secrets/oidc/netbird.client_secret
             authorization_policy: one_factor
+            claims_policy: netbird
             consent_mode: explicit
+            token_endpoint_auth_method: client_secret_post
             require_pkce: true
             pkce_challenge_method: S256
             redirect_uris:
+              - https://netbird.blarc.my.id/peers
+              - https://netbird.blarc.my.id/add-peers
               - https://netbird.blarc.my.id/callback
               - https://netbird.blarc.my.id/silent-callback
               - http://localhost:53000
