@@ -54,7 +54,7 @@ app-template:
         # Generated with Authelia 4.39.20 using authelia crypto hash generate argon2 --password <existing-client-secret> --no-confirm; mounted so Authelia can validate Grafana OIDC client authentication.
         grafana.client_secret: ENC[AES256_GCM,data:YZZ9md7A0XZluPs+HMcEBv998D6IVQNEok0nwMFMrJB0DY+hp+Z8bSdecoUvTcaEm801Py0HsXfvLLj1IanOlLEZjkKPZqTXWS7TIcKJwC29ONR2ig3DGvpXzWLYcpBoMA==,iv:QbMkNCHy98zKeNBe1hHVqSHkGGaa5qDmYg8VwUzmndQ=,tag:x6cYnf+2pWdxLmNPhzgz4w==,type:str]
         # Generated with Authelia 4.39.20 using authelia crypto hash generate argon2 --password <existing-client-secret> --no-confirm; mounted so Authelia can validate Audiobookshelf OIDC client authentication.
-        audiobookshelf.client_secret: ENC[AES256_GCM,data:pM8otA1HIsCYqJlEITI3Yk11WQmE/7s8/Oxf64B45687n5GKI1lTTvmGn5JZuqIgx22onrs6X7H12VZEYhaS2USCz3QiK0EK4PvC8LPy6GQbYUqJJrh08UxQlwxIGri8bA==,iv:tuBzMh/FuNtnoDyLDNlqilGkA4lN1svz4RcMPCodiQw=,tag:99A2U7o0wBkSmZiz8uDgUA==,type:str]
+        audiobookshelf.client_secret: ENC[AES256_GCM,data:JK3csPsHfUCVOB9Xbf9o6b/gICyQPNrMJznnVPIQUaEEhB6mEGWhAg2uC0GjkpyPnPATulPi4G5lMH621zWXTL8qplSW7+62RdMfcrgT3nXw6EzaU2CT8ekG+y9wPCDdPA==,iv:K+5KvKbRMh3uzVy3YAd7mZKYaun0bYC+EYnmLnYaG6A=,tag:4tlBxb42ZZWR5TLGXsThKg==,type:str]
         # Generated with Authelia 4.39.20 using authelia crypto hash generate argon2 --password <existing-client-secret> --no-confirm; mounted so Authelia can validate SFTPGo OIDC client authentication.
         sftpgo.client_secret: ENC[AES256_GCM,data:cEbU2nMHiZDZQLOs08bvTthUM7bx5B9LqrE5EvPKgRQSMDnVS9z3wpPRII5QUNhzCb2t36r9P3mXNdwvXwxgdkXYARUXKPeTMXcIg8wxS+qBKi60vrVdAI1shAFoDoqeiA==,iv:g/ViJekx1bK0REyCXqRyM4F3m/e8WCrv75KI0pdKqsc=,tag:2ywIb5nJCZs6eJA4/o9E1g==,type:str]
 sops:
@@ -78,6 +78,6 @@ sops:
         -----END AGE ENCRYPTED FILE-----
       recipient: age1mm90zkg8lsmpqa7gya9p2prsj8yfq774gjm6dkamkkvwugen7ywse5w97z
   encrypted_comment_regex: .*
-  lastmodified: "2026-07-26T10:52:59Z"
-  mac: ENC[AES256_GCM,data:3whhcJdxwJyC3p2+HUQmKhdbfOrXp0+TxjslmTK5BK9HVWX4et60JBaLtn562mdscTXvhSJMKToT46YoAMkjfadk/6hFDwmJ9iToRa2p/F+OExBIlYpVcUdHYSFa9ANNr+ka9jXu7LXoI2/Ay0Ydbq1RFmmjbZgF9qF1aHpU4n4=,iv:d1bouYvHauRspIzBFOXblJTcxaf56M9Iu+fNT5i6+UY=,tag:F5mZGotddVNoWWXI6/whxA==,type:str]
+  lastmodified: "2026-07-26T13:20:59Z"
+  mac: ENC[AES256_GCM,data:3fU9nRUsiqoMIN21kKjfP9qRCDwB/biPiFm8sdxHm7HuPDAWsueCutripaaK4PXIV9LiMs9PB7/gZnq9yparUDS8rY/YBsJolVomGyyS9YMsm4O+knp8BJaodfXCX4DnnxdJX1oZoU63NfrJh9yHxFsPI83pzukhxChCjMGA++w=,iv:dR+JeMQx+arLbirgRfv69FKat4t2iGOXISX0urReHv0=,tag:GTsa8el5F2JICpWltAQd3Q==,type:str]
   version: 3.13.2

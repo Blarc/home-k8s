@@ -1,0 +1,31 @@
+app-template:
+  controllers:
+    audiobookshelf:
+      containers:
+        app:
+          env:
+            AUDIOBOOKSHELF_OIDC_CLIENT_SECRET: ENC[AES256_GCM,data:rag+2+4lpme8+KAlE5JWdTwciVeOjQb8t8WbdA5bSu2262MUuAeX17vogMRMh1M0WUEU7Uj4XXVjufcOrSmWnw==,iv:ldIOdD3v3Dr3fYSlACKPCcoedUDjHfNKMFVgPlWWVbs=,tag:1HYxDchyzBlGHZiVMUCL0A==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSArYk1Mdlc5TlBQK3Zhcno1
+        SDdoNWh6dHA3U0QxZmpSYkI5QXFnSnc0SVZnCmJmbzQyaGpFTVo2Nk8wM3dyVkJG
+        RlFlTWRjZlBnRWdxRUxPZzR0L3pNMUUKLS0tIGRVZFhoNFdFdXlBTXR5S2hwZ0ZG
+        MkZVc2xWVlRnVmd0Vy9GUXFzVUhxWUUK8Md39lqkm6UqnwbnS52ss9kEueonLcJK
+        pyFhkNBBPv4TQY8SiX/2HGMGxUp6FB7kkthsUSwak+gC9NBQeIU7Dg==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1hnmh393g3qaf2szdjkyrd7jsven9wzvgpud4207vzrfywmuvdassvperqc
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBad2FoY2Z3SkNJclB5TURl
+        b0U0dUhRTkhiMXRpeDd4Z2xQVi93aFB5VTF3Cm5iOGM5TXZnd00rVzh0bzhSQUli
+        aWpQRDczeWlMOWZlZ1c1N0dEM1RGbWcKLS0tIFNGNFRiSjlGcG9WWnVtc2RkN040
+        eDlXNG56bkI5YjMzcDZOMnBGT2V1d0kKcJx5VS8DiHLBDgvlBhiJjIwiGM+XSAG8
+        M3IvgfYEzwWPZOQU+sPosUB0ehnD4+PqvTx/wZBpC6kLAcjyFlpyAQ==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1mm90zkg8lsmpqa7gya9p2prsj8yfq774gjm6dkamkkvwugen7ywse5w97z
+  lastmodified: "2026-07-26T13:20:59Z"
+  mac: ENC[AES256_GCM,data:WZHLZdbN6Ak7gsKS9dziN29m46dCZgAssrlpYtAIg8qcTz6r2A/5eOGtUgF7bq+DodBSuOed3R3tMsnEJX8HHA01Uskrdyo+dYwZEEhkiIc+SHczAUIxvZZe9d0X6LhYHygeKoCzUyDasxJLHaNl6PgWoZBnJP+T6gMUZ/K0Sns=,iv:4I8Vyvi4dGyxJMRYOyuzmY20UhVTrOfANVqNkV0qUYI=,tag:L28MKjfk1XWiHhdQun8Kdg==,type:str]
+  unencrypted_suffix: _unencrypted
+  version: 3.13.2
