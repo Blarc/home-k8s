@@ -1,0 +1,83 @@
+authelia:
+  configMap:
+    identity_validation:
+      reset_password:
+        secret:
+          # Generated with openssl rand -base64 48; Authelia uses it as the HMAC secret for reset-password JWT signing.
+          value: ENC[AES256_GCM,data:dsgpwVDDi4XBKEyExHtWiIopB6MGmqgGEmvHexKIBRDL6kytZPjOxRaG/9F7Q29wvKBGpKlPppRU4DxP6Kt4gw==,iv:RP7mHGcPnJ1y2ijJIYU5ClqgGeAjm+rgC/3KIAo5tiA=,tag:AGIwGY0J0h7aEdPNogHfsA==,type:str]
+    authentication_backend:
+      ldap:
+        password:
+          # Retrieved from the existing LLDAP bootstrap bind user; Authelia uses it to bind to and query LLDAP.
+          value: ENC[AES256_GCM,data:dqPiyT7fgfmn/HL1IKEQoNHy7N2ItufA5+4Un9cSWds=,iv:k66MyRbwGDCh0WXpOAyqE3AzR+esp8IG8/PiSm6Gpmc=,tag:ItFQslUFgDB9K8O9IwF8cg==,type:str]
+    session:
+      encryption_key:
+        # Generated with openssl rand -base64 48; Authelia uses it to encrypt session data.
+        value: ENC[AES256_GCM,data:koJRJM/7KeMlhAHMsqZo4QHM6BgFwPPt+t+Q4I5sJZ7vSccQVsFpMFpvV9AbK5aZs6CRXhMBY6KhlSAAbZMn8w==,iv:3zD3k2K1OvkTHIbKJy9X8oMhgF0g+Gr7VcBTW7HbpL4=,tag:3LfPOOhASxJem/S0zdrZ/g==,type:str]
+      redis:
+        password:
+          # Generated with openssl rand -base64 32; Authelia uses it to authenticate to the release-local Valkey session store.
+          value: ENC[AES256_GCM,data:Ka1D/zvChEcVAaACAGfzdO5WjfVWyfmmeJaHh0y4RL/4izCTYSdEkfFHqPE=,iv:3BoUjFbbf6Shd+f9n7GEEPMGxy404mWGam1ImwAPhoY=,tag:a/LfK5FbdeQrc3e+SJY1xg==,type:str]
+    storage:
+      encryption_key:
+        # Generated with openssl rand -base64 48; Authelia uses it to encrypt sensitive records in SQLite storage.
+        value: ENC[AES256_GCM,data:Z8OyMbtz1pNGBgaN6mN84A7HEJatb3HHOai63XFYC4Ejj4XD9AYyHHBeTcqgISO//UFVvHFJEWEm08SgZC9kyQ==,iv:SeTkWjucIy0W5gZLYN6PP8fVlNCnfd6Mz5n9Zc0VNiQ=,tag:paCjz9qaXgfJxYZOAlROoQ==,type:str]
+    notifier:
+      smtp:
+        password:
+          # Retrieved from the existing LLDAP SMTP credentials; Authelia uses it to send notification and password-reset emails.
+          value: ENC[AES256_GCM,data:r/BnjK5kYf5qO3cJKWCJ3gYWeXTbG3OaCDthx/zG8Ao=,iv:u3MBxdvnJiZmHdRd6U3S5hzMR+k4+yUIov0n6cUuuUE=,tag:s1aOF2URRbzFogsX+nsgBQ==,type:str]
+    identity_providers:
+      oidc:
+        hmac_secret:
+          # Generated with openssl rand -base64 64; Authelia uses it to sign and validate OIDC HMAC material.
+          value: ENC[AES256_GCM,data:NH9dO/Ty7TCnmFdfKbBD5s85Nl1DJMhJpXgTikxUjWOGXWZiI2a/iLVkzyG0hq8SR0a4GEfuDjb1isKUzHNrB2mfLcBM7TDAe42g6XU+2rJxZjVxewlCppw=,iv:zFqvUHFZ7zo+O+7+qzlM6t9/J7jx6jQlAQqqg4ggZkM=,tag:lVvb+lxdssKe+k9+Q3Uong==,type:str]
+app-template:
+  secrets:
+    valkey:
+      forceRename: authelia-valkey
+      stringData:
+        # Same generated Valkey password used by Authelia session Redis config;
+        #ENC[AES256_GCM,data:OrzfbIaC2jSIO9lQe/ozkOTf8FBfnB4TOK7GdOMlu3qvJ4TJkqnTdRl+ww2rfeP4JTPLlw==,iv:1fkUz3BIT8TWXy9Sf6kHpVZyaUA3rtbALwysOE6EPhE=,tag:L+ZuXMLzKzFuE4PGxpa9pQ==,type:comment]
+        VALKEY_PASSWORD: ENC[AES256_GCM,data:vMnV83/FZ4D2Vh77EwCovPXAQ2gdGptZcUl5AmeU0paszAbTMWGbeUQGepw=,iv:PTbbQkb04tirnbx422+Nv0t1SxSxeoyFBTQpSMMs2yw=,tag:jMeJYXm1Lz6rRugrxu9EVQ==,type:str]
+    oidc:
+      forceRename: authelia-oidc
+      stringData:
+        # Generated with openssl genrsa 2048; mounted at /secrets/oidc/jwks.rs256.key so Authelia can sign OIDC tokens.
+        jwks.rs256.key: ENC[AES256_GCM,data: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,iv:Iy/SBCltqxeoGFl2BD4QAbVp3BcruuGvq2GWE2BvRfc=,tag:ImVxtuCow3Pqc7CGZiF8eg==,type:str]
+        # Generated with Authelia 4.39.20 using authelia crypto hash generate argon2 --password <existing-client-secret> --no-confirm; mounted so Authelia can validate Immich OIDC client authentication.
+        immich.client_secret: ENC[AES256_GCM,data:RUbwehDmyC5eu6TZbFi0keD33l9RBpeQLtb1aSBAqvn/azi4kZqZ0fBttzlMMXF6zXrLNMBALhytobsR/PhJ/ug35LwrQe4bmV+aR9VV8LQ9RHk1WI0W1QEJqqm8Fas18w==,iv:u2k+/B1e+gQ9jh4xLwm8qOSYFwLnioiRAAAeiqlwf1s=,tag:1OjOkoXq1MT66krwS3yVPA==,type:str]
+        # Generated with Authelia 4.39.20 using authelia crypto hash generate argon2 --password <existing-client-secret> --no-confirm; mounted so Authelia can validate Paperless NGX OIDC client authentication.
+        paperless-ngx.client_secret: ENC[AES256_GCM,data:XZSLDI5uU8O5NFF3VwJqTNc6QApz/PmOKs7m1L72Oh9IhPj9OmpxSDcihKlOcahSQLTTP3aOV0vnbqSgK185IRS3gOiK3htby79L4LFIjqkdyvK6AhyYD/1GKa4oMiHVWg==,iv:2TT21v0QwJ3delLVbFCXzi5370lw2gBH6l8+MYt2jZs=,tag:gOUIatobSO/Amsn3POdetg==,type:str]
+        # Generated with Authelia 4.39.20 using authelia crypto hash generate argon2 --password <existing-client-secret> --no-confirm; mounted so Authelia can validate NetBird OIDC client authentication.
+        netbird.client_secret: ENC[AES256_GCM,data:oVmGd8iCMPq1a0m8p+GsljGCDgCjZ0nn8QGvJONRs57njTy1tosgaVZmc2QaBki4D/C+TvINBG2Dqk7po2wZqwiYaHz0HSf6TRSsDhdZJTwD04N223l/F0lcpxe/JXSm9A==,iv:InFggIdaacR4LxulQY/sGP7PtIuumHTDzmZw5zh6siE=,tag:wMOjgv18ryxh40g+HHlDdA==,type:str]
+        # Generated with Authelia 4.39.20 using authelia crypto hash generate argon2 --password <existing-client-secret> --no-confirm; mounted so Authelia can validate Grafana OIDC client authentication.
+        grafana.client_secret: ENC[AES256_GCM,data:YZZ9md7A0XZluPs+HMcEBv998D6IVQNEok0nwMFMrJB0DY+hp+Z8bSdecoUvTcaEm801Py0HsXfvLLj1IanOlLEZjkKPZqTXWS7TIcKJwC29ONR2ig3DGvpXzWLYcpBoMA==,iv:QbMkNCHy98zKeNBe1hHVqSHkGGaa5qDmYg8VwUzmndQ=,tag:x6cYnf+2pWdxLmNPhzgz4w==,type:str]
+        # Generated with Authelia 4.39.20 using authelia crypto hash generate argon2 --password <existing-client-secret> --no-confirm; mounted so Authelia can validate Audiobookshelf OIDC client authentication.
+        audiobookshelf.client_secret: ENC[AES256_GCM,data:pM8otA1HIsCYqJlEITI3Yk11WQmE/7s8/Oxf64B45687n5GKI1lTTvmGn5JZuqIgx22onrs6X7H12VZEYhaS2USCz3QiK0EK4PvC8LPy6GQbYUqJJrh08UxQlwxIGri8bA==,iv:tuBzMh/FuNtnoDyLDNlqilGkA4lN1svz4RcMPCodiQw=,tag:99A2U7o0wBkSmZiz8uDgUA==,type:str]
+        # Generated with Authelia 4.39.20 using authelia crypto hash generate argon2 --password <existing-client-secret> --no-confirm; mounted so Authelia can validate SFTPGo OIDC client authentication.
+        sftpgo.client_secret: ENC[AES256_GCM,data:cEbU2nMHiZDZQLOs08bvTthUM7bx5B9LqrE5EvPKgRQSMDnVS9z3wpPRII5QUNhzCb2t36r9P3mXNdwvXwxgdkXYARUXKPeTMXcIg8wxS+qBKi60vrVdAI1shAFoDoqeiA==,iv:g/ViJekx1bK0REyCXqRyM4F3m/e8WCrv75KI0pdKqsc=,tag:2ywIb5nJCZs6eJA4/o9E1g==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSArbElMVTh0cUFFSVVmVlFB
+        SHMxZnBpd3k1bGRodDdjWUNHbkg1eHJqZWprCkpqcTYwaXdjVVU1NnIrZ1A1ODl3
+        NDRRc2ZOWmZVcE9NTkx6WWJuNkZQcGMKLS0tICt1dnNsVXVIbllMNGJNd1R0b0dr
+        QXhhWHFvY3Ixa2lnSzhLdzArK3ozTXcKt24AM+JZuQSRgfdTWI/AwwzDf8xWrYHw
+        Czay1ZzRwhOabUPsiHiQIgs/gnKuZ3hnMOuG9HMcf/QIMryj0V3wcw==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1hnmh393g3qaf2szdjkyrd7jsven9wzvgpud4207vzrfywmuvdassvperqc
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSArS04xTmpZRFdMeXE4dUJj
+        MXRnQTNINDhHSGRNZlQyaFltUmFsWE1yU2dvCkgyVlNxTUZQbGhVaDJodXNUMVRD
+        R1hhQWhydFNuV1h3TDlYQ1IzL2ZDeTgKLS0tIFNiMkRyUWlmZFNuZzc2UTczeEVU
+        elpSL3JxbkJMc0srTTZ0c2ZXVzZYL1EKwro6MU4aL4XiRcI+8lSa6rOKpoZGaZOM
+        ttUswUwMxOjLk8eHV0w/cUvcGFEFakVe3rJTvYzODCQEGvcIBEjV3Q==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1mm90zkg8lsmpqa7gya9p2prsj8yfq774gjm6dkamkkvwugen7ywse5w97z
+  encrypted_comment_regex: .*
+  lastmodified: "2026-07-26T10:52:59Z"
+  mac: ENC[AES256_GCM,data:3whhcJdxwJyC3p2+HUQmKhdbfOrXp0+TxjslmTK5BK9HVWX4et60JBaLtn562mdscTXvhSJMKToT46YoAMkjfadk/6hFDwmJ9iToRa2p/F+OExBIlYpVcUdHYSFa9ANNr+ka9jXu7LXoI2/Ay0Ydbq1RFmmjbZgF9qF1aHpU4n4=,iv:d1bouYvHauRspIzBFOXblJTcxaf56M9Iu+fNT5i6+UY=,tag:F5mZGotddVNoWWXI6/whxA==,type:str]
+  version: 3.13.2

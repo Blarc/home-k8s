@@ -1,0 +1,12 @@
+apiVersion: v2
+name: authelia
+description: Helm chart to deploy Authelia
+dependencies:
+  - name: authelia
+    version: 0.11.6
+    repository: https://charts.authelia.com
+  - name: app-template
+    version: 5.0.1
+    repository: oci://ghcr.io/bjw-s-labs/helm
+type: application
+version: 1.0.0
