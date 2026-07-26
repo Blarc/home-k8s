@@ -93,9 +93,9 @@ authelia:
       smtp:
         enabled: true
         address: submissions://mail.blarc.my.id:465
-        sender: "Blarc Authelia <noreply@blarc.my.id>"
+        sender: "Blarc Auth <noreply@blarc.my.id>"
         identifier: auth.blarc.my.id
-        subject: "[Authelia] {title}"
+        subject: "[Blarc Auth] {title}"
         startup_check_address: noreply@blarc.my.id
         username: noreply@blarc.my.id
     identity_providers:
