@@ -1,0 +1,8 @@
+apiVersion: v2
+dependencies:
+  - name: metrics-server
+    repository: https://kubernetes-sigs.github.io/metrics-server
+    version: 3.13.1
+description: Helm chart to deploy metrics-server
+name: metrics-server
+version: 1.0.0

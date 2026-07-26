@@ -1,0 +1,6 @@
+metrics-server:
+  fullnameOverride: metrics-server
+  args:
+    # Talos kubelet serving certs do not include the node InternalIP as an IP SAN.
+    # metrics-server scrapes kubelets by InternalIP by default, so TLS validation fails.
+    - --kubelet-insecure-tls
