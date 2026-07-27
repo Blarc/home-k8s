@@ -61,6 +61,11 @@ traefik:
       exposedPort: 443
       expose:
         external: true
+      # Applied before every router using this entrypoint. This currently also
+      # covers NetBird's external gRPC route.
+      http:
+        middlewares:
+          - traefik-crowdsec-bouncer@kubernetescrd
 
   # Gateways are defined as templates
   gateway:
