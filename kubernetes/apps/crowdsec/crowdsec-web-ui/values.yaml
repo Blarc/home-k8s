@@ -28,7 +28,7 @@ app-template:
                 httpGet:
                   path: /api/health
                   port: *port
-                initialDelaySeconds: 10
+                initialDelaySeconds: 60
                 periodSeconds: 10
             readiness: *probes
           securityContext:
