@@ -7,6 +7,7 @@ immich:
       containers:
         main:
           image:
+            # renovate: datasource=github-releases depName=immich-app/immich
             tag: v2.6.2
           env:
             DB_HOSTNAME:
