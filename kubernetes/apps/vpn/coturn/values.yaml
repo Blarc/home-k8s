@@ -7,6 +7,7 @@ app-template:
         app:
           image:
             repository: docker.io/coturn/coturn
+            # renovate: datasource=github-releases depName=coturn/coturn
             tag: 4.6.2-r8
           env:
             TZ: Europe/Ljubljana
