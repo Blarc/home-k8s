@@ -1,0 +1,91 @@
+app-template:
+  controllers:
+    app:
+      containers:
+        app:
+          image:
+            repository: ghcr.io/theduffman85/crowdsec-web-ui
+            # renovate: datasource=docker depName=ghcr.io/theduffman85/crowdsec-web-ui
+            tag: 2026.7.21@sha256:5ac7736eb0e6fab444d75026f81907b678b9429c7b2a4aa4eca5ff895bbc1415
+          env:
+            CONFIG_AUTH_ENABLED: "true"
+            CONFIG_INSTANCE_LAPI_URL: http://crowdsec-service.crowdsec.svc.cluster.local:8080
+            CONFIG_INSTANCE_LAPI_AUTH_USERNAME: crowdsec-web-ui
+            CONFIG_INSTANCE_METRICS_URL: http://crowdsec-service.crowdsec.svc.cluster.local:6060/metrics
+            CONFIG_NOTIFICATIONS_ALLOW_PRIVATE_ADDRESSES: "false"
+            CONFIG_UPDATES_ENABLED: "false"
+          envFrom:
+            - secret: configuration
+          ports:
+            - name: http
+              containerPort: &port 3000
+              protocol: TCP
+          probes:
+            liveness: &probes
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /api/health
+                  port: *port
+                initialDelaySeconds: 10
+                periodSeconds: 10
+            readiness: *probes
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: [ALL]
+          resources:
+            requests:
+              cpu: 25m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+  defaultPodOptions:
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: OnRootMismatch
+      seccompProfile:
+        type: RuntimeDefault
+  service:
+    app:
+      type: ClusterIP
+      ports:
+        http:
+          port: *port
+  route:
+    app:
+      hostnames:
+        - crowdsec.blarc.my.id
+      parentRefs:
+        - name: internal
+          namespace: traefik
+      rules:
+        - backendRefs:
+            - identifier: app
+              port: *port
+          matches:
+            - path:
+                type: PathPrefix
+                value: /
+  persistence:
+    data:
+      type: persistentVolumeClaim
+      storageClass: topolvm-thin-retain
+      accessMode: ReadWriteOnce
+      size: 1Gi
+      globalMounts:
+        - path: /app/data
+    tmp:
+      type: emptyDir
+      globalMounts:
+        - path: /tmp
+
+  secrets:
+    configuration:
+      includeInChecksum: true

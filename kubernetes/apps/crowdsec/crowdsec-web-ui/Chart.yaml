@@ -1,0 +1,9 @@
+apiVersion: v2
+name: crowdsec-web-ui
+description: Local CrowdSec administration UI
+type: application
+version: 1.0.0
+dependencies:
+  - name: app-template
+    repository: oci://ghcr.io/bjw-s-labs/helm
+    version: 5.0.1

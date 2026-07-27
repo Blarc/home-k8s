@@ -1,0 +1,87 @@
+crowdsec:
+  container_runtime: containerd
+
+  # Keep this install entirely local: no Console enrollment, Central API, or lists.
+  config:
+    console.yaml: |
+      console:
+        enabled: false
+    config.yaml.local: |
+      api:
+        server:
+          auto_registration:
+            enabled: true
+            token: "${REGISTRATION_TOKEN}"
+            allowed_ranges:
+              - "127.0.0.1/32"
+              - "10.0.0.0/8"
+              - "172.16.0.0/12"
+              - "192.168.0.0/16"
+      db_config:
+        type: sqlite
+        db_path: /var/lib/crowdsec/data/crowdsec.db
+
+  lapi:
+    replicas: 1
+    envFrom:
+      - secretRef:
+          name: crowdsec-lapi-secrets
+    env:
+      - name: DISABLE_ONLINE_API
+        value: "true"
+    resources:
+      requests:
+        cpu: 25m
+        memory: 64Mi
+      limits:
+        cpu: 100m
+        memory: 128Mi
+    persistentVolume:
+      data:
+        enabled: true
+        storageClassName: topolvm-thin-retain
+        size: 1Gi
+      config:
+        enabled: true
+        storageClassName: topolvm-thin-retain
+        size: 256Mi
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    lifecycle:
+      postStart:
+        exec:
+          command:
+            - /bin/bash
+            - -ec
+            - >-
+              until cscli machines list >/dev/null 2>&1; do sleep 2; done;
+              cscli machines add crowdsec-web-ui
+              --password "$CROWDSEC_WEB_UI_PASSWORD" --force -f /dev/null
+
+  agent:
+    isDeployment: false
+    acquisition:
+      - namespace: traefik
+        podName: traefik-*
+        program: traefik
+    env:
+      - name: COLLECTIONS
+        value: "crowdsecurity/traefik crowdsecurity/base-http-scenarios crowdsecurity/http-cve"
+      - name: PARSERS
+        value: "crowdsecurity/cri-logs"
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        cpu: 250m
+        memory: 256Mi
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+
+  appsec:
+    enabled: false

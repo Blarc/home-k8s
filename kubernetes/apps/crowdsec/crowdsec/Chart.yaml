@@ -1,0 +1,9 @@
+apiVersion: v2
+name: crowdsec
+description: Local CrowdSec security engine and LAPI
+type: application
+version: 1.0.0
+dependencies:
+  - name: crowdsec
+    repository: https://crowdsecurity.github.io/helm-charts
+    version: 0.24.0
