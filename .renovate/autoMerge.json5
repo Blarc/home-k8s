@@ -2,6 +2,11 @@
     $schema: "https://docs.renovatebot.com/renovate-schema.json",
     packageRules: [
         {
+            description: "Auto-merge all patch updates",
+            automerge: true,
+            matchUpdateTypes: ["patch"],
+        },
+        {
             description: "Auto-merge trusted container digests",
             matchDatasources: ["docker"],
             automerge: true,
