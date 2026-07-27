@@ -11,11 +11,7 @@ spec:
     - Ingress
     - Egress
   ingress:
-    - from:
-        - namespaceSelector:
-            matchLabels:
-              kubernetes.io/metadata.name: traefik
-      ports:
+    - ports:
         - protocol: TCP
           port: 3000
   egress:
