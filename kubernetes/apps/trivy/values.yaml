@@ -1,0 +1,6 @@
+trivy-operator:
+  trivy:
+    # we probably do not need to retain it
+    storageClassName: topolvm-thin
+    # the default is 5Gi
+    storageSize: "2Gi"
