@@ -2,6 +2,26 @@
     $schema: "https://docs.renovatebot.com/renovate-schema.json",
     packageRules: [
         {
+            description: "Argo CD Custom Image Group",
+            groupName: "Argo CD Custom Image",
+            matchFileNames: [
+                "kubernetes/apps/argo-cd/Dockerfile",
+                "kubernetes/apps/argo-cd/values.yaml",
+            ],
+            matchPackageNames: [
+                "/argoproj/argo-cd/",
+                "/getsops/sops/",
+                "/kubernetes/kubectl/",
+                "/helmfile/vals/",
+                "/FiloSottile/age/",
+                "/jkroepke/helm-secrets/",
+                "/ghcr.io/blarc/home-k8s/argo-cd/",
+            ],
+            group: {
+                commitMessageTopic: "{{{groupName}}} group",
+            },
+        },
+        {
             description: "Actions Runner Controller Group",
             groupName: "Actions Runner Controller",
             matchDatasources: ["docker"],
