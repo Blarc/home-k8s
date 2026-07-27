@@ -2,7 +2,7 @@ traefik:
   fullnameOverride: traefik
   providers:
     kubernetesCRD:
-      enabled: false
+      enabled: true
     kubernetesIngress:
       enabled: false
     kubernetesGateway:
@@ -12,6 +12,18 @@ traefik:
     level: INFO
   accessLog:
     enabled: true
+
+  experimental:
+    plugins:
+      bouncer:
+        moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
+        version: v1.7.0
+
+  volumes:
+    - name: crowdsec-bouncer-key
+      mountPath: /etc/traefik/crowdsec
+      type: secret
+      secretName: crowdsec-bouncer-key
 
   ingressClass:
     enabled: false
