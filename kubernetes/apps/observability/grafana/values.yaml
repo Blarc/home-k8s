@@ -141,6 +141,11 @@ grafana:
         datasource:
           - name: DS_PROMETHEUS
             value: Prometheus
+      trivy:
+        url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/refs/heads/master/dashboards/k8s-addons-trivy-operator.json
+        datasource:
+          - name: DS_PROMETHEUS
+            value: Prometheus
   sidecar:
     dashboards:
       enabled: true
