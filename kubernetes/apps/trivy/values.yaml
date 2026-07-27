@@ -1,6 +1,7 @@
 trivy-operator:
   operator:
     scanJobsConcurrentLimit: 1
+    metricsVulnIdEnabled: true
   trivy:
     # we probably do not need to retain it
     storageClassName: topolvm-thin
