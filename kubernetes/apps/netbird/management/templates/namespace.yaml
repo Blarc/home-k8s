@@ -2,6 +2,8 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: netbird
+  annotations:
+    argocd.argoproj.io/sync-options: 'Prune=false,Delete=false'
   labels:
     pod-security.kubernetes.io/enforce: privileged
     external: "true"
