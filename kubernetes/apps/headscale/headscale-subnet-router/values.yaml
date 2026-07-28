@@ -1,0 +1,106 @@
+app-template:
+  controllers:
+    subnet-router:
+      type: deployment
+      replicas: 1
+      strategy: Recreate
+      initContainers:
+        sysctls:
+          image:
+            repository: ghcr.io/tailscale/tailscale
+            tag: v1.98.9
+          command:
+            - sh
+            - -c
+            - sysctl -w net.ipv4.ip_forward=1 net.ipv6.conf.all.forwarding=1
+          securityContext:
+            privileged: true
+      containers:
+        app:
+          image:
+            repository: ghcr.io/tailscale/tailscale
+            tag: v1.98.9
+          env:
+            - name: TS_AUTHKEY
+              valueFrom:
+                secretKeyRef:
+                  name: headscale-subnet-router-auth
+                  key: TS_AUTHKEY
+            - name: TS_AUTH_ONCE
+              value: "true"
+            - name: TS_ACCEPT_DNS
+              value: "false"
+            - name: TS_ENABLE_HEALTH_CHECK
+              value: "true"
+            - name: TS_EXTRA_ARGS
+              value: --login-server=https://headscale.blarc.my.id --advertise-tags=tag:subnet-router
+            - name: TS_HOSTNAME
+              value: subnet-router
+            - name: TS_KUBE_SECRET
+              value: ""
+            - name: TS_ROUTES
+              value: 192.168.1.0/24
+            - name: TS_STATE_DIR
+              value: /var/lib/tailscale
+            - name: TS_USERSPACE
+              value: "false"
+          ports:
+            - name: health
+              containerPort: 9002
+              protocol: TCP
+          probes:
+            liveness: &healthProbe
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /healthz
+                  port: health
+                initialDelaySeconds: 10
+                periodSeconds: 10
+                timeoutSeconds: 5
+                failureThreshold: 6
+            readiness:
+              <<: *healthProbe
+              spec:
+                httpGet:
+                  path: /healthz
+                  port: health
+                initialDelaySeconds: 5
+                periodSeconds: 10
+                timeoutSeconds: 5
+                failureThreshold: 3
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+              add:
+                - NET_ADMIN
+                - NET_RAW
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+
+  defaultPodOptions:
+    securityContext:
+      seccompProfile:
+        type: RuntimeDefault
+
+  persistence:
+    dev-net-tun:
+      type: hostPath
+      hostPath: /dev/net/tun
+      hostPathType: CharDevice
+      globalMounts:
+        - path: /dev/net/tun
+    state:
+      type: persistentVolumeClaim
+      storageClass: topolvm-thin-retain
+      accessMode: ReadWriteOnce
+      size: 1Gi
+      globalMounts:
+        - path: /var/lib/tailscale
