@@ -83,4 +83,30 @@ spec:
         automated:
           prune: true
           selfHeal: true
-
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: namespaces
+  namespace: argo-cd
+spec:
+  project: apps
+  source:
+    repoURL: https://github.com/Blarc/home-k8s.git
+    targetRevision: HEAD
+    path: 'kubernetes/apps'
+    directory:
+      recurse: true
+      # matches EXACTLY 1 folder deep relative to path
+      include: '*/namespace.yaml'
+      # Excludes anything 1 OR MORE levels deep (e.g., app/sub/namespace.yaml, app/templates/**/namespace.yaml)
+      exclude: '*/**/*'
+  destination:
+    name: in-cluster
+    namespace: argo-cd
+  syncPolicy:
+    automated:
+      prune: false
+      selfHeal: true
+    syncOptions:
+      - Delete=false
