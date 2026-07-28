@@ -6,6 +6,7 @@ spec:
     serviceType: NodePort
     port: 31820
     address: {{ .Values.publicAddress }}
+    enableIpForwardOnPodInit: true
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
