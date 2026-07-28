@@ -3,81 +3,83 @@ authelia:
     identity_validation:
       reset_password:
         secret:
-          # Generated with openssl rand -base64 48; Authelia uses it as the HMAC secret for reset-password JWT signing.
-          value: ENC[AES256_GCM,data:dsgpwVDDi4XBKEyExHtWiIopB6MGmqgGEmvHexKIBRDL6kytZPjOxRaG/9F7Q29wvKBGpKlPppRU4DxP6Kt4gw==,iv:RP7mHGcPnJ1y2ijJIYU5ClqgGeAjm+rgC/3KIAo5tiA=,tag:AGIwGY0J0h7aEdPNogHfsA==,type:str]
+          #ENC[AES256_GCM,data:MgkLQmFlPGDlDzUWNTm6ln8KAPehmNmBcM7oE2ETKIFQEDIM5Bu+ADdsvpDgQm2PoG9qiE1UJIJD2YufNaaaGtmYp51lEaKt4rU/RTw85u4DnR0gpx3zjcaLRy4xwqMlUijh0ACauD7iukJa,iv:K6H2IR8zDk0hAw34zeiSagMk9arIwOW+g876wMOtEjo=,tag:7PHtpDw7ERzNg8+Tz3JzkA==,type:comment]
+          value: ENC[AES256_GCM,data:Koe3MJgcONevfntFE8H5kM9sxhmaB+FERDd9aoNI3NDzFurX0bJIRJmgLUXqAWu/sRzgbEfMySLpalWpHhjPoA==,iv:1wCusAynrVaLlqtCWH+eo/MYkdjj2FhHylNSd53MnVI=,tag:2zCFROm4zl7ofWi6hE+a9w==,type:str]
     authentication_backend:
       ldap:
         password:
-          # Retrieved from the existing LLDAP bootstrap bind user; Authelia uses it to bind to and query LLDAP.
-          value: ENC[AES256_GCM,data:UUIH1uV+52gHIKqBaE2FqrD1ThVCP+KjXU9kzKvnLKQ=,iv:NnvHyEDMw3nyI7KFKR2btnVUxww5372gjc0MoB7hZEU=,tag:SuheE7DeWBWDZ1r6ZV6TBg==,type:str]
+          #ENC[AES256_GCM,data:h6xRO6oTTYNzlEwxJCQC7MEY1DguJ9I++LUD+jxMEmtA7OdaTh1hhL5kLvKHr/KC7hL33LSAG68xGznNrcor5B+4K8GFfJPKi4VTPrRQnA+GYV+wBu6xleMPPzzSsPMbK9Tn4Q==,iv:OrnCCRk/ArrR3qa3z4+EDNxyrVlvAfCAjU8k3p4oQSE=,tag:7su410p6GEqjmEqxReslGg==,type:comment]
+          value: ENC[AES256_GCM,data:VBnE2Ld2EQmiBuIUZfTNq2zj9u0MI/+47pb1y88e30w=,iv:qe9WbTp+in9FpDilGspn1EtzHtiqSXMdPfcujtm1nbc=,tag:kFCRes7x5PRxWjnrm7V8Pg==,type:str]
     session:
       encryption_key:
-        # Generated with openssl rand -base64 48; Authelia uses it to encrypt session data.
-        value: ENC[AES256_GCM,data:koJRJM/7KeMlhAHMsqZo4QHM6BgFwPPt+t+Q4I5sJZ7vSccQVsFpMFpvV9AbK5aZs6CRXhMBY6KhlSAAbZMn8w==,iv:3zD3k2K1OvkTHIbKJy9X8oMhgF0g+Gr7VcBTW7HbpL4=,tag:3LfPOOhASxJem/S0zdrZ/g==,type:str]
+        #ENC[AES256_GCM,data:LgKU8iLQ/27EnZ0XMMc2nscjBJ2KvXFAsoagVSX23gkfzoW9t/u3JI11LCUhh3WrwMyotd90K9ZymVOCM4Q8wcG1Fo6kYO9nUlDyVJG97LJCzA==,iv:2xC2mGPdk20tkoYoG3V51rrgUacNOWsMZksDGTvGzFw=,tag:2xoXIw6Fj4zjVulR5vzAHA==,type:comment]
+        value: ENC[AES256_GCM,data:6DtxMaTM4Gtz5g58C15oLgMLCb73QCxJkwVcdJHh9bTjhqY0mYwCFc+vpEkRqfG/KrcoUtg3gCiXW8Rgcwohig==,iv:965gQ3uEVVX7z+BwpINp5vSqbprYhfGyYQ2OfPd1xPo=,tag:DukvJcEibiqa84b7SMJ+1Q==,type:str]
       redis:
         password:
-          # Generated with openssl rand -base64 32; Authelia uses it to authenticate to the release-local Valkey session store.
-          value: ENC[AES256_GCM,data:Ka1D/zvChEcVAaACAGfzdO5WjfVWyfmmeJaHh0y4RL/4izCTYSdEkfFHqPE=,iv:3BoUjFbbf6Shd+f9n7GEEPMGxy404mWGam1ImwAPhoY=,tag:a/LfK5FbdeQrc3e+SJY1xg==,type:str]
+          #ENC[AES256_GCM,data:zsWShSWb4B4c8pSy1mbhKua24tk9K+XWDds820Qp2LZQ5YmWBGKqmYI1hUXNAFAYM44OOoqsWRNP/K5+g6e5kYgh7ZKd7vWvANw4pzwhtGfSkpg00s1Z1NgtN877goIOfAUi7VpsP4yQav8pxMi/n22Wi3w=,iv:qsu7LUG7nCheyHbtjJWRdrfA4Ny7tKlgRqYS9KHbCb8=,tag:aR033xxLFD1n+qeBMtRWDw==,type:comment]
+          value: ENC[AES256_GCM,data:BSefh4VbjpfyfdLY6PPW3VO0/KUrLPLe/DF8kld9LmS2E3XRJrWUczhxNqM=,iv:7axcEO6u6KpExekPNUqwV9gj/HK9p4yaccOdKKLy+xQ=,tag:G7Oh+LVnyJ6/pOKryiHEwQ==,type:str]
     storage:
       encryption_key:
-        # Generated with openssl rand -base64 48; Authelia uses it to encrypt sensitive records in SQLite storage.
-        value: ENC[AES256_GCM,data:Z8OyMbtz1pNGBgaN6mN84A7HEJatb3HHOai63XFYC4Ejj4XD9AYyHHBeTcqgISO//UFVvHFJEWEm08SgZC9kyQ==,iv:SeTkWjucIy0W5gZLYN6PP8fVlNCnfd6Mz5n9Zc0VNiQ=,tag:paCjz9qaXgfJxYZOAlROoQ==,type:str]
+        #ENC[AES256_GCM,data:8bsj+3TU/f7qHVF/k5/2/qeR6YGB1FfJOLPRjfJxF28K91dzwvP1n5M8bj67l+qCy5YMDAcevNEiXSDDfXDN/wmLt/mvLrRXMRtUlrpOX/VB6h+twwPkxoaTbgvlU4hwBFjftYpJ0BHS,iv:QkgOocb7/vNQbUpMwK3ZBg0Khp3LBq25LRa4xjOPAvI=,tag:kFVedb0Ysb6/wtLF4FvbaQ==,type:comment]
+        value: ENC[AES256_GCM,data:wNn4mmbJQv86npKoYSNwEaUxwDYSjDM6d1CqQlXCoCIQd9yWAIT9b0T/9kT22VjcOiPqiGBixmsImEbl6lVtAA==,iv:/N14ZFHfBUagRXfby5a9Kl5WRrb1H1bo8LwiC93GxSw=,tag:ifHP4GxUCdrIJz8ANMSV8Q==,type:str]
     notifier:
       smtp:
         password:
-          # Retrieved from the existing LLDAP SMTP credentials; Authelia uses it to send notification and password-reset emails.
-          value: ENC[AES256_GCM,data:r/BnjK5kYf5qO3cJKWCJ3gYWeXTbG3OaCDthx/zG8Ao=,iv:u3MBxdvnJiZmHdRd6U3S5hzMR+k4+yUIov0n6cUuuUE=,tag:s1aOF2URRbzFogsX+nsgBQ==,type:str]
+          #ENC[AES256_GCM,data:gvPrmB1iOO0jI0L7yGR4kYaP/ETBfixCHoNd/lcPeaTSqyPA80bBsbqMuY2eZ2H00wnEqO85iI2jcjbwG59/jFjBCbOFv3Orc6spEHJTry5u4ylCVKC2QtpqBGGk92aY3ornlIW9sRFRkP5Phnzag+ypbu+i,iv:OAikqQreR4DHmKqp3r8YV5q0J3FBWPLoEhXmgQOrv3E=,tag:M2vsppi2rP226mz8WQTlHQ==,type:comment]
+          value: ENC[AES256_GCM,data:zpKOQp24GsEpNEmZtDbnakB5m2DTzwiLTIXx35+06aU=,iv:puLeMAwy/ECn6p9FiHO4emBoX7G4U/ji0DXODWz8wYc=,tag:7xBQ6zKiqCIUU+r+rL1skA==,type:str]
     identity_providers:
       oidc:
         hmac_secret:
-          # Generated with openssl rand -base64 64; Authelia uses it to sign and validate OIDC HMAC material.
-          value: ENC[AES256_GCM,data:NH9dO/Ty7TCnmFdfKbBD5s85Nl1DJMhJpXgTikxUjWOGXWZiI2a/iLVkzyG0hq8SR0a4GEfuDjb1isKUzHNrB2mfLcBM7TDAe42g6XU+2rJxZjVxewlCppw=,iv:zFqvUHFZ7zo+O+7+qzlM6t9/J7jx6jQlAQqqg4ggZkM=,tag:lVvb+lxdssKe+k9+Q3Uong==,type:str]
+          #ENC[AES256_GCM,data:FLejZa2Ob9vaxzVFGTUAKRXcsvuBQVws5TIk5IjiFSDTMnhh9VHh8pDY+HiwYjOUZRbVHud1pJQFl7b2u8BAuHdptJS2OSXoCYEReSREuIzp689uycG4HmK6/YYlyTrhHY4=,iv:Cbj1Dwv6HzkttckBXaHWq6PYA4TE+UObw+qONnWEE54=,tag:sHk7SxlqI1/927depo7WxQ==,type:comment]
+          value: ENC[AES256_GCM,data:TCt6dGA7zx2wUwfowwMlRYJVcijIWcvHxqhQ3KNuLKmmFYsvg4/Sn2O2/Xd73XW8Ru7HEZ9FIHTCTxnzcNl+w4jUR8Z7XArDh6nPjclQXVUWRGWDYwfaauY=,iv:BE0c4iPtOyaayC56ZoWp4pbwyZ0IimVew/h4iNcuk5Q=,tag:/UjIxg1wGslYhR16NiobYg==,type:str]
 app-template:
   secrets:
     valkey:
-      forceRename: authelia-valkey
+      forceRename: ENC[AES256_GCM,data:SjPiLMWPc7o47K9W59sn,iv:NG3JNTSk5S0mWaeAtSV90WqFV8AE/CSgUVmr/oP0mi4=,tag:tH0jHaWP6+O2FYCukgcryg==,type:str]
       stringData:
-        # Same generated Valkey password used by Authelia session Redis config;
-        #ENC[AES256_GCM,data:OrzfbIaC2jSIO9lQe/ozkOTf8FBfnB4TOK7GdOMlu3qvJ4TJkqnTdRl+ww2rfeP4JTPLlw==,iv:1fkUz3BIT8TWXy9Sf6kHpVZyaUA3rtbALwysOE6EPhE=,tag:L+ZuXMLzKzFuE4PGxpa9pQ==,type:comment]
-        VALKEY_PASSWORD: ENC[AES256_GCM,data:vMnV83/FZ4D2Vh77EwCovPXAQ2gdGptZcUl5AmeU0paszAbTMWGbeUQGepw=,iv:PTbbQkb04tirnbx422+Nv0t1SxSxeoyFBTQpSMMs2yw=,tag:jMeJYXm1Lz6rRugrxu9EVQ==,type:str]
+        #ENC[AES256_GCM,data:D3IjU0/DkmHeKApLqELxru6aQzS16LZxb0GlB82ZXAFZD2RRIAt4KWb76VzFm8kExW9TmMZJvGfDoNhDDI+Tl8lAgqe0Xw==,iv:SOwzc2NsOvvIZ9inolnfRHYAk411doWedyC3968zmn4=,tag:ObiIjVPI9x5SMOEWCz8gsw==,type:comment]
+        #ENC[AES256_GCM,data:oeYRoIikyOkoEkHgAsQEYcxt3vkzW79ck1de2YXo+GqndmwoVYAQmHwZRqyOkUaDw6I+Gg==,iv:BRlpvQ5aXWFj2RIhNJsrgZFFwxxTZEAMzgOxucEc3Is=,tag:aVGXDEspeWAmvfgQRfopnQ==,type:comment]
+        VALKEY_PASSWORD: ENC[AES256_GCM,data:MX9FNyUsX4afropzlWsTMLG3QnGt8HP9iLTeImR1cxwYGifR7XVMYFxw6Ic=,iv:OyC0xnHEGeK2UohAqvjZ1NjE7HavIVf8KlvpEbMy4CM=,tag:j3t+tvy4a+yvHHDGY9/l/g==,type:str]
     oidc:
-      forceRename: authelia-oidc
+      forceRename: ENC[AES256_GCM,data:P/jmjfjeGOfeCgq7ZA==,iv:Kj2NS+73T6T8m7oauGsKawNNWCZw7RcNPjhejRRZk38=,tag:dzcGjZIkLZs56Dg3DJ1hyA==,type:str]
       stringData:
-        # Generated with openssl genrsa 2048; mounted at /secrets/oidc/jwks.rs256.key so Authelia can sign OIDC tokens.
-        jwks.rs256.key: ENC[AES256_GCM,data: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,iv:Iy/SBCltqxeoGFl2BD4QAbVp3BcruuGvq2GWE2BvRfc=,tag:ImVxtuCow3Pqc7CGZiF8eg==,type:str]
-        # Generated with Authelia 4.39.20 using authelia crypto hash generate argon2 --password <existing-client-secret> --no-confirm; mounted so Authelia can validate Immich OIDC client authentication.
-        immich.client_secret: ENC[AES256_GCM,data:RUbwehDmyC5eu6TZbFi0keD33l9RBpeQLtb1aSBAqvn/azi4kZqZ0fBttzlMMXF6zXrLNMBALhytobsR/PhJ/ug35LwrQe4bmV+aR9VV8LQ9RHk1WI0W1QEJqqm8Fas18w==,iv:u2k+/B1e+gQ9jh4xLwm8qOSYFwLnioiRAAAeiqlwf1s=,tag:1OjOkoXq1MT66krwS3yVPA==,type:str]
-        # Generated with Authelia 4.39.20 using authelia crypto hash generate argon2 --password <existing-client-secret> --no-confirm; mounted so Authelia can validate Paperless NGX OIDC client authentication.
-        paperless-ngx.client_secret: ENC[AES256_GCM,data:XZSLDI5uU8O5NFF3VwJqTNc6QApz/PmOKs7m1L72Oh9IhPj9OmpxSDcihKlOcahSQLTTP3aOV0vnbqSgK185IRS3gOiK3htby79L4LFIjqkdyvK6AhyYD/1GKa4oMiHVWg==,iv:2TT21v0QwJ3delLVbFCXzi5370lw2gBH6l8+MYt2jZs=,tag:gOUIatobSO/Amsn3POdetg==,type:str]
-        # Generated with Authelia 4.39.20 using authelia crypto hash generate argon2 --password <existing-client-secret> --no-confirm; mounted so Authelia can validate NetBird OIDC client authentication.
-        netbird.client_secret: ENC[AES256_GCM,data:oVmGd8iCMPq1a0m8p+GsljGCDgCjZ0nn8QGvJONRs57njTy1tosgaVZmc2QaBki4D/C+TvINBG2Dqk7po2wZqwiYaHz0HSf6TRSsDhdZJTwD04N223l/F0lcpxe/JXSm9A==,iv:InFggIdaacR4LxulQY/sGP7PtIuumHTDzmZw5zh6siE=,tag:wMOjgv18ryxh40g+HHlDdA==,type:str]
-        # Generated with Authelia 4.39.20 using authelia crypto hash generate argon2 --password <existing-client-secret> --no-confirm; mounted so Authelia can validate Grafana OIDC client authentication.
-        grafana.client_secret: ENC[AES256_GCM,data:YZZ9md7A0XZluPs+HMcEBv998D6IVQNEok0nwMFMrJB0DY+hp+Z8bSdecoUvTcaEm801Py0HsXfvLLj1IanOlLEZjkKPZqTXWS7TIcKJwC29ONR2ig3DGvpXzWLYcpBoMA==,iv:QbMkNCHy98zKeNBe1hHVqSHkGGaa5qDmYg8VwUzmndQ=,tag:x6cYnf+2pWdxLmNPhzgz4w==,type:str]
-        # Generated with Authelia 4.39.20 using authelia crypto hash generate argon2 --password <existing-client-secret> --no-confirm; mounted so Authelia can validate Audiobookshelf OIDC client authentication.
-        audiobookshelf.client_secret: ENC[AES256_GCM,data:JK3csPsHfUCVOB9Xbf9o6b/gICyQPNrMJznnVPIQUaEEhB6mEGWhAg2uC0GjkpyPnPATulPi4G5lMH621zWXTL8qplSW7+62RdMfcrgT3nXw6EzaU2CT8ekG+y9wPCDdPA==,iv:K+5KvKbRMh3uzVy3YAd7mZKYaun0bYC+EYnmLnYaG6A=,tag:4tlBxb42ZZWR5TLGXsThKg==,type:str]
-        # Generated with Authelia 4.39.20 using authelia crypto hash generate argon2 --password <existing-client-secret> --no-confirm; mounted so Authelia can validate SFTPGo OIDC client authentication.
-        sftpgo.client_secret: ENC[AES256_GCM,data:cEbU2nMHiZDZQLOs08bvTthUM7bx5B9LqrE5EvPKgRQSMDnVS9z3wpPRII5QUNhzCb2t36r9P3mXNdwvXwxgdkXYARUXKPeTMXcIg8wxS+qBKi60vrVdAI1shAFoDoqeiA==,iv:g/ViJekx1bK0REyCXqRyM4F3m/e8WCrv75KI0pdKqsc=,tag:2ywIb5nJCZs6eJA4/o9E1g==,type:str]
+        #ENC[AES256_GCM,data:GiKUuRuYktSLhCrOnJ4Mz8sIhuc29UnI+WOcYlf3jAhmuoA2Dyp5yADBcQjeIOO3eyzNRBPe9wbdSgXkLX2hXo24Zd++x2biTW2wyVE7U2PFYX57YVCqMx1ZokFPr3UuN0CQ9cinQ2oahMzQuWM=,iv:wTnDyKimEx0y8xSnB8seRnHAWELGKEKr/FimVjtcZgA=,tag:lrL4fSlipAOjjueKZBMBVg==,type:comment]
+        jwks.rs256.key: ENC[AES256_GCM,data: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,iv:MqMD/oYvxnkf7ezcpgI2aeGdOqYgsH7ZtR0WqN/iyXs=,tag:EQtBQ8IAoyYGYwLYL+EnbQ==,type:str]
+        #ENC[AES256_GCM,data:zwORoAlCz121xNWzQN5i/yI2CSQapbmSIbIa44SZZtBnqTha7wtMgSu6YtsslJ4nCzaIvqZVqz/jtAkOwucGlYVkl5Gxd7uMNrBt6BZlxlKxkvjlLcM9oc3M18C4airigX8f/G4SmHlsSGzEdw3pEdA3DlBg4yvRFJZA0TqzuCsS2JuBSMGtxb8HaBmfzxMebqS0v78tOVGl43syNArqC2ejRbq8dCPeIWsXnd/t9KCKayRzJineM/Z/4MbDbLj8CA==,iv:/LUOMfOCvwS5P5oT5CJY+gD7mR++JhP5aZM1GFeDWqI=,tag:yDRpbnwhnHImLXvtku3/WQ==,type:comment]
+        immich.client_secret: ENC[AES256_GCM,data:o43YDa2E3kZmcSUqWgk1SizPJLs/aVF3wWFAdkkk4VX4UjTNFLIHuarnQ9k/g43ik3p24MiE7gD23bXkNbl4BAR81wdOKVOvgNQY4b/O/YoQsLVTIYKxJkJILb3vxy29IA==,iv:YEKIbv/ESq5z/9bp2+hZd+VS7EiA3elm6bLCLua3wWc=,tag:ACWxkXT5vf3IooLZ0efIng==,type:str]
+        #ENC[AES256_GCM,data:DkdADdDCW3AqLcViNDXt0Co/bHvlr+C1s3q7zBaojvxx+dhi0y1/eWl9XlIoD70cbja3quZmNl2vWz0G4ER9qFUoufmXxxrYJhU4X4I8I+/COmcDs+0AG2whcI8ZidflYTXudcZwTHNhqNqRnvhd29o72Tmh8aMTf9uXJ8DdGntdBUlqAn/Gl0qK1uaCB7Vamawje75mUWzpUcB656oZh9/mQmMBx0fwxuR+vv4S8COm48WCF5xfHVJxpN92MTmCkZF+YUgrV6s=,iv:/n9mYSHbUOlyoMph9Yb2KPidcpzLkKOPyXzgJFDJE8k=,tag:/SmFN3JoVJUoHTs9ic9BfA==,type:comment]
+        paperless-ngx.client_secret: ENC[AES256_GCM,data:0mkxfgvnI7v8qzTW+Oh/UT8Y9ef2+maeZtpevYL/JN+7o06T/GQbkaPPNe7hKWBpDWnBIFGy3SfZqs+pmbx6Rcfbs/xUsXyp7f10ay3PIZ4EWIbyKB/GaUd1+sqSqOdWgw==,iv:u4/jyCgZhN3Kwv4ocAUXtsFdW7V8O8TUanhVEIkb/aY=,tag:t9MLljmtwkvKKoBEMjhoZQ==,type:str]
+        #ENC[AES256_GCM,data:YXgF0Bl7V4JaDLZvvJ9KT8KO+W2p/RjDtPLAAxak5ug/gsixqf5NSxlMmNt/vg9+WATWR3f/mqls697pkSgCiy9BgwX81EGET4+s7o1skqMn+AzXAzaRPwzY6GdTWlQYAIcWbz9dUp8s0Sqh15UZ+th3x6Pa3fSZ0XH62vHd+b0g37Zs0iakUEWbR5LIllCyx1H5IfMxTJRdhcY2ODvhz+wm3r+i/Exq0BrOcx0iCOxpZF7Qc7zS8EFaitUNl1UUw/M=,iv:tpJxMUksN3TI9qRPm9gP919MGZA0TjjlFhXkmnq2okM=,tag:Na0FH+8dplSXHscjRmIeUQ==,type:comment]
+        netbird.client_secret: ENC[AES256_GCM,data:3ZEnGefgmtDk8TK1zHidmhygZg2i0oreZud4Tp7c9eShvhznkP/vj0/E5+IAccFBaahe3jIn9TpwqfKXwl6pElGQ6hhuP2Ss+Z0+4YQP1u9MBIgtNPJEnkL3+IrOd+KmCA==,iv:6sXo2MU9XC+nI4EzwvjFkqOqfPFhUHDcbmmvSwY7AAg=,tag:qCVeu65k4SCfTAYN9Gxgjg==,type:str]
+        #ENC[AES256_GCM,data:rZQu7W+ArHBeOmeY/7UFs5Jec44FruKJCdQDNGgF50Y2zOXsIdXVLGnHuXuv4VDT3az+G5/UJ6y6mh7qWuJagArFgPzIbdRXPxNANtDdmwm9mmZlMN+k3NLmudOCc/OOlJgz/gU8zWU3xnHkq6YD8DBrTKtc8X5DyKjouoYKrd4ZcBnEl4NUsvWZyXHIv7QVHDov0vR5Qeyk0CCNanSFJeNPye9pPEB4hF1P29Lu0MvmCCQWKaevGBvbY6Ur9DmZ+xE=,iv:Sy2E1+9D4YCsWkNYWapLPFpLL0fOzGABGOnejTfknSM=,tag:MDX9m7C7wTl42S2wqb2b0g==,type:comment]
+        grafana.client_secret: ENC[AES256_GCM,data:R7UljzY5jeX8hLT4R5eTaTg+G/d1WE+a6s5MuAa8OEpQNP5p9gqjqtMSiYfiQ9kE1GdiELG6jT8UiH7ukEk5gqOPHzqLDDCoJfSIdtF0oqsMDMKokQs3gMkBHRK4FceRvw==,iv:jt0mPCWyxsGRfRlR1Fq86fZbqUmJpojkA74k8wMMkck=,tag:p90PyGjQqLxkSXO+j5xEsw==,type:str]
+        #ENC[AES256_GCM,data:MiyGLc1vcKwFAYtvTnX3wVTrv7Ik+IE2+45g7LrUzjX+ynu42nlO71Y17AxwmQMF8VtX5gYhgLznP2elPh8GJo8RVh5DTh5KB3urbpO3UwP7fQxO8PMd7dOHJdf8eB5LP/lbapkXaT8O5Mge6Lur1ZJHLvP/uqd7d/ibbVyc9zT44/YylRIl8B5sqJNErIHy31S6labcSTAtzwE0OBpqFoV1xu0FLt8FBKIjvGKflZxw4CM9aa5CHh9mm/Rt77F72q0GHuuou6q6,iv:zha9iclsZp5TXx7dVL6a4lIXtB0muKtBnDc7e9pl7pQ=,tag:KfWiL5LrAL+IeHLmCI/TPw==,type:comment]
+        audiobookshelf.client_secret: ENC[AES256_GCM,data:szyCm0IvZKdm5kjOOc8CB/IGgYkt+J4OFYKfuzVQfWafcg/2Z8YyuOKjE93mzktUvMaUiJrPQgrXTh7/7YeIz4uWOFdeuLaliDFnVcMkeXnW3bzKhL3+dRu+YO/sCUCEXA==,iv:Rg06BpIGQDEBZ+L19PmnqIq9LUTpIOTXYHC0P+ffe/I=,tag:bQiUQTq9CLBkUCcDKR8Y6w==,type:str]
+        #ENC[AES256_GCM,data:UKjIEbAp5YlLSNlOTM06zfd+tH9j/iYBoZnuWahdjmkwHS6P+l0asa9/EenRuf5EhzGIk1UxLTdZR2hswyOI1OYyVEshNRhrB20Gyfdo5VCAmrflLoNcaXGpGikLAsYx118FT+xHGqxhEXb4e6RhsAHvf2qsd4HfohYODUZee7DhAPwW6HhMsd5cRgW5v2YBaCFABpqfrN7a2r74J9DHapn/SkJcOhtMDWEEIsRZIxuzpoXjut+RtVZRWGpyrurzvg==,iv:bxkCZmAxjUDZjLSlN9LCOxU3heYo0ruoJ4M7/aaMhCo=,tag:EKjjy02ljWU09pu7kMSlOw==,type:comment]
+        sftpgo.client_secret: ENC[AES256_GCM,data:5ac7b+3NoBapi5XLHRgkT/Qmbpb8rm8BXQsuAAprWHTxoOToFm077RiSegRthHSsO7M1CcIzQEzg4R9/FzhJGOwIsRwX0NhZ+tQo5F0mA8+TCuJIt1tyuYNYWG40uKjn9g==,iv:vvJ5Gq2otzBGUOxT8QeFAxCzkqt0lYZVJ9INnyIePHI=,tag:fn6JgS4+Zesk9Din+8y/PA==,type:str]
+        #ENC[AES256_GCM,data:3ebUr52jwg85kmdab0sr7xtyTuxEdlrdGexnm1XJ5ptLHWiNBaDNk0EbQ5qX0ICDRDO1IfoHiN0yMFLousjTN8IO4+AyLA9OkDdTwyRlabB87EySCfkqW/2fWXJ9vYs7mlO4qXBzVhlUq89WBRH1czbkFs0FHj6V2t9jJYshHHZx4KMvmFnq6x1kCNffCHRTWq3wIL7UGF3/2UvSpzmjYpI1gm0MM0cZpLbi2AEyPr+csjxMqh2Skhc72Tix18mHrlcA+94=,iv:ugOWKDcvTwrKX7q03tQLRNEczWY8XWQyhPXkWHGPGVI=,tag:BiMs7gymmGLyj9QXwQkz0g==,type:comment]
+        headscale.client_secret: ENC[AES256_GCM,data:5p1EQCPW0UPkcwGpJI0sm+IE6TQZ5LaiDhWeUKG+0tivj70vxyhdWi8ZodhWa6S5eKvzJzxfyr3L/wX0N1zJkXd8g3B5KIjHQMN32WhC4rrEhZjKeW0Ap4N7lWe124FiDw==,iv:HC6Kdl0BDH5EhZwGPur/CBPSguqaTDP0AA/AnaNl47s=,tag:Ok42p6PwHfqDMUU87IIZOA==,type:str]
 sops:
   age:
     - enc: |
         -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSArbElMVTh0cUFFSVVmVlFB
-        SHMxZnBpd3k1bGRodDdjWUNHbkg1eHJqZWprCkpqcTYwaXdjVVU1NnIrZ1A1ODl3
-        NDRRc2ZOWmZVcE9NTkx6WWJuNkZQcGMKLS0tICt1dnNsVXVIbllMNGJNd1R0b0dr
-        QXhhWHFvY3Ixa2lnSzhLdzArK3ozTXcKt24AM+JZuQSRgfdTWI/AwwzDf8xWrYHw
-        Czay1ZzRwhOabUPsiHiQIgs/gnKuZ3hnMOuG9HMcf/QIMryj0V3wcw==
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSArbjBHaUh1dU5Ta0hDdWow
+        dVR1K2RYREdTbkRUaDVoVDJ3c0hSK2xkZkQ4Clh5QmZjV2hBSm9JOWhyYjcxTExh
+        VkRXdFBYcGZFY29NSmwvMmFwdHFVU2sKLS0tIFN6OTVubXIzN2FpT0lnamtoMm9q
+        dTdlQVlzckVKWjkwcUVpQXhiOE1DeXMKICRKJXvm7Dj1RvmRLsLL86nyqirhCF9/
+        2CPTMp2h5/kIqJIgxZ5oRsB1fDiL+7QaTIrsNkEr+NrKJB6F6ehqQQ==
         -----END AGE ENCRYPTED FILE-----
       recipient: age1hnmh393g3qaf2szdjkyrd7jsven9wzvgpud4207vzrfywmuvdassvperqc
     - enc: |
         -----BEGIN AGE ENCRYPTED FILE-----
-        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSArS04xTmpZRFdMeXE4dUJj
-        MXRnQTNINDhHSGRNZlQyaFltUmFsWE1yU2dvCkgyVlNxTUZQbGhVaDJodXNUMVRD
-        R1hhQWhydFNuV1h3TDlYQ1IzL2ZDeTgKLS0tIFNiMkRyUWlmZFNuZzc2UTczeEVU
-        elpSL3JxbkJMc0srTTZ0c2ZXVzZYL1EKwro6MU4aL4XiRcI+8lSa6rOKpoZGaZOM
-        ttUswUwMxOjLk8eHV0w/cUvcGFEFakVe3rJTvYzODCQEGvcIBEjV3Q==
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBoMFlmUUNFNWNaRUJtNVVT
+        aDNRc1BnOEJCdFBQU2FZa0JmbXBnSmIvR1NnCnZabmlYSFZaWVdZa2daa2xyOVdK
+        anM2ajZhbkFBMTlocUgvc2J0bzJPQkEKLS0tIFNiYnRSL0JjZXE1L2dUVmVOUDZw
+        WndoeE9JN2FXVU1COUtIMFFzSy9hVzgKlR+oyizIR7CBmC/Gh+Ic8tmqHmjsY/v/
+        g11cXOlRM6+u6jwb2DeZOrbcDnc73YPPh0pbrHEBvQWr6NZjhhEXBQ==
         -----END AGE ENCRYPTED FILE-----
       recipient: age1mm90zkg8lsmpqa7gya9p2prsj8yfq774gjm6dkamkkvwugen7ywse5w97z
-  encrypted_comment_regex: .*
-  lastmodified: "2026-07-26T18:59:45Z"
-  mac: ENC[AES256_GCM,data:XtfaxVZ+tnkRPoCG+v1cEPiyTqRoSX9q6c/k2O6gEd2OhW8rv0OpfmO0d7T1gm3+l++etJ3Myh7PydV2Lp4wU6fu6I/Duf9KnjaZly75/Wzh5xopy4BUQOY2Ua6pu+KtiHlgGajcLwQu783rsq5kHgaOzPub18BuoIbsnJiGNSw=,iv:H+EDWYN24zDDe4W1pKu7lCpgkB9ekdFMNmwzzbFsKB0=,tag:23NDy9J/EYgX/iKaeAE9UQ==,type:str]
+  lastmodified: "2026-07-28T11:18:05Z"
+  mac: ENC[AES256_GCM,data:TFJNqAD2c6jGm3b0vVhxO13lUqDK2seCXmVE+BUxVYK02wLyxqRnfgteCiJX4qJ7oVN+RamC+vC60ymn3iCpZo3h63evJcsYL92GAtTsH99cXPk+tljbvm1Tu75ZFt3dfAFtPloVS01YxA0RmllvKf8Pqu6ilRIQZOg2v3HUYx4=,iv:ignt1q/1S/1UhEXWUFHq50qaZM/jCk2ogDFJNzDx+KY=,tag:tzcLoimk2wrkXyz+fq3ZoA==,type:str]
+  unencrypted_suffix: _unencrypted
   version: 3.13.2

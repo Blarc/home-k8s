@@ -113,6 +113,13 @@ authelia:
             - userinfo
           allowed_origins_from_client_redirect_uris: true
         claims_policies:
+          headscale:
+            id_token:
+              - email
+              - email_verified
+              - groups
+              - name
+              - preferred_username
           netbird:
             id_token:
               - email
@@ -121,6 +128,13 @@ authelia:
           sftpgo:
             id_token:
               - preferred_username
+        authorization_policies:
+          headscale:
+            default_policy: deny
+            rules:
+              - policy: one_factor
+                subject:
+                  - group:Headscale
         jwks:
           - key_id: authelia-rs256
             algorithm: RS256
@@ -216,6 +230,18 @@ authelia:
             grant_types:
               - authorization_code
               - refresh_token
+          - client_id: WMkTDUQ4ZdKotqQuTclpCw5ofhZ3bWALaH5N3MFs
+            client_name: Headscale
+            client_secret:
+              path: /secrets/oidc/headscale.client_secret
+            authorization_policy: headscale
+            claims_policy: headscale
+            consent_mode: implicit
+            require_pkce: true
+            pkce_challenge_method: S256
+            redirect_uris:
+              - https://headscale.blarc.my.id/oidc/callback
+            scopes: *defaultScopes
 
   secret:
     additionalSecrets:
