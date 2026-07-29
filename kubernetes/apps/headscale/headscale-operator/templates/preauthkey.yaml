@@ -1,0 +1,13 @@
+apiVersion: headscale.infrado.cloud/v1beta1
+kind: HeadscalePreAuthKey
+metadata:
+  name: headscale-subnet-router-auth
+  namespace: {{ .Release.Namespace }}
+spec:
+  headscaleRef: headscale
+  secretName: headscale-subnet-router-auth
+  expiration: 24h
+  reusable: true
+  ephemeral: false
+  tags:
+    - tag:subnet-router

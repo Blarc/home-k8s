@@ -1,0 +1,83 @@
+apiVersion: headscale.infrado.cloud/v1beta1
+kind: Headscale
+metadata:
+  name: headscale
+  namespace: {{ .Release.Namespace }}
+spec:
+  version: "v0.29.2"
+  image: ghcr.io/juanfont/headscale
+  replicas: 1
+  config:
+    server_url: https://headscale.blarc.my.id
+    listen_addr: 0.0.0.0:8080
+    metrics_listen_addr: 0.0.0.0:9090
+    grpc_listen_addr: 0.0.0.0:50443
+    grpc_allow_insecure: true
+    noise:
+      private_key_path: /var/lib/headscale/noise_private.key
+    prefixes:
+      v4: 100.64.0.0/10
+      v6: fd7a:115c:a1e0::/48
+    derp:
+      server:
+        enabled: true
+        region_id: 999
+        region_code: headscale
+        region_name: Headscale Embedded DERP
+        stun_listen_addr: 0.0.0.0:3478
+        private_key_path: /var/lib/headscale/derp_server_private.key
+        automatically_add_embedded_derp_region: true
+    disable_check_updates: true
+    database:
+      type: sqlite
+      sqlite:
+        path: /var/lib/headscale/db.sqlite
+    log:
+      level: info
+    policy:
+      mode: database
+    dns:
+      magic_dns: false
+      override_local_dns: false
+    unix_socket: /var/run/headscale/headscale.sock
+    oidc:
+      only_start_if_oidc_is_available: true
+      issuer: https://auth.blarc.my.id
+      client_id: WMkTDUQ4ZdKotqQuTclpCw5ofhZ3bWALaH5N3MFs
+      client_secret_path: /secrets/oidc/client_secret
+      scope:
+        - openid
+        - profile
+        - email
+        - groups
+      email_verified_required: true
+      allowed_groups:
+        - Headscale
+      pkce:
+        enabled: true
+        method: S256
+    taildrop:
+      enabled: true
+  persistent_volume_claim:
+    size: 1Gi
+    storage_class_name: topolvm-thin-retain
+  api_key:
+    auto_manage: true
+    expiration: "2160h"
+    rotation_buffer: "240h"
+  extra_volumes:
+    - name: oidc
+      secret:
+        defaultMode: 288
+        secretName: headscale-oidc
+  extra_volume_mounts:
+    - name: oidc
+      mountPath: /secrets/oidc/client_secret
+      subPath: client_secret
+      readOnly: true
+  acl_policy:
+    tag_owners:
+      tag:subnet-router:
+        - group:admin
+    inline: |-
+      {{- .Files.Get "files/acl_policy.hujson" | nindent 6 }}

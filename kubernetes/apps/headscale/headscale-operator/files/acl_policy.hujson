@@ -1,0 +1,50 @@
+{
+  "groups": {
+    "group:admin": [
+      "jakob@",
+      "jakob.malezic@gmail.com"
+    ],
+    "group:cod2": [
+      "blarc@",
+      "rokk@",
+      "davids1@",
+      "matejp@",
+      "tilenp@",
+      "markb@",
+      "gregorz@",
+      "janb@",
+      "anzeh@",
+      "janb1@",
+      "simonk@",
+      "aljazs@"
+    ]
+  },
+  "hosts": {
+    "lan": "192.168.1.0/24",
+    "cod2": "192.168.1.224/32"
+  },
+  "grants": [
+    {
+      "src": [
+        "group:admin"
+      ],
+      "dst": [
+        "192.168.1.0/24"
+      ],
+      "ip": [
+        "*"
+      ]
+    },
+    {
+      "src": [
+        "group:cod2"
+      ],
+      "dst": [
+        "cod2"
+      ],
+      "ip": [
+        "*"
+      ]
+    }
+  ]
+}

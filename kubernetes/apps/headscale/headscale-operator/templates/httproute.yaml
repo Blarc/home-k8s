@@ -1,0 +1,19 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: headscale
+  namespace: {{ .Release.Namespace }}
+spec:
+  parentRefs:
+    - name: external
+      namespace: traefik
+  hostnames:
+    - headscale.blarc.my.id
+  rules:
+    - backendRefs:
+        - name: headscale
+          port: 8080
+      matches:
+        - path:
+            type: PathPrefix
+            value: /

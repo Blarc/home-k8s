@@ -1,0 +1,11 @@
+apiVersion: headscale.infrado.cloud/v1beta1
+kind: HeadscaleAutoApprover
+metadata:
+  name: subnet-router
+  namespace: {{ .Release.Namespace }}
+spec:
+  headscaleRef: headscale
+  routes:
+    - cidr: 192.168.1.0/24
+      tags:
+        - tag:subnet-router

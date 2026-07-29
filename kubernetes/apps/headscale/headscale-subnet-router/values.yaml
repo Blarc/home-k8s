@@ -25,7 +25,7 @@ app-template:
               valueFrom:
                 secretKeyRef:
                   name: headscale-subnet-router-auth
-                  key: TS_AUTHKEY
+                  key: key
             - name: TS_AUTH_ONCE
               value: "true"
             - name: TS_ACCEPT_DNS
@@ -33,7 +33,7 @@ app-template:
             - name: TS_ENABLE_HEALTH_CHECK
               value: "true"
             - name: TS_EXTRA_ARGS
-              value: --login-server=https://headscale.blarc.my.id --advertise-tags=tag:subnet-router
+              value: --login-server=https://headscale.blarc.my.id
             - name: TS_HOSTNAME
               value: subnet-router
             - name: TS_KUBE_SECRET
@@ -43,7 +43,9 @@ app-template:
             - name: TS_STATE_DIR
               value: /var/lib/tailscale
             - name: TS_USERSPACE
-              value: "false"
+              value: "true"
+            - name: TS_DEBUG_FIREWALL_MODE
+              value: nftables
           ports:
             - name: health
               containerPort: 9002

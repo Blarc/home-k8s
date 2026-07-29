@@ -1,0 +1,6 @@
+dependencies:
+- name: headscale-operator
+  repository: oci://ghcr.io/infradohq/headscale-operator/charts
+  version: 0.5.0
+digest: sha256:82699d958616788678dd871428aa8c21ee863e63189512aef365dd37c7511e07
+generated: "2026-07-29T08:15:16.195351+02:00"
