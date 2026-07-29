@@ -1,6 +1,6 @@
 dependencies:
 - name: cilium
-  repository: oci://ghcr.io/home-operations/charts-mirror
-  version: 1.18.6
-digest: sha256:1d6d6e61704f1a642cbdfcc6941ce4965d5b352adf36d58c0f4b62b372c9973f
-generated: "2026-01-13T12:41:47.15042981Z"
+  repository: oci://quay.io/cilium/charts
+  version: 1.19.6
+digest: sha256:cd63dde06820e8e3592f16151025fe34c574ee8f48b4ac5b7804febb285b5b84
+generated: "2026-07-29T12:39:04.199389+02:00"
