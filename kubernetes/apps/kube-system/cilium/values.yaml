@@ -64,8 +64,11 @@ cilium:
     # https://docs.cilium.io/en/stable/network/kubernetes/kubeproxy-free/#maglev-consistent-hashing
     algorithm: maglev
 
-  gatewayAPI:
-    enabled: false
+  # gatewayAPI:
+  #   enabled: true
+
+  envoyConfig:
+    enabled: true
 
   # https://github.com/cilium/cilium/issues/43814
   extraConfig:
