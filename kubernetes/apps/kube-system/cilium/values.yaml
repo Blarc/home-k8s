@@ -5,11 +5,6 @@ cilium:
 
   kubeProxyReplacement: true
 
-  # WireGuard forwards peer traffic with the original 10.8.0.0/24 source IPs.
-  # Cilium's source IP verification rejects that pattern as spoofing unless it is disabled.
-  daemon:
-    enableSourceIPVerification: false
-
   # Talos specific
   k8sServiceHost: localhost
   k8sServicePort: 7445
