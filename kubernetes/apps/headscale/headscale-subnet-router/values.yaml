@@ -38,8 +38,9 @@ app-template:
               value: subnet-router
             - name: TS_KUBE_SECRET
               value: ""
+            # Specific node and Cilium LoadBalancer routes override overlapping 192.168.1.0/24 Wi‑Fi networks
             - name: TS_ROUTES
-              value: 192.168.1.0/24
+              value: 192.168.1.0/24,192.168.1.16/32,192.168.1.220/30,192.168.1.224/27
             - name: TS_STATE_DIR
               value: /var/lib/tailscale
             - name: TS_DEBUG_FIREWALL_MODE
