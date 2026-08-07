@@ -19,6 +19,7 @@ docker-mailserver:
   deployment:
     env:
       OVERRIDE_HOSTNAME: mail.blarc.my.id
+      POSTFIX_MESSAGE_SIZE_LIMIT: "73400320" # 70 MiB total email size
     resources:
       requests:
         cpu: 100m
