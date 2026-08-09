@@ -23,7 +23,20 @@
         "prIgnoreNotification", // suppress the comment which is added to a PR whenever you close a PR unmerged
     ],
     ignorePaths: [
-        "**/*.sops.*"
+        "**/*.sops.*",
+        // Disabled applications are not deployed, so do not create dependency PRs for them.
+        "kubernetes/apps/adguard/**",
+        "kubernetes/apps/lvm-disk-watcher/**",
+        "kubernetes/apps/netbird/agent/**",
+        "kubernetes/apps/netbird/dashboard/**",
+        "kubernetes/apps/netbird/management/**",
+        "kubernetes/apps/netbird/relay/**",
+        "kubernetes/apps/netbird/signal/**",
+        "kubernetes/apps/observability/kepler/**",
+        "kubernetes/apps/pdf-scrawl/**",
+        "kubernetes/apps/trivy/**",
+        "kubernetes/apps/unifi/**",
+        "kubernetes/apps/vpn/coturn/**"
     ],
     flux: {
         managerFilePatterns: ["/(^|/)kubernetes/.+\\.ya?ml$/"]
