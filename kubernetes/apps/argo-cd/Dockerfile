@@ -2,7 +2,7 @@
 
 # Renovate's Dockerfile manager updates this ARG through the FROM reference below;
 # do not add a custom Renovate annotation, as that would create a duplicate PR.
-ARG ARGOCD_VERSION="v3.4.6"
+ARG ARGOCD_VERSION="v3.5.0"
 FROM quay.io/argoproj/argocd:$ARGOCD_VERSION
 # renovate: datasource=github-releases depName=getsops/sops
 ARG SOPS_VERSION=3.13.3
