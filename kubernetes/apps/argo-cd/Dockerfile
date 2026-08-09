@@ -1,6 +1,7 @@
 # BASED ON https://github.com/jkroepke/helm-secrets/wiki/ArgoCD-Integration#option-1-custom-docker-image
 
-# renovate: datasource=github-releases depName=argoproj/argo-cd
+# Renovate's Dockerfile manager updates this ARG through the FROM reference below;
+# do not add a custom Renovate annotation, as that would create a duplicate PR.
 ARG ARGOCD_VERSION="v3.4.6"
 FROM quay.io/argoproj/argocd:$ARGOCD_VERSION
 # renovate: datasource=github-releases depName=getsops/sops
