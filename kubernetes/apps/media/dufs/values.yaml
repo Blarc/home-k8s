@@ -1,0 +1,79 @@
+app-template:
+  controllers:
+    dufs:
+      annotations:
+        reloader.stakater.com/auto: "true"
+      containers:
+        app:
+          image:
+            repository: docker.io/sigoden/dufs
+            tag: v0.46.0@sha256:8dd3b750015734703e64b55641fb7d2254c112e0ff3967074766177dc15dc982
+          env:
+            DUFS_SERVE_PATH: /media
+            DUFS_BIND: 0.0.0.0
+            DUFS_PORT: &port 5000
+            # dufs 0.46.0 makes --allow-all imply --allow-symlink. Keep the
+            # browser operations enabled individually so symlinks stay off.
+            DUFS_ALLOW_ALL: "false"
+            DUFS_ALLOW_UPLOAD: "true"
+            DUFS_ALLOW_DELETE: "true"
+            DUFS_ALLOW_SEARCH: "true"
+            DUFS_ALLOW_ARCHIVE: "true"
+            DUFS_ALLOW_SYMLINK: "false"
+          probes:
+            liveness: &probes
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /__dufs__/health
+                  port: *port
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 5
+                failureThreshold: 3
+            readiness: *probes
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: [ "ALL" ] }
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              memory: 256Mi
+  defaultPodOptions:
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: OnRootMismatch
+  service:
+    app:
+      ports:
+        http:
+          port: *port
+  route:
+    app:
+      hostnames:
+        - "{{ .Release.Name }}.blarc.my.id"
+      parentRefs:
+        - name: internal
+          namespace: traefik
+      rules:
+        - backendRefs:
+            - identifier: app
+              port: *port
+          matches:
+            - path:
+                type: PathPrefix
+                value: /
+  persistence:
+    media:
+      existingClaim: qbittorrent-media
+      globalMounts:
+        - path: /media
+    tmp:
+      type: emptyDir
