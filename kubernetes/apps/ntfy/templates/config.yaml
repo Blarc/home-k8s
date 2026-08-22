@@ -10,5 +10,5 @@ data:
     auth-file: "/var/lib/ntfy/user.db"
     auth-default-access: "deny-all"
     auth-access:
-      - "grafana:alerts:rw"
       - "alertmanager:alerts:rw"
+      - "media:media:rw"
