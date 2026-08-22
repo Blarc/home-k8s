@@ -8,7 +8,7 @@ app-template:
         sysctls:
           image:
             repository: ghcr.io/tailscale/tailscale
-            tag: v1.102.2
+            tag: v1.102.3
           command:
             - sh
             - -c
@@ -19,7 +19,7 @@ app-template:
         app:
           image:
             repository: ghcr.io/tailscale/tailscale
-            tag: v1.102.2
+            tag: v1.102.3
           env:
             - name: TS_AUTHKEY
               valueFrom:
