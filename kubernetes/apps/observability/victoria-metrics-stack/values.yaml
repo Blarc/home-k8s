@@ -1,0 +1,96 @@
+victoria-metrics-k8s-stack:
+  argocdReleaseOverride: victoria-metrics-stack
+  fullnameOverride: victoria-metrics
+  victoria-metrics-operator:
+    operator:
+      disable_prometheus_converter: false
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+      limits:
+        memory: 256Mi
+  defaultDashboards:
+    enabled: false
+  defaultRules:
+    enabled: false
+  syncJob:
+    enabled: false
+  vmsingle:
+    enabled: true
+    spec:
+      retentionPeriod: "7d"
+      resources:
+        requests:
+          cpu: 100m
+          memory: 512Mi
+        limits:
+          memory: 2Gi
+      storage:
+        storageClassName: topolvm-thin
+        resources:
+          requests:
+            storage: 10Gi
+    route:
+      enabled: true
+      parentRefs:
+        - name: internal
+          namespace: traefik
+      hostnames:
+        - "victoria-metrics.blarc.my.id"
+  vmagent:
+    enabled: true
+    spec:
+      externalLabels:
+        cluster: home
+      resources:
+        requests:
+          cpu: 50m
+          memory: 128Mi
+        limits:
+          memory: 512Mi
+  vlsingle:
+    enabled: true
+    spec:
+      retentionPeriod: "3d"
+      resources:
+        requests:
+          cpu: 50m
+          memory: 256Mi
+        limits:
+          memory: 1Gi
+      storage:
+        storageClassName: topolvm-thin
+        resources:
+          requests:
+            storage: 10Gi
+    route:
+      enabled: true
+      parentRefs:
+        - name: internal
+          namespace: traefik
+      hostnames:
+        - "victoria-logs.blarc.my.id"
+  vlagent:
+    enabled: true
+    spec:
+      k8sCollector:
+        enabled: true
+      resources:
+        requests:
+          cpu: 50m
+          memory: 128Mi
+        limits:
+          memory: 256Mi
+  vmalert:
+    # VMAlert and default alerts initially disabled to prevent duplicate notifications.
+    enabled: false
+  # Bundled node-exporter and kube-state-metrics initially disabled because kube-prometheus-stack already runs them.
+  prometheus-node-exporter:
+    enabled: false
+  kube-state-metrics:
+    enabled: false
+  grafana:
+    enabled: false
+  alertmanager:
+    enabled: false
