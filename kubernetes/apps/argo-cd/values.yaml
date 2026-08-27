@@ -7,6 +7,12 @@ argo-cd:
   global:
     domain: argo-cd.blarc.my.id
   server:
+    resources:
+      requests:
+        cpu: 25m
+        memory: 96Mi
+      limits:
+        memory: 256Mi
     httproute:
       enabled: true
       hostnames:
@@ -16,6 +22,12 @@ argo-cd:
           namespace: traefik
   controller:
     replicas: 1
+    resources:
+      requests:
+        cpu: 150m
+        memory: 512Mi
+      limits:
+        memory: 1Gi
     roleRules:
       - apiGroups:
           - '*'
@@ -28,6 +40,12 @@ argo-cd:
     enabled: false
 
   repoServer:
+    resources:
+      requests:
+        cpu: 50m
+        memory: 256Mi
+      limits:
+        memory: 512Mi
     image:
       repository: ghcr.io/blarc/home-k8s/argo-cd
       tag: v3.5.1-428d13d1
@@ -44,6 +62,34 @@ argo-cd:
     volumeMounts:
       - mountPath: /argocd-helm-secrets-private-keys/
         name: argocd-helm-secrets-private-keys
+  applicationSet:
+    resources:
+      requests:
+        cpu: 25m
+        memory: 64Mi
+      limits:
+        memory: 256Mi
+  notifications:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 32Mi
+      limits:
+        memory: 128Mi
+  redis:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 32Mi
+      limits:
+        memory: 128Mi
+  redisSecretInit:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 32Mi
+      limits:
+        memory: 128Mi
   configs:
     params:
       server.insecure: true
@@ -62,3 +108,9 @@ argocd-image-updater:
   fullnameOverride: argo-cd-image-updater
   crds:
     keep: false
+  resources:
+    requests:
+      cpu: 10m
+      memory: 64Mi
+    limits:
+      memory: 128Mi

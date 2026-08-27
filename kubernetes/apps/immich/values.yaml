@@ -50,6 +50,16 @@ immich:
 
   valkey:
     enabled: true
+    controllers:
+      main:
+        containers:
+          main:
+            resources:
+              requests:
+                cpu: 25m
+                memory: 64Mi
+              limits:
+                memory: 256Mi
     persistence:
       data:
         # Optional: Set this to persistentVolumeClaim to keep job queues persistent
@@ -59,6 +69,16 @@ immich:
         accessMode: ReadWriteOnce
 
   machine-learning:
+    controllers:
+      main:
+        containers:
+          main:
+            resources:
+              requests:
+                cpu: 100m
+                memory: 512Mi
+              limits:
+                memory: 2Gi
     persistence:
       cache:
         # Optional: Set this to persistentVolumeClaim to avoid downloading the ML models every start.
@@ -66,3 +86,15 @@ immich:
         storageClass: topolvm-thin
         size: 10Gi
         accessMode: ReadWriteOnce
+
+  server:
+    controllers:
+      main:
+        containers:
+          main:
+            resources:
+              requests:
+                cpu: 100m
+                memory: 1Gi
+              limits:
+                memory: 2Gi

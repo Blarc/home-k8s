@@ -147,6 +147,12 @@ grafana:
 #          - name: DS_PROMETHEUS
 #            value: Prometheus
   sidecar:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 96Mi
+      limits:
+        memory: 256Mi
     dashboards:
       enabled: true
       searchNamespace: ALL
@@ -178,5 +184,11 @@ grafana:
         - "grafana.blarc.my.id"
   persistence:
     enabled: false
+  resources:
+    requests:
+      cpu: 25m
+      memory: 192Mi
+    limits:
+      memory: 512Mi
   testFramework:
     enabled: false

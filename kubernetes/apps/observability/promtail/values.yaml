@@ -1,5 +1,11 @@
 promtail:
   fullnameOverride: promtail
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 256Mi
   config:
     clients:
       - url: http://loki-headless.observability.svc.cluster.local:3100/loki/api/v1/push

@@ -16,6 +16,12 @@ kube-prometheus-stack:
       alertmanagerConfiguration:
         name: alertmanager
       externalUrl: https://alertmanager.blarc.my.id
+      resources:
+        requests:
+          cpu: 10m
+          memory: 200Mi
+        limits:
+          memory: 256Mi
       storage:
         volumeClaimTemplate:
           spec:
@@ -86,6 +92,12 @@ kube-prometheus-stack:
                 ups: "primary"
   prometheus-node-exporter:
     fullnameOverride: node-exporter
+    resources:
+      requests:
+        cpu: 10m
+        memory: 32Mi
+      limits:
+        memory: 128Mi
     prometheus:
       monitor:
         enabled: true
@@ -97,6 +109,12 @@ kube-prometheus-stack:
             targetLabel: kubernetes_node
   kube-state-metrics:
     fullnameOverride: kube-state-metrics
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+      limits:
+        memory: 256Mi
     metricLabelsAllowlist:
       - pods=[*]
       - deployments=[*]
@@ -113,6 +131,20 @@ kube-prometheus-stack:
   grafana:
     enabled: false
     forceDeployDashboards: true
+  prometheusOperator:
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+      limits:
+        memory: 256Mi
+    prometheusConfigReloader:
+      resources:
+        requests:
+          cpu: 5m
+          memory: 32Mi
+        limits:
+          memory: 128Mi
   additionalPrometheusRulesMap:
     dockerhub-rules:
       groups:

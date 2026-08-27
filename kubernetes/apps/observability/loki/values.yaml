@@ -24,6 +24,12 @@ loki:
       retention_period: 1h
   singleBinary:
     replicas: 1
+    resources:
+      requests:
+        cpu: 25m
+        memory: 256Mi
+      limits:
+        memory: 1Gi
     persistence:
       enabled: false
     extraVolumes:
@@ -57,5 +63,11 @@ loki:
   sidecar:
     image:
       repository: ghcr.io/kiwigrid/k8s-sidecar
+    resources:
+      requests:
+        cpu: 10m
+        memory: 96Mi
+      limits:
+        memory: 256Mi
     rules:
       searchNamespace: ALL
