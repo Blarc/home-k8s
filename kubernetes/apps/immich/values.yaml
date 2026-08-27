@@ -31,10 +31,10 @@ immich:
                   name: immich-database-app
                   key: dbname
 
-  server:
-    controllers:
-      main:
-        replicas: 0
+#  server:
+#    controllers:
+#      main:
+#        replicas: 0
 
   immich:
     persistence:
