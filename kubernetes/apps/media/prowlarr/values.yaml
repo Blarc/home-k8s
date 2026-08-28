@@ -74,5 +74,6 @@ app-template:
       storageClass: topolvm-thin-retain
       accessMode: ReadWriteOnce
       size: 256Mi
+      volumeName: pvc-7db323bc-7d2a-4d5e-8cc4-66c59e227f62
     tmp:
       type: emptyDir
