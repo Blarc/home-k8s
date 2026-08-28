@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    external-dns.alpha.kubernetes.io/target: "193.77.155.77"
+    external-dns.kubernetes.io/target: "193.77.155.77"
 spec:
   gatewayClassName: traefik
   listeners:

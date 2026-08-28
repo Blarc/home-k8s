@@ -1,6 +1,11 @@
 external-dns:
   fullnameOverride: external-dns
 
+  image:
+    tag: v0.22.0
+
+  policy: upsert-only
+
   provider:
     name: coredns
   registry: noop
