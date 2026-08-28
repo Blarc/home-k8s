@@ -1,0 +1,88 @@
+app-template:
+  controllers:
+    scryer:
+      annotations:
+        reloader.stakater.com/auto: "true"
+      containers:
+        app:
+          image:
+            repository: ghcr.io/scryer-media/scryer
+            tag: 0.18.21@sha256:c0ab4debc394c2d6d6473881cdcbbfd9120788a4c5877dd8f9d002a0005905a6
+            pullPolicy: Always
+          env:
+            SCRYER_BIND: 0.0.0.0:8080
+            SCRYER_BASE_PATH: /
+            SCRYER_METADATA_GATEWAY_GRAPHQL_URL: https://smg.scryer.media/graphql
+            SCRYER_PUBLIC_URL: "https://{{ .Release.Name }}.blarc.my.id"
+            SCRYER_DB_PATH: /config/scryer.db
+            # Keep library paths on the shared media filesystem used by qBittorrent.
+            SCRYER_MOVIES_PATH: /media/movies
+            SCRYER_SERIES_PATH: /media/series
+            SCRYER_ANIME_PATH: /media/anime
+            TZ: Europe/Ljubljana
+          probes:
+            liveness: &probes
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /health
+                  port: &containerPort 8080
+                initialDelaySeconds: 10
+                periodSeconds: 10
+                timeoutSeconds: 5
+                failureThreshold: 5
+            readiness: *probes
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: [ "ALL" ] }
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+            limits:
+              cpu: 1
+              memory: 2Gi
+  defaultPodOptions:
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: OnRootMismatch
+  service:
+    app:
+      ports:
+        http:
+          port: &port 80
+          targetPort: *containerPort
+  route:
+    app:
+      hostnames:
+        - "{{ .Release.Name }}.blarc.my.id"
+      parentRefs:
+        - name: internal
+          namespace: traefik
+      rules:
+        - backendRefs:
+            - identifier: app
+              port: *port
+          matches:
+            - path:
+                type: PathPrefix
+                value: /
+  persistence:
+    config:
+      type: persistentVolumeClaim
+      storageClass: topolvm-thin-retain
+      accessMode: ReadWriteOnce
+      size: 128Mi
+    media:
+      # Configure Scryer's download staging path as /media/downloads in the UI
+      # so imports stay on the same filesystem as qBittorrent.
+      existingClaim: qbittorrent-media
+      globalMounts:
+        - path: /media
+    tmp:
+      type: emptyDir
