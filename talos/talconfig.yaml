@@ -108,3 +108,9 @@ controlPlane:
         scheduler:
           extraArgs:
             bind-address: 0.0.0.0
+    - |
+      cluster:
+        apiServer:
+          resources:
+            requests:
+              memory: 1280Mi
