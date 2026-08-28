@@ -109,11 +109,27 @@ victoria-metrics-k8s-stack:
       - pods=[*]
       - deployments=[*]
       - persistentvolumeclaims=[*]
-  # These control-plane endpoints are not exposed by this cluster's managed control plane.
+  # These control-plane endpoints had to be exposed manually in talconfig
   kubeControllerManager:
-    enabled: false
+    enabled: true
+    vmScrape:
+      spec:
+        endpoints:
+          - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+            port: http-metrics
+            scheme: https
+            tlsConfig:
+              insecureSkipVerify: true
   kubeScheduler:
-    enabled: false
+    enabled: true
+    vmScrape:
+      spec:
+        endpoints:
+          - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+            port: http-metrics
+            scheme: https
+            tlsConfig:
+              insecureSkipVerify: true
   alertmanager:
     enabled: true
     spec:

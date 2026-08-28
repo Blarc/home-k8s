@@ -55,6 +55,23 @@ nodes:
 #            match: disk.model == "FORESEE 512GB SS"
 
 controlPlane:
+  ingressFirewall:
+    defaultAction: accept
+    rules:
+      - name: controller-manager-metrics
+        portSelector:
+          ports:
+            - 10257
+          protocol: tcp
+        ingress:
+          - subnet: 10.244.0.0/24
+      - name: scheduler-metrics
+        portSelector:
+          ports:
+            - 10259
+          protocol: tcp
+        ingress:
+          - subnet: 10.244.0.0/24
   patches:
     - |-
       cluster:
@@ -82,3 +99,12 @@ controlPlane:
             enable-aggregator-routing: true
         proxy:
           disabled: true
+    # Make Talos listen on the node address instead of loopback.
+    - |
+      cluster:
+        controllerManager:
+          extraArgs:
+            bind-address: 0.0.0.0
+        scheduler:
+          extraArgs:
+            bind-address: 0.0.0.0
