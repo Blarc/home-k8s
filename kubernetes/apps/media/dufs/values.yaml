@@ -9,7 +9,7 @@ app-template:
             repository: docker.io/sigoden/dufs
             tag: v0.46.0@sha256:8dd3b750015734703e64b55641fb7d2254c112e0ff3967074766177dc15dc982
           env:
-            DUFS_SERVE_PATH: /media
+            DUFS_SERVE_PATH: /srv
             DUFS_BIND: 0.0.0.0
             DUFS_PORT: &port 5000
             # dufs 0.46.0 makes --allow-all imply --allow-symlink. Keep the
@@ -74,6 +74,10 @@ app-template:
     media:
       existingClaim: qbittorrent-media
       globalMounts:
-        - path: /media
-    tmp:
-      type: emptyDir
+        - path: /srv/media
+    stuff:
+      storageClass: nfs
+      size: 5Gi
+      accessMode: ReadWriteMany
+      globalMounts:
+        - path: /srv/stuff
