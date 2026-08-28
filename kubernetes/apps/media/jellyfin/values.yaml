@@ -94,6 +94,7 @@ app-template:
                 value: /
   serviceMonitor:
     app:
+      enabled: false
       endpoints:
         - port: http
           interval: 30s

@@ -23,7 +23,8 @@ spec:
     size: 10Gi
     storageClass: "topolvm-thin"
   monitoring:
-    enablePodMonitor: true
+    # Prometheus Operator CRDs are intentionally not installed in this cluster.
+    enablePodMonitor: false
   resources:
     requests:
       memory: "256Mi"

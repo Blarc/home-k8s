@@ -18,7 +18,7 @@ cert-manager:
   prometheus:
     enabled: true
     servicemonitor:
-      enabled: true
+      enabled: false
 
   extraArgs:
     - --dns01-recursive-nameservers-only

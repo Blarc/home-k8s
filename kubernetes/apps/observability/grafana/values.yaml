@@ -32,24 +32,22 @@ grafana:
       datasources:
         - name: Prometheus
           type: prometheus
+          access: proxy
           uid: prometheus
-          access: proxy
-          url: http://prometheus-operated.observability.svc.cluster.local:9090
+          url: http://vmsingle-victoria-metrics.observability.svc.cluster.local.:8428
           isDefault: true
-        - name: Loki
-          type: loki
-          uid: loki
+        - name: VictoriaLogs
+          type: victoriametrics-logs-datasource
           access: proxy
-          url: http://loki-headless.observability.svc.cluster.local:3100
+          uid: victorialogs
+          url: http://vlsingle-victoria-metrics.observability.svc.cluster.local.:9428
+        - name: Alertmanager
+          type: alertmanager
+          access: proxy
+          uid: Alertmanager
+          url: http://vmalertmanager-victoria-metrics.observability.svc.cluster.local.:9093
           jsonData:
-            maxLines: 250
-  #          - name: Alertmanager
-  #            type: alertmanager
-  #            uid: alertmanager
-  #            access: proxy
-  #            url: http://alertmanager-operated.observability.svc.cluster.local:9093
-  #            jsonData:
-  #              implementation: prometheus
+            implementation: prometheus
   dashboardProviders:
     dashboardproviders.yaml:
       apiVersion: 1
@@ -62,6 +60,9 @@ grafana:
           editable: true
           options:
             path: /var/lib/grafana/dashboards/default
+  # Dashboards are downloaded by Grafana's init container and provisioned from
+  # the path below. This keeps dashboard definitions in Git and avoids the
+  # sidecar volume masking the init container output.
   dashboards:
     default:
       cert-manager:
@@ -73,12 +74,6 @@ grafana:
         # renovate: depName="External-dns"
         gnetId: 15038
         revision: 3
-        datasource: Prometheus
-      flux-cluster:
-        url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/cluster.json
-        datasource: Prometheus
-      flux-control-plane:
-        url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/main/monitoring/configs/dashboards/control-plane.json
         datasource: Prometheus
       kubernetes-api-server:
         # renovate: depName="Kubernetes / System / API Server"
@@ -115,9 +110,6 @@ grafana:
         gnetId: 11454
         revision: 14
         datasource: Prometheus
-      miniflux:
-        url: https://raw.githubusercontent.com/miniflux/v2/main/contrib/grafana/dashboard.json
-        datasource: Prometheus
       node-exporter-full:
         # renovate: depName="Node Exporter Full"
         gnetId: 1860
@@ -141,11 +133,18 @@ grafana:
         datasource:
           - name: DS_PROMETHEUS
             value: Prometheus
-#      trivy:
-#        url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/refs/heads/master/dashboards/k8s-addons-trivy-operator.json
-#        datasource:
-#          - name: DS_PROMETHEUS
-#            value: Prometheus
+      victoriametrics-single-node:
+        url: https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/master/dashboards/victoriametrics.json
+      victoriametrics-vmagent:
+        url: https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/master/dashboards/vmagent.json
+      victoriametrics-vmalert:
+        url: https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/master/dashboards/vmalert.json
+      victoriametrics-operator:
+        url: https://raw.githubusercontent.com/VictoriaMetrics/VictoriaMetrics/master/dashboards/operator.json
+      victorialogs-single-node:
+        url: https://raw.githubusercontent.com/VictoriaMetrics/VictoriaLogs/master/dashboards/victorialogs.json
+      victorialogs-vlagent:
+        url: https://raw.githubusercontent.com/VictoriaMetrics/VictoriaLogs/master/dashboards/vlagent.json
   sidecar:
     resources:
       requests:
@@ -172,8 +171,7 @@ grafana:
     - natel-discrete-panel
     - pr0ps-trackmap-panel
     - vonage-status-panel
-  serviceMonitor:
-    enabled: true
+    - victoriametrics-logs-datasource
   route:
     main:
       enabled: true
@@ -181,7 +179,7 @@ grafana:
         - name: internal
           namespace: traefik
       hostnames:
-        - "grafana.blarc.my.id"
+        - grafana.blarc.my.id
   persistence:
     enabled: false
   resources:

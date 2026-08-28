@@ -1,0 +1,39 @@
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  name: crowdsec-agent-service
+  namespace: {{ .Release.Namespace }}
+spec:
+  endpoints:
+    - port: metrics
+      relabelConfigs:
+        - action: replace
+          sourceLabels:
+            - __meta_kubernetes_pod_node_name
+          targetLabel: machine
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  selector:
+    matchLabels:
+      app: crowdsec-agent-service
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMServiceScrape
+metadata:
+  name: crowdsec-service
+  namespace: {{ .Release.Namespace }}
+spec:
+  endpoints:
+    - port: metrics
+      relabelConfigs:
+        - action: replace
+          sourceLabels:
+            - __meta_kubernetes_pod_node_name
+          targetLabel: machine
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  selector:
+    matchLabels:
+      app: crowdsec-service

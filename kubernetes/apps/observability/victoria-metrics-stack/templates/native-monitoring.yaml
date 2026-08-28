@@ -1,0 +1,28 @@
+{{- /* Victoria stack-owned static scrape resources. Application scrapes live with their charts. */ -}}
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMStaticScrape
+metadata:
+  name: node-exporter-static
+  namespace: observability
+spec:
+  jobName: node-exporter-static
+  targetEndpoints:
+    - targets:
+        - 192.168.1.13:9100
+      interval: 20s
+      path: /metrics
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMStaticScrape
+metadata:
+  name: nut-primary
+  namespace: observability
+spec:
+  jobName: nut-primary
+  targetEndpoints:
+    - targets:
+        - 192.168.1.13:9199
+      interval: 20s
+      path: /ups_metrics
+      labels:
+        ups: primary

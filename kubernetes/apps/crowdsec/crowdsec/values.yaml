@@ -48,7 +48,7 @@ crowdsec:
     metrics:
       enabled: true
       serviceMonitor:
-        enabled: true
+        enabled: false
     lifecycle:
       postStart:
         exec:
@@ -81,7 +81,7 @@ crowdsec:
     metrics:
       enabled: true
       serviceMonitor:
-        enabled: true
+        enabled: false
 
   appsec:
     enabled: false

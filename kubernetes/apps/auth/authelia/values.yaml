@@ -60,7 +60,7 @@ authelia:
       metrics:
         enabled: true
         serviceMonitor:
-          enabled: true
+          enabled: false
     theme: light
     totp:
       issuer: Blarc
