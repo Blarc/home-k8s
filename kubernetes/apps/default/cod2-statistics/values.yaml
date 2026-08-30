@@ -11,7 +11,7 @@ app-template:
             pullPolicy: Always
           env:
             TZ: Europe/Ljubljana
-            LOKI_URL: http://loki.observability:3100
+            LOKI_URL: http://vlsingle-victoria-metrics.observability:9428
             LOKI_QUERY: '{service_name="cod2"}'
           probes:
             liveness: &probes
@@ -85,10 +85,10 @@ app-template:
                     kubernetes.io/metadata.name: observability
                 podSelector:
                   matchLabels:
-                    app.kubernetes.io/name: loki
+                    app.kubernetes.io/name: vlsingle
             ports:
               - protocol: TCP
-                port: 3100
+                port: 9428
           - to:
               - namespaceSelector:
                   matchLabels:
