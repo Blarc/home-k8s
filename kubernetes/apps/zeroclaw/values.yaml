@@ -40,7 +40,7 @@ app-template:
               until curl -fsS --connect-timeout 1 --max-time 2 http://127.0.0.1:8080/healthz >/dev/null; do
                 sleep 1
               done
-              exec /usr/local/bin/zeroclaw daemon
+              exec /usr/local/bin/zeroclaw --verbose --log-level info daemon
           envFrom:
             - secretRef:
                 identifier: credentials
