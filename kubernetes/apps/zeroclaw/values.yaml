@@ -1,0 +1,170 @@
+app-template:
+  controllers:
+    zeroclaw:
+      annotations:
+        reloader.stakater.com/auto: "true"
+      strategy: Recreate
+      initContainers:
+        setup-config:
+          image:
+            repository: ghcr.io/zeroclaw-labs/zeroclaw
+            tag: v0.8.4-debian@sha256:d2b3ac2e6b6dd3b0d977b3722fea8bc5ba414c2d5c34d48fe42838aac217afa5
+          command:
+            - /bin/sh
+            - -ec
+          args:
+            - |
+              mkdir -p /zeroclaw-data/.zeroclaw
+              cp -f /config-source/config.toml /zeroclaw-data/.zeroclaw/config.toml
+              chmod 0600 /zeroclaw-data/.zeroclaw/config.toml
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+      containers:
+        app:
+          image:
+            repository: ghcr.io/zeroclaw-labs/zeroclaw
+            tag: v0.8.4-debian@sha256:d2b3ac2e6b6dd3b0d977b3722fea8bc5ba414c2d5c34d48fe42838aac217afa5
+          args:
+            - daemon
+          envFrom:
+            - secretRef:
+                identifier: credentials
+          ports:
+            - name: gateway
+              containerPort: &port 42617
+              protocol: TCP
+          probes:
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /health
+                  port: gateway
+                periodSeconds: 5
+                timeoutSeconds: 2
+                failureThreshold: 30
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /health
+                  port: gateway
+                periodSeconds: 10
+                timeoutSeconds: 5
+                failureThreshold: 3
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /health
+                  port: gateway
+                periodSeconds: 30
+                timeoutSeconds: 5
+                failureThreshold: 3
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          resources:
+            requests:
+              cpu: 25m
+              memory: 64Mi
+            limits:
+              cpu: 1
+              memory: 512Mi
+
+  defaultPodOptions:
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 65534
+      runAsGroup: 65534
+      fsGroup: 65534
+      fsGroupChangePolicy: OnRootMismatch
+      seccompProfile:
+        type: RuntimeDefault
+
+  service:
+    app:
+      type: ClusterIP
+      controller: zeroclaw
+      ports:
+        gateway:
+          port: *port
+          targetPort: gateway
+
+  configMaps:
+    config:
+      includeInChecksum: true
+      data:
+        config.toml: |-
+          schema_version = 3
+
+          [providers.models.openrouter.default]
+          model = "openrouter/free"
+
+          [agents.default]
+          channels = ["discord.default"]
+          model_provider = "openrouter.default"
+          risk_profile = "full"
+          runtime_profile = "agentic"
+
+          [risk_profiles.full]
+          level = "full"
+          workspace_only = false
+
+          [runtime_profiles.agentic]
+          agentic = true
+
+          [channels.discord.default]
+          enabled = true
+          guild_ids = ["1543883980649275482"]
+          channel_ids = ["1543891133711781998"]
+          mention_only = false
+          archive = false
+
+          [peer_groups.discord_default]
+          channel = "discord.default"
+          agents = ["default"]
+          external_peers = ["221581663526846464"]
+
+          [gateway]
+          host = "[::]"
+          port = 42617
+          allow_public_bind = true
+          require_pairing = true
+          web_dist_dir = "/usr/share/zeroclawlabs/web/dist"
+
+  secrets:
+    credentials:
+      includeInChecksum: true
+
+  persistence:
+    data:
+      type: persistentVolumeClaim
+      storageClass: topolvm-thin-retain
+      accessMode: ReadWriteOnce
+      size: 2Gi
+      globalMounts:
+        - path: /zeroclaw-data
+    config-source:
+      type: configMap
+      identifier: config
+      advancedMounts:
+        zeroclaw:
+          setup-config:
+            - path: /config-source/config.toml
+              subPath: config.toml
+              readOnly: true
+    tmp:
+      type: emptyDir
+      globalMounts:
+        - path: /tmp
