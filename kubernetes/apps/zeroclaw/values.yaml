@@ -4,11 +4,15 @@ app-template:
       annotations:
         reloader.stakater.com/auto: "true"
       strategy: Recreate
+      serviceAccount:
+        identifier: zeroclaw
       initContainers:
         setup-config:
           image:
             repository: ghcr.io/zeroclaw-labs/zeroclaw
             tag: v0.8.4-debian@sha256:d2b3ac2e6b6dd3b0d977b3722fea8bc5ba414c2d5c34d48fe42838aac217afa5
+          # Containers start concurrently; wait for MCP so ZeroClaw does not
+          # permanently fail open without its tools after a startup race.
           command:
             - /bin/sh
             - -ec
@@ -28,8 +32,15 @@ app-template:
           image:
             repository: ghcr.io/zeroclaw-labs/zeroclaw
             tag: v0.8.4-debian@sha256:d2b3ac2e6b6dd3b0d977b3722fea8bc5ba414c2d5c34d48fe42838aac217afa5
+          command:
+            - /bin/sh
+            - -ec
           args:
-            - daemon
+            - |
+              until curl -fsS --connect-timeout 1 --max-time 2 http://127.0.0.1:8080/healthz >/dev/null; do
+                sleep 1
+              done
+              exec /usr/local/bin/zeroclaw daemon
           envFrom:
             - secretRef:
                 identifier: credentials
@@ -81,8 +92,76 @@ app-template:
             limits:
               cpu: 1
               memory: 512Mi
+        kubernetes-mcp:
+          image:
+            repository: ghcr.io/containers/kubernetes-mcp-server
+            tag: v0.0.66
+          args:
+            - --port
+            - "8080"
+            - --cluster-provider
+            - in-cluster
+            - --disable-multi-cluster
+            - --read-only
+            - --stateless
+            - --toolsets
+            - core,config
+          env:
+            - name: KUBERNETES_SERVICE_HOST
+              value: kubernetes.default.svc
+            - name: KUBERNETES_SERVICE_PORT
+              value: "443"
+          ports:
+            - name: mcp
+              containerPort: 8080
+              protocol: TCP
+          probes:
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /healthz
+                  port: mcp
+                periodSeconds: 5
+                timeoutSeconds: 2
+                failureThreshold: 30
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /healthz
+                  port: mcp
+                periodSeconds: 10
+                timeoutSeconds: 5
+                failureThreshold: 3
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /healthz
+                  port: mcp
+                periodSeconds: 30
+                timeoutSeconds: 5
+                failureThreshold: 3
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          resources:
+            requests:
+              cpu: 25m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
 
   defaultPodOptions:
+    automountServiceAccountToken: false
     securityContext:
       runAsNonRoot: true
       runAsUser: 65534
@@ -91,6 +170,43 @@ app-template:
       fsGroupChangePolicy: OnRootMismatch
       seccompProfile:
         type: RuntimeDefault
+
+  serviceAccount:
+    zeroclaw:
+      forceRename: zeroclaw
+      automountServiceAccountToken: false
+
+  rbac:
+    roles:
+      zeroclaw-metrics:
+        forceRename: zeroclaw-metrics
+        type: ClusterRole
+        rules:
+          - apiGroups:
+              - metrics.k8s.io
+            resources:
+              - nodes
+              - pods
+            verbs:
+              - get
+              - list
+              - watch
+    bindings:
+      zeroclaw-view:
+        forceRename: zeroclaw-view
+        type: ClusterRoleBinding
+        roleRef:
+          name: view
+          kind: ClusterRole
+        subjects:
+          - identifier: zeroclaw
+      zeroclaw-metrics:
+        forceRename: zeroclaw-metrics
+        type: ClusterRoleBinding
+        roleRef:
+          identifier: zeroclaw-metrics
+        subjects:
+          - identifier: zeroclaw
 
   service:
     app:
@@ -116,6 +232,19 @@ app-template:
           model_provider = "openrouter.default"
           risk_profile = "full"
           runtime_profile = "agentic"
+          mcp_bundles = ["kubernetes"]
+
+          [mcp]
+          enabled = true
+          deferred_loading = false
+
+          [[mcp.servers]]
+          name = "kubernetes"
+          transport = "http"
+          url = "http://127.0.0.1:8080/mcp"
+
+          [mcp_bundles.kubernetes]
+          servers = ["kubernetes"]
 
           [risk_profiles.full]
           level = "full"
@@ -153,8 +282,12 @@ app-template:
       storageClass: topolvm-thin-retain
       accessMode: ReadWriteOnce
       size: 2Gi
-      globalMounts:
-        - path: /zeroclaw-data
+      advancedMounts:
+        zeroclaw:
+          setup-config:
+            - path: /zeroclaw-data
+          app:
+            - path: /zeroclaw-data
     config-source:
       type: configMap
       identifier: config
@@ -166,5 +299,35 @@ app-template:
               readOnly: true
     tmp:
       type: emptyDir
-      globalMounts:
-        - path: /tmp
+      advancedMounts:
+        zeroclaw:
+          setup-config:
+            - path: /tmp
+          app:
+            - path: /tmp
+          kubernetes-mcp:
+            - path: /tmp
+    kubernetes-token:
+      type: custom
+      volumeSpec:
+        projected:
+          defaultMode: 0440
+          sources:
+            - serviceAccountToken:
+                path: token
+                expirationSeconds: 3600
+            - configMap:
+                name: kube-root-ca.crt
+                items:
+                  - key: ca.crt
+                    path: ca.crt
+            - downwardAPI:
+                items:
+                  - path: namespace
+                    fieldRef:
+                      fieldPath: metadata.namespace
+      advancedMounts:
+        zeroclaw:
+          kubernetes-mcp:
+            - path: /var/run/secrets/kubernetes.io/serviceaccount
+              readOnly: true
