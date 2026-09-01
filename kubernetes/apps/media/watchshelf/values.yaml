@@ -1,0 +1,79 @@
+app-template:
+  controllers:
+    watchshelf:
+      annotations:
+        reloader.stakater.com/auto: "true"
+      containers:
+        app:
+          image:
+            # Built from github.com/JediBrooker/WatchShelf/sidecar/Dockerfile.
+            repository: registry.blarc.my.id/watchshelf
+            tag: latest
+            pullPolicy: Always
+          env:
+            ABS_URL: http://audiobookshelf.media.svc.cluster.local:80
+            BIND: 0.0.0.0
+            PORT: &port 8081
+            SESSIONS_FILE: /data/sessions.json
+          probes:
+            liveness: &probes
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /health
+                  port: *port
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+                failureThreshold: 3
+            readiness: *probes
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: [ "ALL" ] }
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+  defaultPodOptions:
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: OnRootMismatch
+  service:
+    app:
+      ports:
+        http:
+          port: *port
+  route:
+    app:
+      hostnames:
+        - "{{ .Release.Name }}.blarc.my.id"
+      parentRefs:
+        - name: external
+          namespace: traefik
+      rules:
+        - backendRefs:
+            - identifier: app
+              port: *port
+          matches:
+            - path:
+                type: PathPrefix
+                value: /
+  persistence:
+    data:
+      type: persistentVolumeClaim
+      storageClass: topolvm-thin-retain
+      accessMode: ReadWriteOnce
+      size: 1Gi
+      globalMounts:
+        - path: /data
+    tmp:
+      type: emptyDir
+      globalMounts:
+        - path: /tmp
