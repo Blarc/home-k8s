@@ -77,7 +77,7 @@ app-template:
       type: persistentVolumeClaim
       storageClass: topolvm-thin-retain
       accessMode: ReadWriteOnce
-      size: 128Mi
+      size: 1Gi
     media:
       # Configure Scryer's download staging path as /media/downloads in the UI
       # so imports stay on the same filesystem as qBittorrent.
