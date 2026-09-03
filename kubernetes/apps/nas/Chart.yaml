@@ -1,0 +1,4 @@
+apiVersion: v2
+description: Helm chart to deploy NAS related resources
+name: nas
+version: 1.0.0
