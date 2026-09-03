@@ -1,0 +1,160 @@
+---
+- name: Setup dufs on NAS
+  hosts: NAS
+  become: true
+
+  vars:
+    dufs_version: "0.46.0"
+    dufs_user: dufs
+    dufs_group: dufs
+    dufs_admin_user: admin
+    dufs_serve_path: /storage
+    dufs_bind: 0.0.0.0
+    dufs_port: 5000
+    dufs_release_target: x86_64-unknown-linux-musl
+    # Add options such as --allow-upload or --allow-delete here when needed.
+    dufs_extra_args: []
+
+  tasks:
+    - name: Load encrypted NAS credentials
+      community.sops.load_vars:
+        file: vars/setup_nut_server.encrypted.yaml
+
+    - name: Install dufs prerequisites
+      apt:
+        name:
+          - ca-certificates
+        state: present
+        update_cache: yes
+
+    - name: Create dufs system group
+      group:
+        name: "{{ dufs_group }}"
+        system: true
+
+    - name: Create dufs system user
+      user:
+        name: "{{ dufs_user }}"
+        group: "{{ dufs_group }}"
+        system: true
+        shell: /usr/sbin/nologin
+        home: /nonexistent
+        create_home: false
+
+    - name: Ensure dufs serves an existing directory
+      file:
+        path: "{{ dufs_serve_path }}"
+        state: directory
+
+    - name: Create dufs configuration directory
+      file:
+        path: /etc/dufs
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Configure dufs admin authentication
+      copy:
+        dest: /etc/dufs/config.yaml
+        owner: "{{ dufs_user }}"
+        group: "{{ dufs_group }}"
+        mode: "0600"
+        content: |
+          serve-path: {{ dufs_serve_path | to_json }}
+          bind: {{ dufs_bind | to_json }}
+          port: {{ dufs_port }}
+          auth:
+            - {{ (dufs_admin_user ~ ':' ~ dufs_admin_password ~ '@/:rw') | to_json }}
+          allow-all: false
+          allow-upload: true
+          allow-delete: true
+          allow-search: true
+          allow-archive: true
+          allow-symlink: false
+      no_log: true
+      notify: Restart dufs
+
+    - name: Download dufs binary archive
+      get_url:
+        url: "https://github.com/sigoden/dufs/releases/download/v{{ dufs_version }}/dufs-v{{ dufs_version }}-{{ dufs_release_target }}.tar.gz"
+        dest: "/tmp/dufs-v{{ dufs_version }}-{{ dufs_release_target }}.tar.gz"
+        mode: "0644"
+
+    - name: Check installed dufs version
+      command: /usr/local/bin/dufs --version
+      register: dufs_installed_version
+      changed_when: false
+      failed_when: false
+
+    - name: Extract dufs binary
+      unarchive:
+        src: "/tmp/dufs-v{{ dufs_version }}-{{ dufs_release_target }}.tar.gz"
+        dest: /usr/local/bin
+        remote_src: true
+        extra_opts:
+          - --no-same-owner
+      when:
+        - dufs_installed_version.rc != 0 or dufs_version not in dufs_installed_version.stdout
+      notify: Restart dufs
+
+    - name: Set dufs binary permissions
+      file:
+        path: /usr/local/bin/dufs
+        owner: root
+        group: root
+        mode: "0755"
+      notify: Restart dufs
+
+    - name: Install dufs systemd service
+      copy:
+        dest: /etc/systemd/system/dufs.service
+        owner: root
+        group: root
+        mode: "0644"
+        content: |
+          [Unit]
+          Description=dufs file server
+          After=network-online.target
+          Wants=network-online.target
+
+          [Service]
+          Type=simple
+          User={{ dufs_user }}
+          Group={{ dufs_group }}
+          ExecStart=/usr/local/bin/dufs --config /etc/dufs/config.yaml {{ dufs_extra_args | join(' ') }}
+          Restart=on-failure
+          RestartSec=5
+          NoNewPrivileges=true
+          PrivateTmp=true
+          ProtectSystem=full
+          ProtectHome=true
+
+          [Install]
+          WantedBy=multi-user.target
+      notify: Restart dufs
+
+    - name: Reload systemd
+      systemd:
+        daemon_reload: true
+
+    - name: Enable and start dufs
+      systemd:
+        name: dufs
+        enabled: true
+        state: started
+
+    - name: Check dufs health endpoint
+      uri:
+        url: "http://127.0.0.1:{{ dufs_port }}/__dufs__/health"
+        return_content: false
+      register: dufs_health
+      retries: 5
+      delay: 2
+      until: dufs_health.status == 200
+
+  handlers:
+    - name: Restart dufs
+      systemd:
+        name: dufs
+        state: restarted

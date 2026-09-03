@@ -2,6 +2,15 @@
 ansible-playbook -i inventory.ini playbooks/setup_zfs.yaml --ask-become-pass
 ```
 
+Install dufs and serve the NAS `/storage` directory on port 5000:
+
+```bash
+ansible-playbook -i inventory.ini playbooks/setup_dufs.yaml --ask-become-pass
+```
+
+The admin password is read from `playbooks/vars/setup_nut_server.encrypted.yaml` as
+`dufs_admin_password`.
+
 ## Tasks
 
 ### Ensure contrib and non-free repositories are enabled
