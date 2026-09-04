@@ -7,7 +7,7 @@ app-template:
         app:
           image:
             repository: ghcr.io/scryer-media/scryer
-            tag: 0.19.7@sha256:27a12f6e27a206426cbe614706dff00708665c8a084498053ef434de0cf808d1
+            tag: 0.19.10@sha256:669552ce0d0c1a61b547218f0b6efab5d2a2a1f83d28eb94fa5d06a950bc3012
             pullPolicy: Always
           env:
             SCRYER_BIND: 0.0.0.0:8080
