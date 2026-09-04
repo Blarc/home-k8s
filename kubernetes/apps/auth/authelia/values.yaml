@@ -260,7 +260,7 @@ app-template:
         app:
           image:
             repository: docker.io/valkey/valkey
-            tag: 9.1.1-alpine
+            tag: 9.1.2-alpine
           command:
             - /bin/sh
             - -ec
