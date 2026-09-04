@@ -75,6 +75,14 @@ app-template:
       existingClaim: qbittorrent-media
       globalMounts:
         - path: /srv/media
+    audiobooks:
+      existingClaim: audiobookshelf-audiobooks
+      globalMounts:
+        - path: /srv/media/audiobooks
+    books:
+      existingClaim: audiobookshelf-books
+      globalMounts:
+        - path: /srv/media/books
     stuff:
       storageClass: nfs
       size: 5Gi
