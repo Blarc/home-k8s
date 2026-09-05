@@ -10,7 +10,7 @@ app-template:
         setup-config:
           image:
             repository: ghcr.io/zeroclaw-labs/zeroclaw
-            tag: v0.8.4-debian@sha256:d2b3ac2e6b6dd3b0d977b3722fea8bc5ba414c2d5c34d48fe42838aac217afa5
+            tag: v0.8.5-debian@sha256:1876f4cfc85d1fd3f418e0607fc9207ef6525113e985092ac09b8dcd179df05e
           # Containers start concurrently; wait for MCP so ZeroClaw does not
           # permanently fail open without its tools after a startup race.
           command:
@@ -31,7 +31,7 @@ app-template:
         app:
           image:
             repository: ghcr.io/zeroclaw-labs/zeroclaw
-            tag: v0.8.4-debian@sha256:d2b3ac2e6b6dd3b0d977b3722fea8bc5ba414c2d5c34d48fe42838aac217afa5
+            tag: v0.8.5-debian@sha256:1876f4cfc85d1fd3f418e0607fc9207ef6525113e985092ac09b8dcd179df05e
           command:
             - /bin/sh
             - -ec
