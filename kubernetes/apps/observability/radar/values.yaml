@@ -1,0 +1,11 @@
+radar:
+  fullnameOverride: radar
+  timeline:
+    storage: sqlite
+  httpRoute:
+    enabled: true
+    parentRefs:
+        - name: internal
+          namespace: traefik
+    hostnames:
+      - radar.blarc.my.id
