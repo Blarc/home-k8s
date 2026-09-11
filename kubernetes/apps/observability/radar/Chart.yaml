@@ -2,7 +2,7 @@ apiVersion: v2
 dependencies:
   - name: radar
     repository: https://skyhook-io.github.io/helm-charts
-    version: 1.13.0
+    version: 1.13.1
 description: Helm chart to deploy radar
 name: radar
 version: 1.0.0
