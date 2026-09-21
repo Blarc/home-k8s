@@ -2,7 +2,7 @@ apiVersion: v2
 dependencies:
   - name: intel-device-plugins-operator
     repository: https://intel.github.io/helm-charts
-    version: 0.36.0
+    version: 0.37.0
 description: Helm chart to deploy Intel Device Plugins Operator
 name: intel-device-plugins-operator
 version: 1.0.0
