@@ -2,7 +2,7 @@ authelia:
   enabled: true
 
   image:
-    tag: 4.39.20
+    tag: 4.39.24
 
   service:
     type: ClusterIP
