@@ -4,7 +4,7 @@ metadata:
   name: headscale
   namespace: {{ .Release.Namespace }}
 spec:
-  version: "v0.29.3"
+  version: "v0.29.4"
   image: ghcr.io/juanfont/headscale
   replicas: 1
   config:
