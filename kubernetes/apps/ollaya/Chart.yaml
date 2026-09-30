@@ -1,0 +1,9 @@
+apiVersion: v2
+name: ollaya
+description: A Helm chart for Ollaya
+dependencies:
+  - name: app-template
+    version: 5.2.1
+    repository: oci://ghcr.io/bjw-s-labs/helm
+type: application
+version: 1.0.0
