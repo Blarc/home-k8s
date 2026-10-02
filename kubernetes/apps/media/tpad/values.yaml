@@ -1,0 +1,70 @@
+app-template:
+  controllers:
+    tpad:
+      containers:
+        app:
+          image:
+            repository: ghcr.io/blarc/tpad
+            tag: latest
+            pullPolicy: Always
+          env:
+            TPAD_DATA_DIR: /data
+            TPAD_LISTEN_ADDR: 0.0.0.0:8080
+          probes:
+            liveness: &probes
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /healthz
+                  port: &port 8080
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 3
+                failureThreshold: 3
+            readiness: *probes
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: [ "ALL" ] }
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+  defaultPodOptions:
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: OnRootMismatch
+  service:
+    app:
+      ports:
+        http:
+          port: *port
+  route:
+    app:
+      hostnames:
+        - "{{ .Release.Name }}.blarc.my.id"
+      parentRefs:
+        - name: internal
+          namespace: traefik
+      rules:
+        - backendRefs:
+            - identifier: app
+              port: *port
+          matches:
+            - path:
+                type: PathPrefix
+                value: /
+  persistence:
+    data:
+      type: persistentVolumeClaim
+      storageClass: nfs
+      accessMode: ReadWriteMany
+      size: 1Gi
+      globalMounts:
+        - path: /data
