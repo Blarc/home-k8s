@@ -5,4 +5,5 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-options: 'Prune=false,Delete=false'
   labels:
+    external: "true"
     pod-security.kubernetes.io/enforce: "privileged"

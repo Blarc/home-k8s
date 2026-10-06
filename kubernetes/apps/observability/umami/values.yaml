@@ -75,6 +75,7 @@ app-template:
           port: *port
   route:
     app:
+      forceRename: '{{ .Release.Name }}'
       hostnames:
         - "{{ .Release.Name }}.blarc.my.id"
       parentRefs:
@@ -88,3 +89,20 @@ app-template:
             - path:
                 type: PathPrefix
                 value: /
+    collector:
+      hostnames:
+        - analytics.blarc.my.id
+      parentRefs:
+        - name: external
+          namespace: traefik
+      rules:
+        - backendRefs:
+            - identifier: app
+              port: *port
+          matches:
+            - path:
+                type: Exact
+                value: /script.js
+            - path:
+                type: Exact
+                value: /api/send
