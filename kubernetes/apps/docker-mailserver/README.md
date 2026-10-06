@@ -1,6 +1,9 @@
 # Docker Mailserver
 
-User was added by executing into the pod and creating one via cli.
+To add user, generate password and add it to a config map:
+```bash
+kubectl -n docker-mailserver exec -it deployment/docker-mailserver -- doveadm pw -s SHA512-CRYPT
+```
 
 
 ## Why Load Balancer
