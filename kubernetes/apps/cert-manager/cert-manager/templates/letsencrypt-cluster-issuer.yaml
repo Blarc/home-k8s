@@ -15,7 +15,10 @@ spec:
       name: letsencrypt-prod
 
     solvers:
-      - dns01:
+      - selector:
+          dnsZones:
+            - blarc.my.id
+        dns01:
           webhook:
             # This group needs to be configured when installing the helm package, otherwise the webhook won't have permission to create an ACME challenge for this API group.
             groupName: blarc.my.id
@@ -23,7 +26,10 @@ spec:
             config:
               etcdEndpoint: http://etcd.etcd.svc.cluster.local:2379
               coreDNSPrefix: /blarcdns
-      - dns01:
+      - selector:
+          dnsZones:
+            - planreply.eu
+        dns01:
           webhook:
             groupName: cert-manager-webhook-spaceship.hjwylde.github.io
             solverName: spaceship
