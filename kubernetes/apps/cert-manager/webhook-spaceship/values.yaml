@@ -1,0 +1,30 @@
+cert-manager-webhook-spaceship:
+  certManager:
+    namespace: cert-manager
+    serviceAccountName: cert-manager
+
+  image:
+    repository: ghcr.io/hjwylde/cert-manager-webhook-spaceship
+    tag: latest
+    pullPolicy: Always
+
+  nameOverride: ""
+  fullnameOverride: "cert-manager-webhook-spaceship"
+
+  service:
+    type: ClusterIP
+    port: 443
+
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+  nodeSelector: { }
+
+  tolerations: [ ]
+
+  affinity: { }

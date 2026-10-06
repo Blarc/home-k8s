@@ -23,3 +23,16 @@ spec:
             config:
               etcdEndpoint: http://etcd.etcd.svc.cluster.local:2379
               coreDNSPrefix: /blarcdns
+      - dns01:
+          webhook:
+            groupName: cert-manager-webhook-spaceship.hjwylde.github.io
+            solverName: spaceship
+            config:
+              apiKeySecretRef:
+                name: spaceship-credentials
+                namespace: cert-manager
+                key: api-key
+              apiSecretSecretRef:
+                name: spaceship-credentials
+                namespace: cert-manager
+                key: api-secret
