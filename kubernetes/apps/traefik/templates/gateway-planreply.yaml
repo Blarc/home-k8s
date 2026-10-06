@@ -1,0 +1,42 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: planreply
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  gatewayClassName: traefik
+  listeners:
+    - name: web-external
+      hostname: planreply.eu
+      protocol: HTTP
+      port: 9000
+      allowedRoutes:
+        kinds:
+          - kind: HTTPRoute
+            group: gateway.networking.k8s.io
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: planreply
+    - name: websecure-external
+      hostname: planreply.eu
+      protocol: HTTPS
+      port: 9443
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - kind: Secret
+            name: planreply-certificate
+            group: ''
+      allowedRoutes:
+        kinds:
+          - kind: HTTPRoute
+            group: gateway.networking.k8s.io
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              kubernetes.io/metadata.name: planreply
