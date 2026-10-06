@@ -4,5 +4,15 @@ node-feature-discovery:
       limits:
         memory: 512Mi
       requests:
-        cpu: 100m
-        memory: 128Mi
+        cpu: 10m
+        memory: 32Mi
+  gc:
+    resources:
+      requests:
+        cpu: 5m
+        memory: 32Mi
+  worker:
+    resources:
+      requests:
+        cpu: 5m
+        memory: 32Mi

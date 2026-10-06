@@ -22,7 +22,7 @@ victoria-metrics-k8s-stack:
       resources:
         requests:
           cpu: 100m
-          memory: 512Mi
+          memory: 768Mi
         limits:
           memory: 2Gi
       storage:
@@ -83,6 +83,24 @@ victoria-metrics-k8s-stack:
           memory: 256Mi
   vmalert:
     enabled: true
+    spec:
+      resources:
+        requests:
+          cpu: 20m
+          memory: 64Mi
+        limits:
+          cpu: 200m
+          memory: 500Mi
+  internal:
+    vmauth:
+      spec:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 32Mi
+          limits:
+            cpu: 200m
+            memory: 300Mi
   # The old kube-prometheus-stack workloads are being replaced by these dependencies.
   prometheus-node-exporter:
     enabled: true
@@ -91,6 +109,10 @@ victoria-metrics-k8s-stack:
       labels:
         jobLabel: node-exporter
   kubelet:
+    vmScrapes:
+      # cAdvisor already provides container CPU and memory metrics.
+      resources:
+        enabled: false
     vmScrape:
       spec:
         relabelConfigs:
@@ -109,6 +131,17 @@ victoria-metrics-k8s-stack:
       - pods=[*]
       - deployments=[*]
       - persistentvolumeclaims=[*]
+  kubeApiServer:
+    vmScrape:
+      spec:
+        endpoints:
+          - interval: 60s
+            bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+            port: https
+            scheme: https
+            tlsConfig:
+              caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+              serverName: kubernetes
   # These control-plane endpoints had to be exposed manually in talconfig
   kubeControllerManager:
     enabled: true

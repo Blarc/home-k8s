@@ -41,6 +41,18 @@ immich:
       library:
         existingClaim: immich-data
     configuration:
+      # Bound background processing peaks on the shared four-core node.
+      job:
+        thumbnailGeneration:
+          concurrency: 1
+        smartSearch:
+          concurrency: 1
+        faceDetection:
+          concurrency: 1
+        videoConversion:
+          concurrency: 1
+      ffmpeg:
+        threads: 2
       oauth:
         enabled: true
         autoRegister: true
@@ -73,6 +85,8 @@ immich:
       main:
         containers:
           main:
+            env:
+              MACHINE_LEARNING_REQUEST_THREADS: "1"
             resources:
               requests:
                 cpu: 100m

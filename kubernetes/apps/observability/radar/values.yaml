@@ -1,5 +1,9 @@
 radar:
   fullnameOverride: radar
+  resources:
+    requests:
+      cpu: 25m
+      memory: 256Mi
   timeline:
     storage: sqlite
   httpRoute:
