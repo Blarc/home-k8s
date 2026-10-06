@@ -78,6 +78,12 @@ app-template:
             limits:
               memory: 512Mi
   defaultPodOptions:
+    # Public DNS points at the router; webmail uses the LAN mail endpoint
+    # while retaining mail.blarc.my.id for TLS hostname verification.
+    hostAliases:
+      - ip: 192.168.1.225
+        hostnames:
+          - mail.blarc.my.id
     securityContext:
       fsGroup: 82
       fsGroupChangePolicy: OnRootMismatch
