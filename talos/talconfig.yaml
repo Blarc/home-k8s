@@ -111,6 +111,8 @@ controlPlane:
     - |
       cluster:
         apiServer:
+          env:
+            GOGC: "50"
           resources:
             requests:
-              memory: 2Gi
+              memory: 1Gi
