@@ -1,0 +1,105 @@
+networkPolicy:
+  enabled: true
+  # Additional NetworkPolicy egress rules, for example for an external database.
+  extraAppEgress: []
+
+app-template:
+  controllers:
+    planreply:
+      replicas: 1
+      strategy: Recreate
+      containers:
+        app:
+          image:
+            repository: ghcr.io/blarc/planreply
+            tag: latest
+            pullPolicy: Always
+          env:
+            NODE_ENV: production
+            PORT: "1234"
+            DATABASE_TYPE: postgres
+            PDF_DIR: /data/pdf-rooms
+            DATABASE_URL:
+              valueFrom:
+                secretKeyRef:
+                  name: '{{ .Release.Name }}-app'
+                  key: uri
+          probes:
+            liveness: &probes
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /health
+                  port: &port 1234
+                periodSeconds: 10
+                timeoutSeconds: 3
+                failureThreshold: 3
+            readiness: *probes
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /health
+                  port: *port
+                periodSeconds: 10
+                timeoutSeconds: 3
+                failureThreshold: 30
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: [ALL]
+          resources:
+            requests:
+              cpu: 10m
+              memory: 128Mi
+            limits:
+              memory: 1Gi
+  defaultPodOptions:
+    imagePullSecrets:
+      - name: planreply-ghcr
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: OnRootMismatch
+  service:
+    app:
+      controller: planreply
+      type: ClusterIP
+      ports:
+        http:
+          port: *port
+  route:
+    app:
+      hostnames:
+        - planreply.eu
+      parentRefs:
+        - name: planreply
+          namespace: traefik
+          sectionName: websecure-external
+      rules:
+        - matches:
+            - path:
+                type: PathPrefix
+                value: /
+          backendRefs:
+            - identifier: app
+              port: *port
+  persistence:
+    pdfs:
+      type: persistentVolumeClaim
+      storageClass: nfs
+      accessMode: ReadWriteMany
+      size: 10Gi
+      # To reuse a claim, disable this item and add an existing-pdfs item.
+      # See README.md for the standard app-template values override.
+      globalMounts:
+        - path: /data/pdf-rooms
+    tmp:
+      type: emptyDir
+      globalMounts:
+        - path: /tmp
