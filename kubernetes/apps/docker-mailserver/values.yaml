@@ -15,6 +15,10 @@ docker-mailserver:
             selector = "mail";
             path = "/etc/rspamd/dkim/rsa-2048-mail-blarc.my.id.private.txt";
           }
+          planreply.eu {
+            selector = "mail";
+            path = "/etc/rspamd/dkim/rsa-2048-mail-planreply.eu.private.txt";
+          }
         }
   deployment:
     env:
