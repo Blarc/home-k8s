@@ -1,0 +1,9 @@
+apiVersion: v2
+name: umami
+description: Website analytics with Umami and PostgreSQL
+type: application
+version: 1.0.0
+dependencies:
+  - name: app-template
+    version: 5.2.1
+    repository: oci://ghcr.io/bjw-s-labs/helm

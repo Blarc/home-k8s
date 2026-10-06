@@ -1,0 +1,90 @@
+# Supplied by values.encrypted.yaml.
+secret: {}
+
+app-template:
+  controllers:
+    umami:
+      annotations:
+        reloader.stakater.com/auto: "true"
+      replicas: 1
+      strategy: Recreate
+      containers:
+        app:
+          image:
+            repository: ghcr.io/umami-software/umami
+            tag: 3.4.0
+          env:
+            TZ: Europe/Ljubljana
+            HOSTNAME: 0.0.0.0
+            PORT: &port 3000
+            DISABLE_TELEMETRY: "1"
+            DISABLE_UPDATES: "1"
+            DATABASE_URL:
+              valueFrom:
+                secretKeyRef:
+                  name: '{{ .Release.Name }}-app'
+                  key: uri
+          envFrom:
+            - secretRef:
+                name: '{{ .Release.Name }}-secret'
+          probes:
+            liveness: &probe
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /api/heartbeat
+                  port: *port
+                periodSeconds: 10
+                timeoutSeconds: 5
+                failureThreshold: 3
+            readiness: *probe
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /api/heartbeat
+                  port: *port
+                periodSeconds: 10
+                timeoutSeconds: 5
+                failureThreshold: 60
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ALL]
+          resources:
+            requests:
+              cpu: 10m
+              memory: 128Mi
+            limits:
+              memory: 1Gi
+  defaultPodOptions:
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1001
+      runAsGroup: 1001
+      fsGroup: 1001
+      seccompProfile:
+        type: RuntimeDefault
+  service:
+    app:
+      controller: umami
+      ports:
+        http:
+          port: *port
+  route:
+    app:
+      hostnames:
+        - "{{ .Release.Name }}.blarc.my.id"
+      parentRefs:
+        - name: internal
+          namespace: traefik
+      rules:
+        - backendRefs:
+            - identifier: app
+              port: *port
+          matches:
+            - path:
+                type: PathPrefix
+                value: /
