@@ -106,3 +106,13 @@ app-template:
             - path:
                 type: Exact
                 value: /api/send
+#            - path:
+#                type: Exact
+#                value: /recorder.js
+#            - path:
+#                type: Exact
+#                value: /api/record
+#            # Public recorder settings only; keep website management APIs internal.
+#            - path:
+#                type: RegularExpression
+#                value: '^/api/websites/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/recorder$'
