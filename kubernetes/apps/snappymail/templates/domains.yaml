@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-domains
+data:
+  {{- range .Values.mail.domains }}
+  {{ . }}.json: |
+    {
+      "IMAP": {
+        "host": {{ $.Values.mail.hostname | toJson }},
+        "port": {{ $.Values.mail.imapPort }},
+        "type": 1,
+        "shortLogin": false,
+        "ssl": {"verify_peer": true, "verify_peer_name": true, "allow_self_signed": false}
+      },
+      "SMTP": {
+        "host": {{ $.Values.mail.hostname | toJson }},
+        "port": {{ $.Values.mail.smtpPort }},
+        "type": 1,
+        "shortLogin": false,
+        "useAuth": true,
+        "usePhpMail": false,
+        "ssl": {"verify_peer": true, "verify_peer_name": true, "allow_self_signed": false}
+      },
+      "Sieve": {
+        "host": {{ $.Values.mail.hostname | toJson }},
+        "port": 4190,
+        "type": 2,
+        "enabled": false
+      },
+      "whiteList": ""
+    }
+  {{- end }}
