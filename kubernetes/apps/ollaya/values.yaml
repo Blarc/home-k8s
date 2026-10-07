@@ -24,6 +24,8 @@ app-template:
               done
 
               ollaya pull laya:multilingual
+              ollaya pull decima
+              ollaya pull decima:small
           env:
             OLLAYA_HOST: 127.0.0.1:11435
             OLLAYA_MODELS: /home/ollaya/.ollaya/models
