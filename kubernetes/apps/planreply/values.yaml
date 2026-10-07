@@ -7,7 +7,7 @@ app-template:
   controllers:
     planreply:
       replicas: 1
-      strategy: Recreate
+      strategy: RollingUpdate
       containers:
         app:
           image:
