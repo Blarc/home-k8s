@@ -6,7 +6,7 @@ app-template:
         pull-model:
           image:
             repository: ghcr.io/ollaya-dev/ollaya
-            tag: 0.12.0
+            tag: 0.12.1
             pullPolicy: IfNotPresent
           command:
             - /bin/bash
@@ -38,7 +38,7 @@ app-template:
         app:
           image:
             repository: ghcr.io/ollaya-dev/ollaya
-            tag: 0.12.0
+            tag: 0.12.1
             pullPolicy: IfNotPresent
           env:
             OLLAYA_HOST: 0.0.0.0:11435
