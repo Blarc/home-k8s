@@ -4,6 +4,6 @@ dependencies:
   version: 0.11.22
 - name: app-template
   repository: oci://ghcr.io/bjw-s-labs/helm
-  version: 5.2.1
-digest: sha256:8d133166ddb4831fec969539abdb0e653d7df5018d1af4ee494e4677e2572750
-generated: "2026-09-17T21:55:54.137603089Z"
+  version: 5.3.0
+digest: sha256:7c91291f25dd58566f6d396604d3e534a3ac754624621a56fe2a16cd106c8b01
+generated: "2026-10-10T19:43:58.115415481Z"
