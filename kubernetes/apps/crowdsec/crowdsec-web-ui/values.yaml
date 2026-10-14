@@ -6,7 +6,7 @@ app-template:
           image:
             repository: ghcr.io/theduffman85/crowdsec-web-ui
             # renovate: datasource=docker depName=ghcr.io/theduffman85/crowdsec-web-ui
-            tag: 2026.10.3@sha256:5d3ef6c46ce08d8c53cb774f8429103d2571986db93517715cc691756c07ce66
+            tag: 2026.10.5@sha256:54d048dcab5082c0e394f0d00caacaf292f8f042ee449b974f9a28d1a192e3b7
           env:
             CONFIG_AUTH_ENABLED: "true"
             CONFIG_INSTANCE_LAPI_URL: http://crowdsec-service.crowdsec.svc.cluster.local:8080
