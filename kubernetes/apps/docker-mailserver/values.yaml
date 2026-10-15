@@ -2,6 +2,11 @@ docker-mailserver:
   fullnameOverride: docker-mailserver
   certificate: docker-mailserver-certificate
   configMaps:
+    postfix-relaymap.cf:
+      create: true
+      path: postfix-relaymap.cf
+      data: |
+        @planreply.eu [mail.smtp2go.com]:2525
     dkim-signing.conf:
       create: true
       path: rspamd/override.d/dkim_signing.conf
@@ -20,6 +25,12 @@ docker-mailserver:
             path = "/etc/rspamd/dkim/rsa-2048-mail-planreply.eu.private.txt";
           }
         }
+  secrets:
+    postfix-sasl-password.cf:
+      name: postfix-sasl-password.cf
+      # Set create: true and data in values.encrypted.yaml before deploying.
+      create: false
+      path: postfix-sasl-password.cf
   deployment:
     env:
       OVERRIDE_HOSTNAME: mail.blarc.my.id

@@ -10,6 +10,9 @@ docker-mailserver:
       path: ENC[AES256_GCM,data:uJz+dIwocFz5duH1NVcTi9JW,iv:0mRoHgHXepPXMzendyRjZ2l0DGTLOW5+NFsptx8tuec=,tag:c/f97w35Cx0LX39MbnPcVA==,type:str]
       data: ENC[AES256_GCM,data:9rHnV8AjXBe2QN+s9brFCQfSg2Bc0IBx4Z/jTP+I0ErHP1MWurg3abGOvaTlrvoVjfAsTyzMv0EsqF6zOhdjSn1QxtXyaLPda5uF+jcg1VXWriUZF3N1HJ97YZQUy903rSbV3WHd6Nup3cEC8sPm0RybdHAm,iv:F1DoSj6J4jxpiKiV3zc8w7AsiiXNKL0xjfekV8Ar+Go=,tag:WH7XEFymasX25el9s1F05g==,type:str]
   secrets:
+    postfix-sasl-password.cf:
+      create: ENC[AES256_GCM,data:y3krsw==,iv:KKROq/I4GyCv1UGfLAtilcGcYtL1XKpW92SqaHknUGk=,tag:NfLYzqXSAjB/XlE7jVWf1Q==,type:bool]
+      data: ENC[AES256_GCM,data:mrNvbTod84k+XH8wELoO6+eIdps2nS1ntphbTZ9JhEU+7YKR/1fcNhrdDqGGnuZKBVwpHgj1/LFC+cpm,iv:J9+858jK58idIGLDcyG/aOt7Nb+MnzDoNgqOPOm3X1Q=,tag:4GPR0uLlMpCzbLJcY/wCow==,type:str]
     rsa-2048-mail-blarc.my.id.private.txt:
       name: ENC[AES256_GCM,data:rNIgitnBe0/ivQxgRlPJT5bZo4DTFzMQtpwhWaz+Fnd/Qh9jXQ==,iv:YxLe6mNtWfnrjUbcAW/dgL26bLd/XrVrMmIJ6uReKMQ=,tag:+TdjRSzDzJtyKmS79z+v7Q==,type:str]
       create: ENC[AES256_GCM,data:OmUpyA==,iv:NNsTSNJBkE6wLaG2BRO6Z111RqhRhNt3WbEnTxKGbwg=,tag:jWG8rSWsCLGLjFbwpLYJsA==,type:bool]
@@ -40,7 +43,7 @@ sops:
         9Ge1MvjQftbJpzfHqP3jDD1gZXQQ51FvJ40z37wo0DYz6Wq3x0dx2w==
         -----END AGE ENCRYPTED FILE-----
       recipient: age1mm90zkg8lsmpqa7gya9p2prsj8yfq774gjm6dkamkkvwugen7ywse5w97z
-  lastmodified: "2026-10-06T09:29:22Z"
-  mac: ENC[AES256_GCM,data:9BQgn7nPszYNqiwr9qEyN8VCvgcg7b1sTZlUSGbmD4djRaTuKE+rdcAuwG3R2aV8AspLax9ZBOS7K28UF3nUYYhiEqgR8kVUgwQch2VpIe5x+Xi5IgwqYTNiJqFYFln7/mqPCFZHxXiySIYYoq2vRxT+2A7kWQLWg3baN+GH6K0=,iv:fJBuF9iurNb1d8CatJmGGWvbWLN9Moj8J/u/Mh0HeZA=,tag:dxb8S5cKIZRWuehZS2+BYg==,type:str]
+  lastmodified: "2026-10-15T08:27:19Z"
+  mac: ENC[AES256_GCM,data:OQdspcdo5VBOTTa7wt4bU1FxCmjYO9GlvSM8mM7AmLI+IdVoEyeNfg5RXJyt0DDNmN+3/ZdL6GFh00TOvqWdBEiohKLcNJEeiX9uKzkt7SOiQpmJocBDCGtrrKkbzatOAczj+px0UA2/ZvohSsYJ3nj9NQ1Wee2C6YqaBUNa9LM=,iv:tuUjHk6OkT7Gs4XnLtVXdVJSfqYIa3/aI/VYwf4fsQg=,tag:e29sPNXrRqzt95p7vRoygA==,type:str]
   unencrypted_suffix: _unencrypted
   version: 3.13.3
