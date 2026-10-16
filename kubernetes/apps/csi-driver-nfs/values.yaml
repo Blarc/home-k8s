@@ -17,6 +17,8 @@ csi-driver-nfs:
         limits:
           memory: 32Mi
   node:
+    nodeSelector:
+      kubernetes.io/hostname: multi-role
     resources:
       livenessProbe:
         limits:
