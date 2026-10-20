@@ -109,7 +109,9 @@ authelia:
     notifier:
       smtp:
         enabled: true
-        address: submissions://mail.blarc.my.id:465
+        address: submissions://docker-mailserver.docker-mailserver.svc.cluster.local:465
+        tls:
+          server_name: mail.blarc.my.id
         sender: "Blarc Auth <noreply@blarc.my.id>"
         identifier: auth.blarc.my.id
         subject: "[Blarc Auth] {title}"
