@@ -1,7 +1,6 @@
 nut_admin_password: ENC[AES256_GCM,data:+u4wCiHQlGHS/h/Uk4uSkAH+Oow5,iv:CCb9gw7/oSLiy5aFXhh3ds2hDbQ1Zi6cxtX6/6gNq/A=,tag:N/8Cx2PGOFJaBO1qQhpV5Q==,type:str]
 nut_monitor_password: ENC[AES256_GCM,data:mjM4CX83Y0VwtrYOwFxDjJ4kpIcGzA==,iv:yAI/O+AkaM4WhRJCw4lYC8a0UEWc0PJ88wOjN+G+Z5U=,tag:xn2tbhgrKyPmmX1D1RZe7g==,type:str]
 nut_ntfy_topic_name: ENC[AES256_GCM,data:ZyxDmlOLy03q09U2mCX+M+jTovi3KvhuhuUbB7CWD4FBvgjZ8enYwvY7N2w=,iv:Nbe9m+rIKFci/cmjJcfvc8mpDR1g6VeF75dAu4YLUV4=,tag:o2O5S/No7kW4t70LMaAylg==,type:str]
-dufs_admin_password: ENC[AES256_GCM,data:6M6gDNv70LvQdiAJ39MX5mWICCe7cY3F0g==,iv:Qn+izo7EPYM0AY4uWc0piSskEenrT5oxhJn3d1ALgs4=,tag:jgS4PBUxzzNlL1OWjN8h8w==,type:str]
 sops:
   age:
     - enc: |
@@ -22,7 +21,7 @@ sops:
         OC+F8dvWdoYp0kLAnqMW5zqKQcpRO5vApYAMuC8xpfJOgo+cYLP9CA==
         -----END AGE ENCRYPTED FILE-----
       recipient: age1mm90zkg8lsmpqa7gya9p2prsj8yfq774gjm6dkamkkvwugen7ywse5w97z
-  lastmodified: "2026-09-03T06:02:56Z"
-  mac: ENC[AES256_GCM,data:ahq1C01zwd7jcZD++nHVhp++BBksJcSQRYrnvv6SCtUTnRdznhTBrqvf2xdHD3h/oBPcUqA/bQ/fHR0/zDunKgVHKXuapmIDJAXLwOFsYZX1n8sxGfNGIcEOUPHUOXrekbU1G6C6Ye/1N4iCfrtO0m5XJhibXi+kCIHveob+fJU=,iv:MiJOhv3Q90GKx7SbBWHiW2RQWQ9ncNfq13udzdbbkx4=,tag:eLzJ2hAzV49ctzfG55lIZg==,type:str]
+  lastmodified: "2026-10-20T06:19:10Z"
+  mac: ENC[AES256_GCM,data:7T+h1erO4DvFAF+iigtA9rRAg9xUnm5fMKGjKngVoGhXwiYmrwMgpekzAh3Iyy1KTVgumT/ZgYoZVrBEoaeExuVYb5RUQZowYuEPS+CRTfl1cmNHeKNLX3qS1svplgd2IoR0t/QWZ2gmbxjxO//2dfJ2v/fHA2wka9glD4EXFPM=,iv:LPSo96icS2zF/DRivKSSIWRqEa86jFHV/lXSHKjTgUw=,tag:E3UXAQWPW7LzHEXsa1G9bg==,type:str]
   unencrypted_suffix: _unencrypted
   version: 3.13.3

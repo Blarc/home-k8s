@@ -8,8 +8,10 @@ Install dufs and serve the NAS `/storage` directory on port 5000:
 ansible-playbook -i inventory.ini playbooks/setup_dufs.yaml --ask-become-pass
 ```
 
-The admin password is read from `playbooks/vars/setup_nut_server.encrypted.yaml` as
-`dufs_admin_password`.
+Browser access through `https://nas.blarc.my.id` is authenticated by Authelia at the Traefik gateway. The dufs playbook
+restricts direct access to NAS port 5000 to localhost and the Kubernetes node at `192.168.1.16`. Sync the Authelia
+policy and protected HTTPRoute before running this playbook; the playbook starts the firewall before it removes the dufs
+password.
 
 ## Tasks
 

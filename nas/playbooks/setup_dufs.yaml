@@ -7,23 +7,20 @@
     dufs_version: "0.46.0"
     dufs_user: dufs
     dufs_group: dufs
-    dufs_admin_user: admin
     dufs_serve_path: /storage
     dufs_bind: 0.0.0.0
     dufs_port: 5000
+    dufs_proxy_node_ip: 192.168.1.16
     dufs_release_target: x86_64-unknown-linux-musl
     # Add options such as --allow-upload or --allow-delete here when needed.
     dufs_extra_args: []
 
   tasks:
-    - name: Load encrypted NAS credentials
-      community.sops.load_vars:
-        file: vars/setup_nut_server.encrypted.yaml
-
     - name: Install dufs prerequisites
       apt:
         name:
           - ca-certificates
+          - nftables
         state: present
         update_cache: yes
 
@@ -54,7 +51,61 @@
         group: root
         mode: "0755"
 
-    - name: Configure dufs admin authentication
+    - name: Restrict direct access to dufs
+      copy:
+        dest: /etc/dufs/firewall.nft
+        owner: root
+        group: root
+        mode: "0644"
+        content: |
+          table inet dufs_access {
+            chain input {
+              type filter hook input priority 0; policy accept;
+              iifname "lo" accept
+              ip saddr {{ dufs_proxy_node_ip }} tcp dport {{ dufs_port }} accept
+              tcp dport {{ dufs_port }} drop
+            }
+          }
+      notify: Restart dufs firewall
+
+    - name: Install dufs firewall service
+      copy:
+        dest: /etc/systemd/system/dufs-firewall.service
+        owner: root
+        group: root
+        mode: "0644"
+        content: |
+          [Unit]
+          Description=Restrict direct access to dufs
+          After=nftables.service
+          Before=dufs.service
+          PartOf=nftables.service
+
+          [Service]
+          Type=oneshot
+          RemainAfterExit=yes
+          ExecStartPre=-/usr/sbin/nft delete table inet dufs_access
+          ExecStart=/usr/sbin/nft -f /etc/dufs/firewall.nft
+          ExecStop=-/usr/sbin/nft delete table inet dufs_access
+
+          [Install]
+          WantedBy=multi-user.target
+      notify: Restart dufs firewall
+
+    - name: Reload systemd for dufs firewall
+      systemd:
+        daemon_reload: true
+
+    - name: Enable and start dufs firewall
+      systemd:
+        name: dufs-firewall
+        enabled: true
+        state: started
+
+    - name: Apply dufs firewall changes before removing the password
+      meta: flush_handlers
+
+    - name: Configure dufs
       copy:
         dest: /etc/dufs/config.yaml
         owner: "{{ dufs_user }}"
@@ -64,15 +115,12 @@
           serve-path: {{ dufs_serve_path | to_json }}
           bind: {{ dufs_bind | to_json }}
           port: {{ dufs_port }}
-          auth:
-            - {{ (dufs_admin_user ~ ':' ~ dufs_admin_password ~ '@/:rw') | to_json }}
           allow-all: false
           allow-upload: true
           allow-delete: true
           allow-search: true
           allow-archive: true
           allow-symlink: false
-      no_log: true
       notify: Restart dufs
 
     - name: Download dufs binary archive
@@ -116,7 +164,10 @@
           [Unit]
           Description=dufs file server
           After=network-online.target
+          After=dufs-firewall.service
           Wants=network-online.target
+          BindsTo=dufs-firewall.service
+          PartOf=dufs-firewall.service
 
           [Service]
           Type=simple
@@ -144,6 +195,9 @@
         enabled: true
         state: started
 
+    - name: Apply dufs configuration changes
+      meta: flush_handlers
+
     - name: Check dufs health endpoint
       uri:
         url: "http://127.0.0.1:{{ dufs_port }}/__dufs__/health"
@@ -154,6 +208,11 @@
       until: dufs_health.status == 200
 
   handlers:
+    - name: Restart dufs firewall
+      systemd:
+        name: dufs-firewall
+        state: restarted
+
     - name: Restart dufs
       systemd:
         name: dufs
