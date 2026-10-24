@@ -2,7 +2,7 @@ apiVersion: v2
 dependencies:
   - name: node-feature-discovery
     repository: oci://registry.k8s.io/nfd/charts
-    version: 0.20.0
+    version: 0.20.1
 description: Helm chart to deploy Node Feature Discovery
 name: node-feature-discovery
 version: 1.0.0
