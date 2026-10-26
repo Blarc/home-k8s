@@ -31,5 +31,36 @@ completed downloads on one filesystem. The app runs as UID/GID 1000 with umask
 Settings and credentials entered in the UI persist on the config volume.
 The chart does not overwrite them on restart.
 
+## OIDC (Authelia)
+
+Authelia registers the `droppedneedle` client with one-factor authentication and
+implicit consent. Any Authelia user can sign in; new OIDC accounts receive the
+User role and can be promoted under Settings > Users.
+
+DroppedNeedle configures OIDC through its UI rather than environment variables
+([upstream instructions](https://github.com/DroppedNeedle/DroppedNeedle#configuration)).
+After deploying both charts, sign in with the local administrator account, open
+Settings > Security, and enable OIDC with:
+
+| Setting       | Value                                                         |
+|---------------|---------------------------------------------------------------|
+| Issuer URL    | `https://auth.blarc.my.id`                                    |
+| Client ID     | `droppedneedle`                                               |
+| Client Secret | Decrypt the value below                                       |
+| Redirect URI  | `https://droppedneedle.blarc.my.id/api/v1/auth/oidc/callback` |
+| Scopes        | `openid profile email`                                        |
+
+The raw client secret is SOPS-encrypted in this chart's `values.encrypted.yaml`
+and rendered as Secret `droppedneedle-oidc`. Authelia stores its hashed counterpart.
+From the repository root on macOS, copy the raw secret directly to the clipboard:
+
+```sh
+sops decrypt --extract '["app-template"]["secrets"]["oidc"]["stringData"]["client-secret"]' kubernetes/apps/media/droppedneedle/values.encrypted.yaml | pbcopy
+```
+
+Save the settings, then verify the SSO button in a private browser session.
+Keep local administrator login available until OIDC login has been verified.
+The OIDC settings persist on the config PVC.
+
 The startup probe allows ten minutes for database migrations before liveness
 checks begin. The image is pinned by digest; update the digest to upgrade it.
