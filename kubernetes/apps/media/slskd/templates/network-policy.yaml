@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/controller: slskd
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: traefik
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: traefik
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/instance: droppedneedle
+              app.kubernetes.io/controller: droppedneedle
+      ports:
+        - protocol: TCP
+          port: {{ index .Values "app-template" "controllers" "slskd" "containers" "app" "env" "SLSKD_HTTP_PORT" }}
+    # Soulseek peers need direct inbound access to the separate peer port.
+    - ports:
+        - protocol: TCP
+          port: {{ index .Values "app-template" "controllers" "slskd" "containers" "app" "env" "SLSKD_SLSK_LISTEN_PORT" }}

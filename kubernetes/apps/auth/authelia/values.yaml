@@ -83,6 +83,11 @@ authelia:
             - dufs.blarc.my.id
             - nas.blarc.my.id
           policy: deny
+        - domain: slskd.blarc.my.id
+          subject: user:jakob
+          policy: one_factor
+        - domain: slskd.blarc.my.id
+          policy: deny
         - domain: scryer.blarc.my.id
           subject:
             - user:jakob

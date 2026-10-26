@@ -1,0 +1,6 @@
+dependencies:
+- name: app-template
+  repository: oci://ghcr.io/bjw-s-labs/helm
+  version: 5.3.0
+digest: sha256:b84624e40dc35bae6ed1469097f455c7d94c672299be761f56f0db33785674f2
+generated: "2026-10-10T19:44:50.915075696Z"
