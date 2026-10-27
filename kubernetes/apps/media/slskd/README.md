@@ -40,7 +40,7 @@ The web service remains internal; TLS terminates at Traefik.
 The `--no-auth` command-line argument disables slskd's built-in authentication
 and takes precedence over `slskd.yml`. Traefik uses a chart-owned Authelia
 forward-auth middleware. A NetworkPolicy restricts HTTP access to Traefik pods
-and DroppedNeedle pods in this namespace. TCP 50300 remains open to Soulseek
+and DroppedNeedle and Lidarr pods in this namespace. TCP 50300 remains open to Soulseek
 peers. Authelia explicitly allows `user:jakob` with `one_factor` authentication
 for this hostname and denies everyone else.
 
@@ -59,6 +59,10 @@ Paste only the key after `role=ReadWrite;` into DroppedNeedle. Its configured
 The API key remains in SOPS-encrypted values for clients that require a key
 setting; slskd does not enforce API authentication with `--no-auth`. DroppedNeedle
 connects directly through the HTTP allowance in the NetworkPolicy.
+
+Lidarr also connects directly through this allowance. Configure its slskd client
+with host `slskd.media.svc.cluster.local`, port `80`, and SSL disabled. If the
+client requires an API key, use the key described above.
 
 Soulseek credentials are managed in encrypted values using `SLSKD_SLSK_USERNAME`
 and `SLSKD_SLSK_PASSWORD`; avoid defining conflicting values in `slskd.yml`, which

@@ -24,6 +24,10 @@ spec:
             matchLabels:
               app.kubernetes.io/instance: droppedneedle
               app.kubernetes.io/controller: droppedneedle
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/instance: lidarr
+              app.kubernetes.io/controller: lidarr
       ports:
         - protocol: TCP
           port: {{ index .Values "app-template" "controllers" "slskd" "containers" "app" "env" "SLSKD_HTTP_PORT" }}
