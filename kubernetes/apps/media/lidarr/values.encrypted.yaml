@@ -1,0 +1,31 @@
+app-template:
+  controllers:
+    lidarr:
+      containers:
+        app:
+          env:
+            LIDARR__AUTH__APIKEY: ENC[AES256_GCM,data:oe5FYwZFledQvWQiPUMMpxBcsWZGEworzZ7HU920ktc=,iv:tNob6YgkAfWiumFf27LBHBVaNshnJcF00tiM7awESuA=,tag:3LmGcGDQHyyLLlf3YpUJFA==,type:str]
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAwSlc1cGREOHN4M0E0bVlY
+        c3V2NGkwUUowb2Y2Yk10N0sxQU5vZWlsRzNRCnhkZTJ1anBpT2JueTJNQ05xbUZV
+        UkxJVUhPSDlKNVFuaFAzcUpqWkx1d0kKLS0tIHd1a0xPajM3akloMjQ3bGtJdEtk
+        cGxyb3lsV1JjZjU1dmlqVmFSWkk3M0EKt2bf2ag8fAM5sxfavNcjfwJ+i9bE/9UO
+        bAEB8DoKSvIfYWqV8Hmm9YNtloD5e+i2s5PqDAqHHsMN9B9/D1K9Ug==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1hnmh393g3qaf2szdjkyrd7jsven9wzvgpud4207vzrfywmuvdassvperqc
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB2aXI3RjdQQkVOOU5KMkJv
+        cUt1K08vY2wvRlV5V2Z3azd5SjhqWnArcUdJCk4yK2I3c29iWlMram9HZ0VKU1NX
+        QXY5THg4S0Q2ODMyTTY4UUpiWVNmYTAKLS0tIG9JS0NVTGNTdDdYbkF4Ritzbi9w
+        VU5mQkRVaEZ6STZ0cjZCYzUvMmlLd0kKcK4D2i4WBj47KaabSpgZPY/XeCOk9B9s
+        DO1w8Cq8V7Ng0xTQ+wKpEBaLZz/ekzyuaIp/9RA6aEXiJXnVX2Ch4A==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1mm90zkg8lsmpqa7gya9p2prsj8yfq774gjm6dkamkkvwugen7ywse5w97z
+  lastmodified: "2026-10-27T09:04:26Z"
+  mac: ENC[AES256_GCM,data:46m8cs9oguFkN7cLalPkXIaXIN2HOCyz0N1Prb18PKmhhtg6UwmwAC2J0gophHYV28u7Q2jX/9f61jbezR4O1kOKZbPIlGHav2/xfRkm65Ik+2tOcsUMG+NbHSDSaJOtSqaINzJrlbpTXPbLDh4yZjjat2Vwmu/4PI5JJfX7Qzc=,iv:2Khxg+wDYqhFLOneP9Xfv8i8jiR6wKQ2oe4TBa0WH98=,tag:kNw3e0hFxOLvFSw7FctDCg==,type:str]
+  unencrypted_suffix: _unencrypted
+  version: 3.13.3
