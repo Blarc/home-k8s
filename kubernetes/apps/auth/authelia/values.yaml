@@ -137,6 +137,12 @@ authelia:
             - userinfo
           allowed_origins_from_client_redirect_uris: true
         claims_policies:
+          securo:
+            id_token:
+              - email
+              - email_verified
+              - name
+              - preferred_username
           headscale:
             id_token:
               - email
@@ -166,6 +172,24 @@ authelia:
             key:
               path: /secrets/oidc/jwks.rs256.key
         clients:
+          - client_id: securo
+            client_name: Securo
+            client_secret:
+              path: /secrets/oidc/securo.client_secret
+            authorization_policy: one_factor
+            claims_policy: securo
+            consent_mode: implicit
+            token_endpoint_auth_method: client_secret_post
+            require_pkce: true
+            pkce_challenge_method: S256
+            redirect_uris:
+              - https://securo.blarc.my.id/api/auth/oidc/callback
+            scopes:
+              - openid
+              - profile
+              - email
+            grant_types:
+              - authorization_code
           - client_id: hrQQXJ6Vf93NhcmSR1EpZ8Oa3PMala9t9fUY0cq8
             client_name: Immich
             client_secret:

@@ -1,0 +1,6 @@
+dependencies:
+- name: securo
+  repository: oci://ghcr.io/securo-finance/charts
+  version: 0.16.6
+digest: sha256:11cd620067538164d6a7aa0b6401048488f9dceaf6fa7ff62803de3d3ed15a0f
+generated: "2026-10-27T13:10:15.541264+01:00"

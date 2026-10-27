@@ -1,0 +1,69 @@
+# Supplied by values.encrypted.yaml; used by the chart-owned Secrets.
+secret: {}
+
+securo:
+  fullnameOverride: securo
+  global:
+    domain: securo.blarc.my.id
+    tls: true
+    # Contains SECRET_KEY and DATABASE_URL for the external CNPG database.
+    existingSecret: securo-secret
+  postgresql:
+    enabled: false
+  config:
+    tz: Europe/Ljubljana
+    localAuthEnabled: "true"
+    oidcEnabled: "true"
+    oidcProviderName: Authelia
+    oidcDiscoveryUrl: https://auth.blarc.my.id/.well-known/openid-configuration
+    oidcRedirectUri: https://securo.blarc.my.id/api/auth/oidc/callback
+    oidcScopes: openid profile email
+    oidcAutoRegister: "true"
+    oidcRequireVerifiedEmail: "true"
+    oidcExistingUserLinkMode: verified_email
+    oidcSyncRoles: "false"
+    enableBankingApiUrl: https://api.enablebanking.com
+    enableBankingOauthRedirectUri: https://securo.blarc.my.id/oauth/callback
+    agentsEnabled: "false"
+    trustedProxyHops: "1"
+  backend:
+    image:
+      tag: 0.16.6
+    resources:
+      requests:
+        cpu: 50m
+        memory: 256Mi
+      limits:
+        memory: 1Gi
+  frontend:
+    image:
+      tag: 0.16.6
+  celeryWorker:
+    enabled: true
+  celeryBeat:
+    enabled: true
+  redis:
+    enabled: true
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+      limits:
+        memory: 256Mi
+  persistence:
+    attachments:
+      enabled: true
+      size: 5Gi
+      storageClass: nfs
+      accessMode: ReadWriteMany
+    agentKnowledge:
+      storageClass: nfs
+      accessMode: ReadWriteMany
+    agentEmbeddingModels:
+      storageClass: nfs
+      accessMode: ReadWriteMany
+  ingress:
+    enabled: false
+  # Wrapper supplies the HTTPRoute at sync wave 1, after backend Services.
+  httpRoute:
+    enabled: false

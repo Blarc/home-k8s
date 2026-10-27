@@ -1,0 +1,29 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: {{ .Release.Name }}-database
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  instances: 1
+  # PostgreSQL 16 matches Securo's upstream deployment and CI.
+  # CNPG's standard image includes pgvector.
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.15-standard-trixie
+  bootstrap:
+    initdb:
+      database: securo
+      owner: securo
+      secret:
+        name: {{ .Release.Name }}-database-auth
+  storage:
+    size: 5Gi
+    storageClass: topolvm-thin-retain
+  resources:
+    requests:
+      cpu: 50m
+      memory: 256Mi
+    limits:
+      memory: 1Gi
+  monitoring:
+    enablePodMonitor: false

@@ -1,0 +1,17 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: {{ .Release.Name }}-database
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  name: securo
+  owner: securo
+  cluster:
+    name: {{ .Release.Name }}-database
+  extensions:
+    - name: vector
+      ensure: present
+    - name: pgcrypto
+      ensure: present

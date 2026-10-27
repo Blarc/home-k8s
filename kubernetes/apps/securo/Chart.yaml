@@ -1,0 +1,10 @@
+apiVersion: v2
+name: securo
+description: Securo personal finance with PostgreSQL and Redis
+type: application
+version: 1.0.0
+appVersion: "0.16.6"
+dependencies:
+  - name: securo
+    version: 0.16.6
+    repository: oci://ghcr.io/securo-finance/charts
