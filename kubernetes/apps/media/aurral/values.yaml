@@ -1,0 +1,95 @@
+app-template:
+  controllers:
+    aurral:
+      type: deployment
+      strategy: Recreate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      containers:
+        app:
+          image:
+            repository: ghcr.io/lklynet/aurral
+            tag: 2.11.0
+          env:
+            PORT: &containerPort 3001
+            TZ: Europe/Ljubljana
+            AURRAL_DATA_DIR: /config
+            AURRAL_PUBLIC_URL: "https://{{ .Release.Name }}.blarc.my.id"
+            DOWNLOAD_FOLDER: /media/downloads/aurral
+            FILE_BROWSE_ROOTS: /media
+            TRUST_PROXY: "1"
+          probes:
+            liveness: &probes
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /api/health/live
+                  port: *containerPort
+                periodSeconds: 30
+                timeoutSeconds: 5
+                failureThreshold: 3
+            readiness: *probes
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /api/health/live
+                  port: *containerPort
+                periodSeconds: 10
+                timeoutSeconds: 5
+                failureThreshold: 60
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities: { drop: [ "ALL" ] }
+          resources:
+            requests:
+              cpu: 10m
+              memory: 256Mi
+            limits:
+              memory: 2Gi
+  defaultPodOptions:
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: OnRootMismatch
+  service:
+    app:
+      ports:
+        http:
+          port: &port 80
+          targetPort: *containerPort
+  route:
+    app:
+      hostnames:
+        - "{{ .Release.Name }}.blarc.my.id"
+      annotations:
+        argocd.argoproj.io/sync-wave: "1"
+      parentRefs:
+        - name: internal
+          namespace: traefik
+      rules:
+        - backendRefs:
+            - identifier: app
+              port: *port
+          matches:
+            - path:
+                type: PathPrefix
+                value: /
+  persistence:
+    config:
+      type: persistentVolumeClaim
+      storageClass: topolvm-thin-retain
+      accessMode: ReadWriteOnce
+      size: 5Gi
+      globalMounts:
+        - path: /config
+    media:
+      existingClaim: qbittorrent-media
+      globalMounts:
+        - path: /media
+    tmp:
+      type: emptyDir
