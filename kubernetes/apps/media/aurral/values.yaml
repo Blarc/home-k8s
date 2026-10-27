@@ -18,6 +18,21 @@ app-template:
             DOWNLOAD_FOLDER: /media/downloads/aurral
             FILE_BROWSE_ROOTS: /media
             TRUST_PROXY: "1"
+            OIDC_ENABLED: "true"
+            OIDC_ISSUER: https://auth.blarc.my.id
+            OIDC_CLIENT_ID: aurral
+            OIDC_CLIENT_SECRET:
+              valueFrom:
+                secretKeyRef:
+                  name: aurral-oidc
+                  key: client-secret
+            OIDC_TOKEN_ENDPOINT_AUTH_METHOD: client_secret_post
+            OIDC_REDIRECT_URI: "https://{{ .Release.Name }}.blarc.my.id/sso/callback"
+            OIDC_SCOPES: "openid profile email"
+            OIDC_USERNAME_CLAIM: preferred_username
+            OIDC_DEFAULT_ROLE: user
+            OIDC_ADMIN_USERS: jakob,masa
+            OIDC_DOMAIN: https://auth.blarc.my.id
           probes:
             liveness: &probes
               enabled: true

@@ -2,8 +2,8 @@
 
 [Aurral](https://github.com/lklynet/aurral) provides music discovery, downloads,
 and playback. This chart uses app-template 5.3.0 and the stable 2.11.0 image.
-The internal route is `https://aurral.blarc.my.id`; Aurral's built-in account
-authentication remains enabled.
+The internal route is `https://aurral.blarc.my.id`, with native Authelia OIDC
+sign-in and local account authentication available.
 
 ## Storage
 
@@ -34,3 +34,24 @@ DroppedNeedle, and Lidarr. No integration credentials are embedded in this chart
 
 See the upstream [setup guide](https://docs.aurral.org/getting-started/docker/)
 and [filesystem guide](https://docs.aurral.org/getting-started/storage/).
+
+## OIDC (Authelia)
+
+OIDC is configured through GitOps using Aurral's environment variables and the
+`aurral` client in the Authelia chart. The issuer is `https://auth.blarc.my.id`
+and the callback is `https://aurral.blarc.my.id/sso/callback`. Both sides use
+`client_secret_post`, with S256 PKCE required by Authelia.
+
+The raw client secret is SOPS-encrypted in this chart's `values.encrypted.yaml`
+and rendered as Secret `aurral-oidc`. Authelia's encrypted values hold its matching
+PBKDF2 hash in `authelia-oidc`. Deploy both chart changes before using SSO;
+no OIDC settings need to be entered in the Aurral UI.
+
+Any Authelia user can sign in with one-factor authentication and receives the
+`user` role by default. `OIDC_ADMIN_USERS: jakob` grants the Authelia user `jakob`
+administrator access. Add more comma-separated Authelia usernames to that value
+as needed. Aurral recalculates OIDC roles at sign-in.
+
+For an existing local account, sign in locally and link SSO from the account
+settings before signing in through SSO separately; matching usernames alone do
+not automatically link accounts. The local administrator remains available.
