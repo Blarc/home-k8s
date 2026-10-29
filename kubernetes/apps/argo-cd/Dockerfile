@@ -13,7 +13,7 @@ ARG VALS_VERSION=0.50.0
 # renovate: datasource=github-releases depName=FiloSottile/age
 ARG AGE_VERSION=1.3.2
 # renovate: datasource=github-releases depName=jkroepke/helm-secrets
-ARG HELM_SECRETS_VERSION=4.7.9
+ARG HELM_SECRETS_VERSION=4.7.10
 
 # vals or sops
 ENV HELM_SECRETS_BACKEND="sops" \
