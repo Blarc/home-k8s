@@ -60,6 +60,17 @@ grafana:
           editable: true
           options:
             path: /var/lib/grafana/dashboards/default
+        - name: nas
+          orgId: 1
+          folder: NAS
+          type: file
+          disableDeletion: false
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/nas
+  # A separate provider avoids masking the downloaded default dashboards.
+  dashboardsConfigMaps:
+    nas: grafana-nas-disks
   # Dashboards are downloaded by Grafana's init container and provisioned from
   # the path below. This keeps dashboard definitions in Git and avoids the
   # sidecar volume masking the init container output.

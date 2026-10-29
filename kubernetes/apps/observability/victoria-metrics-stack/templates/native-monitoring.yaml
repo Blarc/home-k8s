@@ -11,6 +11,24 @@ spec:
         - 192.168.1.13:9100
       interval: 20s
       path: /metrics
+      labels:
+        host: nas
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMStaticScrape
+metadata:
+  name: nas-zfs
+  namespace: observability
+spec:
+  jobName: nas-zfs
+  targetEndpoints:
+    - targets:
+        - 192.168.1.13:9134
+      interval: 60s
+      scrapeTimeout: 10s
+      path: /metrics
+      labels:
+        host: nas
 ---
 apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMStaticScrape

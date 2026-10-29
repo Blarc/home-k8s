@@ -1,0 +1,223 @@
+---
+- name: Install pinned upstream SMART collector
+  ansible.builtin.get_url:
+    url: "https://raw.githubusercontent.com/jgeboski/prometheus-smart-collector/{{ smart_collector_revision }}/prometheus_smart_collector.py"
+    checksum: "{{ smart_collector_checksum }}"
+    dest: /usr/local/sbin/prometheus-smart-collector
+    owner: root
+    group: root
+    mode: "0755"
+  notify: Collect SMART metrics
+
+- name: Install SMART collector service
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/prometheus-smart-collector.service
+    mode: "0644"
+    content: |
+      [Unit]
+      Description=Collect SMART attributes for Prometheus node exporter
+
+      [Service]
+      Type=oneshot
+      ExecStart=/usr/bin/python3 /usr/local/sbin/prometheus-smart-collector --prom-file /var/lib/prometheus/node-exporter/smart.prom
+      TimeoutStartSec=120
+      UMask=0022
+      NoNewPrivileges=true
+      PrivateTmp=true
+      ProtectHome=true
+      ProtectSystem=strict
+      ReadWritePaths=/var/lib/prometheus/node-exporter
+  notify: Collect SMART metrics
+
+- name: Install SMART collector timer
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/prometheus-smart-collector.timer
+    mode: "0644"
+    content: |
+      [Unit]
+      Description=Collect SMART attributes every 15 minutes
+
+      [Timer]
+      OnBootSec=45s
+      OnUnitActiveSec=15min
+
+      [Install]
+      WantedBy=timers.target
+
+- name: Reload systemd and enable SMART collection
+  ansible.builtin.systemd_service:
+    name: prometheus-smart-collector.timer
+    daemon_reload: true
+    enabled: true
+    state: started
+
+- name: Apply collector changes before verifying the replacement
+  ansible.builtin.meta: flush_handlers
+
+- name: Collect initial SMART metrics
+  ansible.builtin.systemd_service:
+    name: prometheus-smart-collector.service
+    state: started
+
+- name: Verify replacement SMART metrics are exposed
+  ansible.builtin.uri:
+    url: http://127.0.0.1:9100/metrics
+    return_content: true
+  register: node_metrics
+  failed_when: "node_metrics.status != 200 or 'smart_attr{' not in node_metrics.content"
+
+- name: Disable legacy SMART collection
+  ansible.builtin.systemd_service:
+    name: prometheus-node-exporter-smartmon.timer
+    enabled: false
+    state: stopped
+
+- name: Stop any in-flight legacy SMART collection
+  ansible.builtin.systemd_service:
+    name: prometheus-node-exporter-smartmon.service
+    state: stopped
+
+- name: Remove generated legacy SMART metrics
+  ansible.builtin.file:
+    path: /var/lib/prometheus/node-exporter/smartmon.prom
+    state: absent
+
+- name: Configure scheduled HDD self-tests
+  ansible.builtin.template:
+    src: smartd.conf.j2
+    dest: /etc/smartd.conf
+    owner: root
+    group: root
+    mode: "0644"
+    backup: true
+  notify: Reload smartd
+
+- name: Enable smartd and the existing Debian scrub scheduler
+  ansible.builtin.systemd_service:
+    name: "{{ item }}"
+    enabled: true
+    state: started
+  loop:
+    - smartmontools
+    - cron
+
+- name: Create unprivileged ZFS exporter user
+  ansible.builtin.user:
+    name: zfs-exporter
+    system: true
+    shell: /usr/sbin/nologin
+    create_home: false
+
+- name: Download pinned ZFS exporter archive
+  ansible.builtin.get_url:
+    url: "https://github.com/pdf/zfs_exporter/releases/download/v{{ zfs_exporter_version }}/zfs_exporter-{{ zfs_exporter_version }}.linux-amd64.tar.gz"
+    checksum: "{{ zfs_exporter_checksum }}"
+    dest: "/var/cache/zfs_exporter-{{ zfs_exporter_version }}.tar.gz"
+    mode: "0644"
+
+- name: Install ZFS exporter binary from verified archive
+  ansible.builtin.unarchive:
+    src: "/var/cache/zfs_exporter-{{ zfs_exporter_version }}.tar.gz"
+    dest: /usr/local/bin
+    remote_src: true
+    include:
+      - "zfs_exporter-{{ zfs_exporter_version }}.linux-amd64/zfs_exporter"
+    extra_opts:
+      - --strip-components=1
+      - --no-same-owner
+    owner: root
+    group: root
+    mode: "0755"
+  notify: Restart ZFS exporter
+
+- name: Restrict ZFS exporter access
+  ansible.builtin.copy:
+    dest: /etc/nas-zfs-metrics.nft
+    mode: "0644"
+    content: |
+      table inet nas_zfs_metrics {
+        chain input {
+          type filter hook input priority 0; policy accept;
+          iifname "lo" accept
+          ip saddr {{ monitoring_node_ip }} tcp dport 9134 accept
+          tcp dport 9134 drop
+        }
+      }
+  notify: Restart ZFS metrics firewall
+
+- name: Install ZFS metrics firewall service
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/nas-zfs-metrics-firewall.service
+    mode: "0644"
+    content: |
+      [Unit]
+      Description=Restrict NAS ZFS metrics to the monitoring node
+      After=nftables.service
+      Before=zfs-exporter.service
+      PartOf=nftables.service
+
+      [Service]
+      Type=oneshot
+      RemainAfterExit=yes
+      ExecStartPre=-/usr/sbin/nft delete table inet nas_zfs_metrics
+      ExecStart=/usr/sbin/nft -f /etc/nas-zfs-metrics.nft
+      ExecStop=-/usr/sbin/nft delete table inet nas_zfs_metrics
+
+      [Install]
+      WantedBy=multi-user.target
+  notify: Restart ZFS metrics firewall
+
+- name: Install ZFS exporter service
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/zfs-exporter.service
+    mode: "0644"
+    content: |
+      [Unit]
+      Description=Prometheus ZFS pool exporter
+      After=network.target zfs.target nas-zfs-metrics-firewall.service
+      BindsTo=nas-zfs-metrics-firewall.service
+      PartOf=nas-zfs-metrics-firewall.service
+
+      [Service]
+      User=zfs-exporter
+      Group=zfs-exporter
+      Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      ExecStart=/usr/local/bin/zfs_exporter --web.listen-address=0.0.0.0:9134 --pool=storage --no-collector.dataset-filesystem --no-collector.dataset-snapshot --no-collector.dataset-volume --properties.pool=allocated,free,health,readonly,size,fragmentation --deadline=8s
+      Restart=on-failure
+      RestartSec=5
+      NoNewPrivileges=true
+      PrivateTmp=true
+      ProtectHome=true
+      ProtectSystem=strict
+
+      [Install]
+      WantedBy=multi-user.target
+  notify: Restart ZFS exporter
+
+- name: Reload systemd and enable the ZFS metrics firewall
+  ansible.builtin.systemd_service:
+    name: nas-zfs-metrics-firewall.service
+    daemon_reload: true
+    enabled: true
+    state: started
+
+- name: Apply firewall changes before starting the exporter
+  ansible.builtin.meta: flush_handlers
+
+- name: Enable ZFS exporter
+  ansible.builtin.systemd_service:
+    name: zfs-exporter.service
+    enabled: true
+    state: started
+
+- name: Verify ZFS pool metrics
+  ansible.builtin.uri:
+    url: http://127.0.0.1:9134/metrics
+    return_content: true
+  register: zfs_metrics
+  retries: 5
+  delay: 2
+  until: >-
+    zfs_metrics.status == 200 and
+    'zfs_pool_health{pool="storage"}' in zfs_metrics.content and
+    'zfs_scrape_collector_success{collector="pool"} 1' in zfs_metrics.content

@@ -188,6 +188,150 @@ victoria-metrics-k8s-stack:
   defaultRules:
     enabled: true
   extraRules:
+    nas-disk-rules:
+      groups:
+        - name: nas-disk-recording
+          interval: 1m
+          rules:
+            # Drop the kernel device name before storing history so renaming sda/sdc
+            # on reboot doesn't join one physical disk's history to another's.
+            # Ignore a textfile left over from before the current boot.
+            - record: nas:smart_attribute_raw
+              expr: |
+                max by (host, instance, serial, model, rotational, id, name) (
+                  smart_attr{host="nas"}
+                  * on (instance, device) group_left (serial, model, rotational)
+                  node_disk_info{host="nas", serial!="", device=~"sd[a-z]+"}
+                )
+                and on (instance) (
+                  node_textfile_mtime_seconds{host="nas", file="/var/lib/prometheus/node-exporter/smart.prom"}
+                  > on (instance) node_boot_time_seconds{host="nas"}
+                )
+            # ATA 194 stores temperature in its low byte on the current Toshiba
+            # HDDs and WD SSD; upper bytes may contain historical min/max values.
+            - record: nas:disk_temperature_celsius
+              expr: nas:smart_attribute_raw{id="194"} % 256
+        - name: nas-disk-alerts
+          interval: 1m
+          rules:
+            - alert: NasMonitoringUnavailable
+              expr: |
+                (up{host="nas"} == 0)
+                or absent(up{host="nas", instance="192.168.1.13:9100"})
+                or absent(up{host="nas", instance="192.168.1.13:9134"})
+              for: 10m
+              labels:
+                severity: critical
+                component: nas-disk-health
+                host: nas
+              annotations:
+                summary: NAS monitoring endpoint unavailable
+                description: 'Target {{ $labels.instance }} is unavailable. Check NAS connectivity and prometheus-node-exporter/zfs-exporter services.'
+            - alert: NasDiskMissing
+              expr: |
+                (count(node_disk_info{host="nas", serial=~"46F5K0MGFE1C|36SDK16IFE1C|36B7K1GKFE1C|182694800168"}) or vector(0)) < 4
+              for: 10m
+              labels:
+                severity: critical
+                component: nas-disk-health
+                host: nas
+              annotations:
+                summary: An expected NAS disk or its identity metadata is missing
+                description: 'Only {{ $value }} of four expected disk serials are visible. Run lsblk -d -o NAME,MODEL,SERIAL and inspect node_disk_info before replacing hardware.'
+            - alert: NasSmartDataUnavailable
+              expr: |
+                node_disk_info{host="nas", serial=~"46F5K0MGFE1C|36SDK16IFE1C|36B7K1GKFE1C|182694800168"}
+                unless on (instance, serial) nas:smart_attribute_raw
+              for: 10m
+              labels:
+                severity: critical
+                component: nas-disk-health
+              annotations:
+                summary: 'SMART data unavailable for NAS disk {{ $labels.serial }}'
+                description: 'No attributes for {{ $labels.device }} ({{ $labels.model }}). The upstream collector drops data on nonzero smartctl exit codes, including health warnings. Inspect journalctl -u prometheus-smart-collector and sudo smartctl -x /dev/{{ $labels.device }}.'
+            - alert: NasSmartCollectionStale
+              expr: |
+                (time() - node_textfile_mtime_seconds{host="nas", file="/var/lib/prometheus/node-exporter/smart.prom"} > 2100)
+                or absent(node_textfile_mtime_seconds{host="nas", instance="192.168.1.13:9100", file="/var/lib/prometheus/node-exporter/smart.prom"})
+                or (node_textfile_scrape_error{host="nas"} != 0)
+              for: 10m
+              labels:
+                severity: warning
+                component: nas-disk-health
+                host: nas
+              annotations:
+                summary: NAS SMART textfile collection is missing, stale, or unreadable
+                description: 'SMART metrics must refresh every 15 minutes. Check systemctl status prometheus-smart-collector.timer and journalctl -u prometheus-smart-collector; a fresh file alone does not guarantee disk data is present.'
+            - alert: NasDiskUncorrectableSectors
+              expr: nas:smart_attribute_raw{id=~"197|198"} > 0
+              for: 15m
+              labels:
+                severity: critical
+                component: nas-disk-health
+              annotations:
+                summary: 'Uncorrectable or pending sectors on NAS disk {{ $labels.serial }}'
+                description: '{{ $labels.name }} is {{ $value }} on {{ $labels.model }}. Confirm backups and inspect sudo smartctl -x /dev/disk/by-id/<matching-serial> and zpool status -v storage.'
+            - alert: NasDiskReallocatedSectors
+              expr: nas:smart_attribute_raw{id="5"} > 0
+              for: 15m
+              labels:
+                severity: warning
+                component: nas-disk-health
+              annotations:
+                summary: 'Reallocated sectors on NAS disk {{ $labels.serial }}'
+                description: '{{ $value }} sectors have been reallocated on {{ $labels.model }}. Review the trend, backups, and SMART logs.'
+            - alert: NasDiskErrorsIncreasing
+              # These are gauges of lifetime counts. Comparing with the observed
+              # daily minimum detects growth without treating old errors as new.
+              expr: |
+                nas:smart_attribute_raw{id=~"5|10|187|199"}
+                - min_over_time(nas:smart_attribute_raw{id=~"5|10|187|199"}[24h]) > 0
+              labels:
+                severity: warning
+                component: nas-disk-health
+              annotations:
+                summary: 'Increasing disk errors on NAS disk {{ $labels.serial }}'
+                description: '{{ $labels.name }} increased by {{ $value }} over the observed 24-hour baseline. Inspect SMART logs; CRC errors (199) may indicate cabling or controller problems.'
+            - alert: NasDiskTemperatureHigh
+              expr: nas:disk_temperature_celsius > 45
+              for: 30m
+              labels:
+                severity: warning
+                component: nas-disk-health
+              annotations:
+                summary: 'NAS disk {{ $labels.serial }} is warm'
+                description: 'Temperature is {{ $value }} degrees C on {{ $labels.model }}. Check airflow and cooling.'
+            - alert: NasDiskTemperatureHigh
+              expr: nas:disk_temperature_celsius > 50
+              for: 15m
+              labels:
+                severity: critical
+                component: nas-disk-health
+              annotations:
+                summary: 'NAS disk {{ $labels.serial }} is hot'
+                description: 'Temperature is {{ $value }} degrees C on {{ $labels.model }}. Check airflow and cooling immediately.'
+            - alert: NasZfsPoolUnhealthy
+              expr: (zfs_pool_health{host="nas", pool="storage"} != 0) or (zfs_pool_readonly{host="nas", pool="storage"} != 0)
+              for: 5m
+              labels:
+                severity: critical
+                component: nas-disk-health
+              annotations:
+                summary: NAS storage pool is unhealthy or read-only
+                description: 'Run zpool status -v storage on the NAS. zfs_pool_health maps ONLINE=0, DEGRADED=1, FAULTED=2, OFFLINE=3, UNAVAIL=4, REMOVED=5, SUSPENDED=6.'
+            - alert: NasZfsCollectionFailed
+              expr: |
+                (zfs_scrape_collector_success{host="nas", collector="pool"} != 1)
+                or absent(zfs_pool_health{host="nas", pool="storage"})
+                or absent(zfs_scrape_collector_success{host="nas", collector="pool"})
+              for: 10m
+              labels:
+                severity: critical
+                component: nas-disk-health
+                host: nas
+              annotations:
+                summary: NAS ZFS pool metrics are unavailable
+                description: 'Check journalctl -u zfs-exporter and run zpool get health storage as the zfs-exporter user. The pool or exporter permissions may have changed.'
     dockerhub-rules:
       groups:
         - name: dockerhub

@@ -15,6 +15,33 @@ password.
 
 ## Tasks
 
+### Disk monitoring and scheduled checks
+
+Deploy from `nas/`, then deploy the VictoriaMetrics, Grafana and ntfy changes through Argo CD:
+
+```bash
+ansible-playbook -i inventory.ini playbooks/setup_metrics.yaml --ask-become-pass
+```
+
+Uses [prometheus-smart-collector](https://github.com/jgeboski/prometheus-smart-collector) through
+node exporter and [zfs_exporter](https://github.com/pdf/zfs_exporter). SMART attributes refresh every
+15 minutes; metrics are retained for seven days.
+
+Schedules use Europe/Ljubljana time:
+
+- HDD short tests: daily during 04:00–04:59.
+- HDD long tests: monthly on days 1, 2 and 3 during 01:00–01:59, as assigned in `setup_metrics.yaml`.
+- ZFS scrub: existing schedule, second Sunday monthly at 00:24.
+
+Grafana: **NAS → NAS disk attributes and pool health**. Alertmanager sends ntfy notifications for
+faults and recoveries: warning priority 4, critical priority 5, recovery priority 2.
+
+The collectors do not report individual test or scrub results, so successful checks produce no
+notification. Missing SMART data can indicate a health warning. Independent backups remain necessary.
+
+When replacing a disk, update its by-id entry in `setup_metrics.yaml` and the expected serials in
+the VictoriaMetrics rules and Grafana dashboard.
+
 ### Ensure contrib and non-free repositories are enabled
 
 Debian is committed to Free Software. ZFS is licensed under the CDDL, which is considered "non-free" by Debian's

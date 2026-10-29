@@ -2,19 +2,56 @@
 - name: Setup Monitoring on NAS
   hosts: NAS
   become: true
+  vars:
+    smart_collector_revision: 9e9f8d5bf9596426ceaab9304d1e55351fe20d40
+    smart_collector_checksum: sha256:5a008d2690ff106719ca2b8a36f5d52d8f08bd1eb40e2e6f77da455fd32fa683
+    zfs_exporter_version: "2.5.1"
+    zfs_exporter_checksum: sha256:2caed451cfb0abbd0494b1200aa3bcc134921f12a2a21efe001a4ac9d79d0e32
+    monitoring_node_ip: 192.168.1.16
+    hdd_tests:
+      - device: /dev/disk/by-id/ata-TOSHIBA_MG04ACA600E_46F5K0MGFE1C
+        long_test_day: "01"
+      - device: /dev/disk/by-id/ata-TOSHIBA_MG04ACA600E_36SDK16IFE1C
+        long_test_day: "02"
+      - device: /dev/disk/by-id/ata-TOSHIBA_MG04ACA600E_36B7K1GKFE1C
+        long_test_day: "03"
+
   tasks:
-    - name: Install Prometheus Node Exporter
+    - name: Check supported NAS platform and timezone
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.distribution == 'Debian'
+          - ansible_facts.architecture == 'x86_64'
+          - ansible_facts.date_time.tz in ['CET', 'CEST']
+        fail_msg: This playbook targets the Debian amd64 NAS using Europe/Ljubljana time.
+
+    - name: Install monitoring prerequisites
       apt:
-        name: prometheus-node-exporter
+        name:
+          - prometheus-node-exporter
+          - smartmontools
+          - python3
+          - python3-aiofiles
+          - python3-click
+          - ca-certificates
+          - nftables
+          - cron
         state: present
         update_cache: yes
 
-    - name: Configure Node Exporter to enable ZFS collector
+    - name: Create textfile directory
+      ansible.builtin.file:
+        path: /var/lib/prometheus/node-exporter
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Configure Node Exporter ZFS and textfile collectors
       lineinfile:
         path: /etc/default/prometheus-node-exporter
         regexp: '^ARGS='
-        # This enables ZFS and other standard collectors
-        line: 'ARGS="--collector.zfs"'
+        line: 'ARGS="--collector.zfs --collector.textfile.directory=/var/lib/prometheus/node-exporter"'
       notify: Restart Node Exporter
 
     - name: Ensure Node Exporter is running
@@ -23,8 +60,34 @@
         state: started
         enabled: yes
 
+    - name: Install disk monitoring and scheduled self-tests
+      ansible.builtin.import_tasks: tasks/disk_monitoring.yaml
+
   handlers:
     - name: Restart Node Exporter
       service:
         name: prometheus-node-exporter
+        state: restarted
+
+    - name: Collect SMART metrics
+      ansible.builtin.systemd_service:
+        name: prometheus-smart-collector.service
+        daemon_reload: true
+        state: restarted
+
+    - name: Reload smartd
+      ansible.builtin.systemd_service:
+        name: smartmontools
+        state: reloaded
+
+    - name: Restart ZFS metrics firewall
+      ansible.builtin.systemd_service:
+        name: nas-zfs-metrics-firewall.service
+        daemon_reload: true
+        state: restarted
+
+    - name: Restart ZFS exporter
+      ansible.builtin.systemd_service:
+        name: zfs-exporter.service
+        daemon_reload: true
         state: restarted

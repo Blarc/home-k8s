@@ -14,6 +14,9 @@ message: |
   Alert: {{ .labels.alertname }}
   Instance: {{ .labels.instance }}
   Severity: {{ .labels.severity }}
+  {{- if .labels.serial }}
+  Disk serial: {{ .labels.serial }}
+  {{- end }}
   Starts at: {{ .startsAt }}
   {{- if .endsAt }}Ends at: {{ .endsAt }}{{ end }}
   {{- if .annotations.summary }}
@@ -25,3 +28,17 @@ message: |
   Source: {{ .generatorURL }}
   
   {{ end }}
+priority: |
+  {{- $priority := 3 -}}
+  {{- range .alerts -}}
+    {{- if eq .labels.component "nas-disk-health" -}}
+      {{- if eq $.status "resolved" -}}
+        {{- $priority = 2 -}}
+      {{- else if eq .labels.severity "critical" -}}
+        {{- $priority = 5 -}}
+      {{- else if and (eq .labels.severity "warning") (lt $priority 4) -}}
+        {{- $priority = 4 -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{ $priority }}

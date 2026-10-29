@@ -1,0 +1,8 @@
+# Managed by Ansible. Schedules use the NAS's Europe/Ljubljana timezone.
+# smartd leaves an already-running test uninterrupted. Long tests can run into daytime.
+DEFAULT -a -n standby -m root -M exec /usr/share/smartmontools/smartd-runner
+{% for disk in hdd_tests %}
+{{ disk.device }} -s (S/../.././04|L/../{{ disk.long_test_day }}/./01)
+{% endfor %}
+# Keep monitoring the boot SSD and any newly discovered disks without scheduling tests.
+DEVICESCAN -d removable

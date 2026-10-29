@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-nas-disks
+data:
+  nas-disks.json: |
+    {{- .Files.Get "files/nas-disks.json" | nindent 4 }}
