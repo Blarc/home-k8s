@@ -1,6 +1,6 @@
 dependencies:
 - name: reloader
   repository: oci://ghcr.io/stakater/charts
-  version: 2.2.18
-digest: sha256:69038fcf864a14ecf201528bb91503cf555640291dddcfc2ba3970872e7aba88
-generated: "2026-09-30T14:35:59.711377732Z"
+  version: 2.2.19
+digest: sha256:8bdeb9d799c2eeb3473e58d086ac99b5430ce2946d3f5226749668e8f96c5e7d
+generated: "2026-10-29T01:31:24.039839041Z"
