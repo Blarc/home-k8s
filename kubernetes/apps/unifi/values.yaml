@@ -7,7 +7,7 @@ app-template:
         main:
           image:
             repository: ghcr.io/lemker/unifi-os-server
-            tag: v1.4.0
+            tag: v1.8.0
           env:
             TZ: Europe/Ljubljana
             HOST_IP:
@@ -79,6 +79,7 @@ app-template:
         webui:
           port: 443
           protocol: TCP
+          appProtocol: https
         rtp:
           port: 5005
           protocol: TCP
