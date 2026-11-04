@@ -1,0 +1,31 @@
+cluster:
+  controllerManager:
+    extraArgs:
+      bind-address: 0.0.0.0
+  scheduler:
+    extraArgs:
+      bind-address: 0.0.0.0
+---
+apiVersion: v1alpha1
+kind: NetworkDefaultActionConfig
+ingress: accept
+---
+apiVersion: v1alpha1
+kind: NetworkRuleConfig
+name: controller-manager-metrics
+portSelector:
+  ports:
+    - 10257
+  protocol: tcp
+ingress:
+  - subnet: 10.244.0.0/24
+---
+apiVersion: v1alpha1
+kind: NetworkRuleConfig
+name: scheduler-metrics
+portSelector:
+  ports:
+    - 10259
+  protocol: tcp
+ingress:
+  - subnet: 10.244.0.0/24

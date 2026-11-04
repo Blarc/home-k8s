@@ -4,7 +4,7 @@ This repository manages a home Kubernetes cluster running Talos, plus configurat
 
 ## Repository layout
 
-- `talos/` contains Talos and Talhelper configuration. `talconfig.yaml` is the source configuration; generated machine configuration is under `talos/clusterconfig/`. Secret material is SOPS-encrypted.
+- `talos/` contains Talos configuration managed with topf. `topf.yaml` defines the cluster and nodes; patches live under `all/`, `control-plane/`, and `node/<host>/`. `schematic.yaml` defines system extensions. Secret material in `topf.yaml` and the existing `talsecret.sops.yaml` bundle is SOPS-encrypted. Rendered machine configurations go under the ignored `talos/output/` directory.
 - `nas/` contains Ansible inventory, playbooks, and playbook variables for configuring the NAS.
 - `kubernetes/apps/` contains Argo CD-managed Helm releases, grouped by Kubernetes namespace. Application charts and their values live below the namespace directory, commonly as `kubernetes/apps/<namespace>/<application>/`.
 - Read a component's README and inspect sibling configurations before changing it. Some infrastructure apps use custom Helm templates or upstream charts rather than bjw-s app-template.
@@ -32,6 +32,7 @@ This repository manages a home Kubernetes cluster running Talos, plus configurat
 ## Talos and NAS changes
 
 - Read the relevant README and nearby configuration before editing Talos or Ansible files.
+- Validate Talos changes with offline `topf render` and `talosctl validate`; keep rendered configurations and client credentials out of Git. Keep the existing Talos secrets bundle when changing configuration tools.
 - Preserve the repository's SOPS encryption for secret-bearing configuration. Do not expose decrypted values in logs, commits, or generated documentation.
 - Do not apply Talos configuration, bootstrap or upgrade nodes, change the live Kubernetes cluster, or run NAS playbooks unless the user explicitly requests that operation.
 

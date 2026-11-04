@@ -1,0 +1,29 @@
+clusterName: ENC[AES256_GCM,data:sh9hZw==,iv:6aJd6h+BAyti/z+wt78OirsA1h8D5qB4I1MQ6CofDpM=,tag:s5mj+o4ioVDwIzlzhB1e1A==,type:str]
+clusterEndpoint: https://192.168.1.16:6443
+kubernetesVersion: 1.36.4
+talosVersion: 1.13.7
+schematicId: '@schematic.yaml'
+secretsPath: talsecret.sops.yaml
+data:
+  upsmonHost: ENC[AES256_GCM,data:CJWZKMmdREgLs8p+,iv:A6G3efkIDJ+Lf2FtHnQ7Z9ico9aahRSWdOam8q2Ff3I=,tag:XJ6++/J49hHJ0d92rdDy0g==,type:str]
+  upsmonUser: ENC[AES256_GCM,data:aJAZTV5qMMDKurBP,iv:MdvlmDiWCl/WJ6nuxQrY0bXLRx9W2GJCJ+WDbaGQeKE=,tag:O6gmjCK2NXiR+3fCsFYcVw==,type:str]
+  upsmonPass: ENC[AES256_GCM,data:+/FPbneu9mT+p4F34nWmwBlhMvBRCQ==,iv:gGGmdW8FJRkiuBswVzBlnMmVSr1yexHT55LCOvkG6KM=,tag:FOTWH94DIDjjLkJGa7F0SA==,type:str]
+nodes:
+  - host: multi-role
+    ip: 192.168.1.16
+    role: control-plane
+sops:
+  age:
+    - enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA4NVVGZDdsRlV5d05HTkpI
+        aGRlOFhobDFyNk5uWW81Vi91Z2NpckhVSXlJCk9ydFpHZ3FqalFyNEpoUFUxVUNM
+        cnR3T0lpMHZ3S0ltRU5ndzFKMVJ3aE0KLS0tIHovNmJpd3RERUJVTFdjOWZ3aW9G
+        T3M2NGNGdXR1U1llWVYxSmFncmVTeEEKLZRWBi/QID0N3qha5Dqp3/VLN0b7E35N
+        /aRT3icV8Yqthep1wbXu5QqeLsgvYESaNRrtdXWCdSANvhdk5bU3rA==
+        -----END AGE ENCRYPTED FILE-----
+      recipient: age1mm90zkg8lsmpqa7gya9p2prsj8yfq774gjm6dkamkkvwugen7ywse5w97z
+  encrypted_regex: ^(clusterName|data)$
+  lastmodified: "2026-11-04T09:34:26Z"
+  mac: ENC[AES256_GCM,data:enEKNKtJ/PfitIyvZi5zVnYneprQCucz9cSmPNCxBePHpgQuPS+ZGoxeQZIJRIru6qVTVWSmBFic+KQ48FVjVKaie9gYkXLguP8SmJdcn7Q9DeX0Y6g3azNdajZZncPXJW33BFwWIsDLq3oVtsSq7eCsSu40HATUMPi76vwT5/o=,iv:s2hLxRh3hL0bcq5IdJVhy0kWh3Su0DnY00OCFBvUe74=,tag:9LuGeCBqZM0pzd00ABBYPA==,type:str]
+  version: 3.13.3

@@ -142,7 +142,7 @@ victoria-metrics-k8s-stack:
             tlsConfig:
               caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
               serverName: kubernetes
-  # These control-plane endpoints had to be exposed manually in talconfig
+  # These control-plane endpoints are exposed by the Talos metrics patch.
   kubeControllerManager:
     enabled: true
     vmScrape:

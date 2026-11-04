@@ -1,86 +1,146 @@
 # Talos
 
-## Bare-metal installation
-1. Download ISO from: https://github.com/siderolabs/talos/releases (look for metal-*)
-2. Run `mediawriter` if on Fedora.
-3. Plug to PC and boot from USB.
-4. Apply config:
-   ```bash
-   talosctl apply-config --nodes=192.168.1.16 --file=./clusterconfig/home-multi-role.yaml --insecure
-   ```
-5. Bootstrap the control plane:
-   ```bash
-   talosctl bootstrap --nodes 192.168.1.16 --endpoints 192.168.1.16 --talosconfig=./clusterconfig/talosconfig
-   ```
-6. Retrieve kubeconfig:
-   ```bash
-   talosctl kubeconfig -n 192.168.1.16
-   ```
+This cluster is managed with [topf](https://github.com/postfinance/topf).
+The migration was validated with topf v0.6.2, keeping Talos at 1.13.7 and
+Kubernetes at 1.36.4. Commands below run from this directory (`cd talos`).
 
-## Static IP for nodes
-To prevent changing of nodes' IP, set static IPs for the nodes on the router (Advanced setup > Lan > Static IP Lease List)
+## Install tools
 
-## Talosctl
+Install topf, `talosctl`, and SOPS. For topf on macOS:
 
-Talos uses CLI called talosctl to interact with the cluster. The configuration works similarly as for kubernetes. The configuration file is located at `~/.talos/config`.
-
-To check the version of nodes, you can run the following command:
 ```bash
-talosctl version # assumes talosctl config is configured properly
-```
-To check disks:
-```bash
-talosctl -e 192.168.1.17 disks
-```
-It's important the correct disk is specified in the machine config. You can edit machine config with:
-```bash
-TALOS_EDITOR="vim" talosctl edit machineconfig -n 192.168.1.17
+brew install postfinance/tap/topf
 ```
 
-## Upgrading Talos nodes
-Docs: https://docs.siderolabs.com/talos/v1.8/configure-your-talos-cluster/lifecycle-management/upgrading-talos.
+SOPS must have access to the existing personal age key to decrypt the cluster
+configuration and secrets bundle.
 
-Run the following command for each node
-```bash
-image="$(yq e 'select(.machine.install.image != null) | .machine.install.image' clusterconfig/home-multi-role.yaml)"
-talosctl upgrade --nodes 192.168.1.16 --endpoints 192.168.1.16 --image "$image"
-```
-To watch the upgrade logs use:
-```bash
-talosctl dmesg -f
-```
-and optionally:
-```bash
-talosctl upgrade --wait --debug
-```
+## Configuration
 
-## Upgrading Kubernetes
-Docs: https://docs.siderolabs.com/kubernetes-guides/advanced-guides/upgrading-kubernetes.
+- `topf.yaml`: cluster endpoint, versions, node inventory, and SOPS-encrypted
+  cluster name and UPS settings in `data`.
+- `talsecret.sops.yaml`: the original Talos secrets bundle, selected explicitly by
+  `secretsPath` in `topf.yaml`. Preserve this bundle when managing the existing
+  cluster; it contains its identity, certificates, and tokens.
+- `schematic.yaml`: i915, Intel microcode, and NUT client system extensions.
+  Topf computes its image-factory schematic ID locally.
+- `all/`: shared patches, including hostnames derived from `nodes[].host`.
+- `control-plane/`: cluster settings, kubelet settings, metrics listeners, and
+  ingress firewall rules.
+- `node/multi-role/`: install disk, kernel modules, static networking, and the
+  NUT service template. The `/32` address and default route preserve the previous
+  generated configuration.
 
-Run the following command
-```bash
-talosctl --nodes 192.168.1.16 upgrade-k8s --to 1.36.2
-```
+Patches merge in the order `all/`, `<role>/`, then `node/<host>/`, with files in
+each directory sorted lexicographically. `.yaml.tpl` files use Go templates;
+UPS values come from the decrypted `.Data` fields in `topf.yaml`.
 
-## Inspecting manifests of static pods
-Run the following command to list manifests of static pods for specific node:
+Edit encrypted values with:
+
 ```bash
-talosctl get manifests -n 192.168.1.16
+sops topf.yaml
 ```
 
-## Talhelper
-https://budimanjojo.github.io/talhelper/latest/getting-started/ \
-Talhelper is kustomize for Talos. It helps you configure Talos machine configuration in a GitOps way.
-It uses `talconfig.yaml`, which defines all the configuration and `talsecret.sops.yaml` that contains the Talos cluster's
-secrets and certificates. To generate the machine configuration, run the following command:
+The repository's SOPS rules encrypt `clusterName` and all values under `data`.
+The original `talsecret.sops.yaml` is unchanged. The Talhelper inputs
+`talconfig.yaml` and `talenv.sops.yaml` have been replaced by this layout.
+The old ignored `clusterconfig/` files are local historical artifacts; topf
+does not read them.
+
+## Render and validate
+
 ```bash
-cd talos
-talhelper genconfig
-```
-This generates machine configuration and `talosconfig` which is used to connect to your Talos cluster. To use the config,
-copy it to `~/.talos/config`. You can then apply the configuration to each node:
-```bash
-# Add --insecure flag, if the cluster is new
-talosctl apply-config --nodes=192.168.1.16 --file=./clusterconfig/home-multi-role.yaml
+topf render --output output
+talosctl validate --config output/multi-role.yaml --mode metal
 ```
 
+Rendering is offline by default and writes a complete machine configuration,
+including plaintext secrets, to `output/multi-role.yaml`. `output/`,
+`talosconfig`, and `kubeconfig` are ignored by Git.
+
+For this migration, the rendered documents were compared structurally with a
+fresh Talhelper render using the same encrypted bundle and environment. They
+matched exactly.
+No configuration was applied to the node as part of the migration.
+
+## Review and apply configuration
+
+Preview changes against the running node:
+
+```bash
+topf apply --dry-run
+```
+
+This contacts the node without applying changes and redacts secrets in the diff
+by default. Exit code `2` means configuration changes were found.
+
+After reviewing the diff, explicitly apply the changes:
+
+```bash
+topf apply
+```
+
+Topf asks for confirmation before applying.
+
+## Client configuration
+
+Generate a local Talos client configuration from the existing secrets bundle:
+
+```bash
+topf talosconfig > talosconfig
+chmod 600 talosconfig
+export TALOSCONFIG="$PWD/talosconfig"
+talosctl --nodes 192.168.1.16 version
+```
+
+Topf manages its own client from the secrets bundle; it does not require copying
+this file into `~/.talos/config`. To generate an admin kubeconfig (valid for 12
+hours by default):
+
+```bash
+topf kubeconfig > kubeconfig
+chmod 600 kubeconfig
+```
+
+## Upgrades
+
+For a Talos upgrade, change `talosVersion` in `topf.yaml`, render and validate,
+then review and run:
+
+```bash
+topf upgrade --dry-run
+topf upgrade
+```
+
+When changing system extensions, edit `schematic.yaml` and register the new
+schematic with `topf render --submit-to-factory` before upgrading. The current
+schematic is already registered.
+
+For a Kubernetes upgrade, change `kubernetesVersion` in `topf.yaml` and follow the
+[Talos Kubernetes upgrade guide](https://docs.siderolabs.com/kubernetes-guides/advanced-guides/upgrading-kubernetes).
+For the current configured version:
+
+```bash
+talosctl --nodes 192.168.1.16 upgrade-k8s --to 1.36.4
+```
+
+## New bare-metal installation
+
+For a new cluster only: prepare and boot the Talos image with the configured
+schematic and version. Configure the inventory, patches, and encrypted secrets
+for that cluster, then render and validate before running:
+
+```bash
+topf apply --auto-bootstrap
+```
+
+Keep static IP leases configured on the router. Do not bootstrap or generate new
+secrets for the existing cluster during routine configuration changes.
+
+## Inspecting the node
+
+```bash
+talosctl --nodes 192.168.1.16 disks
+talosctl --nodes 192.168.1.16 get manifests
+talosctl --nodes 192.168.1.16 dmesg -f
+```

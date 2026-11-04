@@ -1,0 +1,19 @@
+machine:
+  install:
+    disk: /dev/sdc
+    diskSelector:
+      model: WDC*
+  kernel:
+    modules:
+      - name: dm_thin_pool
+      - name: dm_mod
+      - name: i915
+# Future user volume (disabled in the previous configuration):
+# apiVersion: v1alpha1
+# kind: UserVolumeConfig
+# name: data
+# provisioning:
+#   minSize: 128GB
+#   grow: true
+#   diskSelector:
+#     match: disk.model == "FORESEE 512GB SS"
