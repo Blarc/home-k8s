@@ -62,7 +62,7 @@ app-template:
       hostnames:
         - "{{ .Release.Name }}.blarc.my.id"
       annotations:
-        argocd.argoproj.io/sync-wave: "-1"
+        argocd.argoproj.io/sync-wave: "1"
       parentRefs:
         - name: internal
           namespace: traefik
@@ -72,7 +72,7 @@ app-template:
               extensionRef:
                 group: traefik.io
                 kind: Middleware
-                name: authelia-forward-auth
+                name: "{{ .Release.Name }}-authelia-forward-auth"
           backendRefs:
             - identifier: app
               port: *port
