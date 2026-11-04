@@ -142,6 +142,20 @@ victoria-metrics-k8s-stack:
             tlsConfig:
               caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
               serverName: kubernetes
+  # Talos runs etcd as a host service, so pod discovery cannot find it.
+  # Enable its metrics listener in talos/control-plane/30-metrics.yaml before deploying this target.
+  kubeEtcd:
+    enabled: true
+    endpoints:
+      - 192.168.1.16
+    service:
+      port: 2381
+      targetPort: 2381
+    vmScrape:
+      spec:
+        endpoints:
+          - port: http-metrics
+            scheme: http
   # These control-plane endpoints are exposed by the Talos metrics patch.
   kubeControllerManager:
     enabled: true

@@ -60,7 +60,7 @@ including plaintext secrets, to `output/multi-role.yaml`. `output/`,
 
 For this migration, the rendered documents were compared structurally with a
 fresh Talhelper render using the same encrypted bundle and environment. They
-matched exactly.
+matched exactly, including the pending etcd metrics listener and firewall rule.
 No configuration was applied to the node as part of the migration.
 
 ## Review and apply configuration
@@ -80,7 +80,12 @@ After reviewing the diff, explicitly apply the changes:
 topf apply
 ```
 
-Topf asks for confirmation before applying.
+Topf asks for confirmation before applying. The pending etcd metrics change
+updates service arguments and can briefly interrupt the single-node control
+plane while etcd restarts. Enable that listener before deploying the
+VictoriaMetrics `kubeEtcd` scrape change. The expected target is
+`http://192.168.1.16:2381/metrics`, with job `kube-etcd`; its firewall rule allows
+the node's current pod subnet, `10.244.0.0/24`.
 
 ## Client configuration
 

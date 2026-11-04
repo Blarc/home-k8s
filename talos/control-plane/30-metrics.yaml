@@ -5,10 +5,24 @@ cluster:
   scheduler:
     extraArgs:
       bind-address: 0.0.0.0
+  etcd:
+    extraArgs:
+      # Separate the metrics listener from the client-certificate-protected API.
+      listen-metrics-urls: http://0.0.0.0:2381
 ---
 apiVersion: v1alpha1
 kind: NetworkDefaultActionConfig
 ingress: accept
+---
+apiVersion: v1alpha1
+kind: NetworkRuleConfig
+name: etcd-metrics
+portSelector:
+  ports:
+    - 2381
+  protocol: tcp
+ingress:
+  - subnet: 10.244.0.0/24
 ---
 apiVersion: v1alpha1
 kind: NetworkRuleConfig
