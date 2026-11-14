@@ -7,7 +7,7 @@ app-template:
         app:
           image:
             repository: docker.io/droppedneedle/droppedneedle
-            tag: latest@sha256:6d58d829cc5aa29e5de95933ba1ce46f249ccf7ef3ed437c643231b771d711c5
+            tag: latest@sha256:38d702f5ef14fa8c3f028e916011e1fe93a8a2b10452c72e2f6f27e3031356ef
           env:
             PORT: &containerPort 8688
             TZ: Europe/Ljubljana
