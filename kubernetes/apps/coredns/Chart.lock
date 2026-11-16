@@ -1,6 +1,6 @@
 dependencies:
 - name: coredns
   repository: oci://ghcr.io/coredns/charts
-  version: 1.50.7
-digest: sha256:f02b3e744dbfcab2db2dc33ebfc09226466df5fb8978d9b9a1d8d257673c8fa0
-generated: "2026-11-14T15:32:21.517170607Z"
+  version: 1.50.8
+digest: sha256:3800bda4595581d1ed6b72591aa3932be3a953777d77bb3778ee20999408bfa6
+generated: "2026-11-16T17:55:12.931990193Z"
