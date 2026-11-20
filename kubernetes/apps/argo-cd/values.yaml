@@ -48,7 +48,7 @@ argo-cd:
         memory: 512Mi
     image:
       repository: ghcr.io/blarc/home-k8s/argo-cd
-      tag: v3.6.1-46a2b162
+      tag: v3.6.2-934bfa64
       imagePullPolicy: Always
     imagePullSecrets:
       - name: argocd-gitlab-registry-secret
