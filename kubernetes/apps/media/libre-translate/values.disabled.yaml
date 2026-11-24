@@ -7,7 +7,7 @@ app-template:
         app:
           image:
             repository: libretranslate/libretranslate
-            tag: v1.9.6
+            tag: v1.10.0
           env:
             LT_PORT: &containerPort 5000
             LT_UPDATE_MODELS: true
